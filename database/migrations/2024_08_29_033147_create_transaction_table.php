@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('payment_method_id')->constrained();
             $table->datetime('transaction_date');
             $table->decimal('total_amount');
-            $table->tinyInteger('payment_method');
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('registered_dishes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('dishes_categories_id')->constrained();
+            $table->foreignId('subcategories_id')->constrained();
             $table->string('title');
             $table->string('description');
             $table->string('image');

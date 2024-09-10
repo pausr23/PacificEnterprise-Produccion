@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use App\Models\DishesCategory;
+use App\Models\RegisteredDish;
+use App\Models\Subcategory;
 
 class AdminDishController extends Controller
 {
@@ -12,7 +15,6 @@ class AdminDishController extends Controller
      */
     public function index()
     {
-        //
         $dishes = RegisteredDish::select(
             'registered_dishes.id',
             'dishes_categories.name as category',
@@ -21,13 +23,12 @@ class AdminDishController extends Controller
             'registered_dishes.description',
             'registered_dishes.dish_price'
         )
-        ->join('dishes_categories', 'registered_dishes.dishes_categories.id', '=', 'dishes_categories.id')
-        ->join('subcategories', 'registered_dishes.subcategories.id', '=', 'subcategories.id')
-        ->orderBy('scheduled_at', 'asc')
+        ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
+        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
         ->get();
 
-        $categories = CategoriesDishes::all();
-        $subcategories = SubcategoriesDishes::all();
+        $categories = DishesCategory::all();
+        $subcategories = Subcategory::all();
         $total = $dishes->count(); 
 
         return view('dishes.index', compact('dishes', 'total', 'categories', 'subcategories'));
@@ -36,12 +37,14 @@ class AdminDishController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $categories = CategoriesDishes::all();
-        $subcategories = SubcategoriesDishes::all();
-
-        return view('dishes.create', compact('categories', 'subcategories'));
+        $selectedCategoryId = $request->input('dishes_categories_id');
+        
+        $categories = DishesCategory::all();
+        $subcategories = $selectedCategoryId ? Subcategory::where('dishes_categories_id', $selectedCategoryId)->get() : collect();
+    
+        return view('dishes.create', compact('categories', 'subcategories', 'selectedCategoryId'));
     }
 
     /**
@@ -49,10 +52,22 @@ class AdminDishController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $file = $request->file('image');
-        $file_name = 'dish_' . time() . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('public/images', $file_name);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'dish_price' => 'required|numeric',
+            'description' => 'nullable|string',
+            'dishes_categories_id' => 'required|exists:dishes_categories,id',
+            'subcategories_id' => 'required|exists:subcategories,id',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        $file_name = 'default.jpg'; // Valor por defecto
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $file_name = 'dish_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/images', $file_name);
+        }
 
         RegisteredDish::create([
             'dishes_categories_id' => $request->dishes_categories_id,
@@ -63,46 +78,14 @@ class AdminDishController extends Controller
             'dish_price' => $request->dish_price,
         ]);
 
-        return redirect()->route('dishes.index')->with('success','PLatillo registrado correctamente.');
-
+        return redirect()->route('dishes.index')->with('success', 'Item registrado correctamente.');
     }
-
-    public function search(Request $request)
-    {
-        $query = RegisteredActivity::select(
-            'registered_dishes.id',
-            'dishes_categories.id as category_id',
-            'dishes_categories.name as category',
-            'registered_dishes.title',
-            'subcategories.name as subcategory'
-        )
-        ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
-        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id');
-
-        if ($request->category != 0) {
-            $query->where('dishes_categories.id', $request->category);
-        }
-
-        if ($request->has('activity') && !empty($request->activity)) {
-            $query->where('registered_dishes.title', 'LIKE', '%' . $request->dish . '%');
-        }
-
-        if ($request->has('subcategory') && !empty($request->subcategory)) {
-            $query->where('registered_dishes.subcategory_id', $request->subcategory);
-        }
-
-        //$dishes = $query->orderBy('scheduled_at', 'asc')->get();
-        $total = $dishes->count();
-
-        return view('dishes.results', compact('dishes', 'total'));
-}
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
         $dish = RegisteredDish::select(
             'dishes_categories.name as category',
             'registered_dishes.title as title',
@@ -114,7 +97,7 @@ class AdminDishController extends Controller
         ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
         ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
         ->where('registered_dishes.id', $id)
-        ->get();
+        ->first();
 
         return view('dishes.show', compact('dish'));
     }
@@ -124,14 +107,12 @@ class AdminDishController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        $dish = RegisteredActivity::find($id);
-        $categories = CategoriesDishes::all();
-        $subcategories = SubcategoriesDishes::all();
-
+        $dish = RegisteredDish::find($id);
+        $categories = DishesCategory::all();
+        $subcategories = Subcategory::all();
         $currentImage = asset('storage/images/' . $dish->image);
         
-        return view('dishes.edit', compact('dish', 'categories', 'subcategories'));
+        return view('dishes.edit', compact('dish', 'categories', 'subcategories', 'currentImage'));
     }
 
     /**
@@ -139,33 +120,39 @@ class AdminDishController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        $file = $request->file('image');
-        $query = RegisteredDish::find($id);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'dish_price' => 'required|numeric',
+            'description' => 'nullable|string',
+            'dishes_categories_id' => 'required|exists:dishes_categories,id',
+            'subcategories_id' => 'required|exists:subcategories,id',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
 
-        if ($query) {
-            if ($file != null) {
-                $file_to_remove = 'storage/images/'.$request->old_image;
-                if (File::exists($file_to_remove)) {
-                    File::delete($file_to_remove);
-                }
-                $file_name = 'dish_' . time() . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('public/images', $file_name);
-            } else {
-                $file_name = $request->old_image;
+        $dish = RegisteredDish::find($id);
+        $file_name = $dish->image; // Mantener la imagen existente
+
+        if ($request->hasFile('image')) {
+            // Eliminar la imagen anterior
+            if (File::exists(public_path('storage/images/' . $file_name)) && $file_name != 'default.jpg') {
+                File::delete(public_path('storage/images/' . $file_name));
             }
 
-            $query->update([
-                'dishes_categories_id' => $request->dishes_categories_id,
-                'subcategories_id' => $request->subcategories_id,
-                'title' => $request->title,
-                'description' => $request->description,
-                'dish_price' => $request->dish_price,
-                'image' => $file_name,
-            ]);
-
-            return redirect()->route('dishes.index')->with('success','Platillo actualizado correctamente.');
+            $file = $request->file('image');
+            $file_name = 'dish_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/images', $file_name);
         }
+
+        $dish->update([
+            'dishes_categories_id' => $request->dishes_categories_id,
+            'subcategories_id' => $request->subcategories_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $file_name,
+            'dish_price' => $request->dish_price,
+        ]);
+
+        return redirect()->route('dishes.index')->with('success', 'Item actualizado correctamente.');
     }
 
     /**
@@ -173,10 +160,16 @@ class AdminDishController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        $result = RegisteredDish::find($id);
-        $result->delete();
+        $dish = RegisteredDish::find($id);
+        if ($dish) {
+            // Eliminar la imagen del disco
+            if (File::exists(public_path('storage/images/' . $dish->image)) && $dish->image != 'default.jpg') {
+                File::delete(public_path('storage/images/' . $dish->image));
+            }
+            $dish->delete();
+        }
 
-        return redirect()->route('dishes.index')->with('success','Platillo eliminado correctamente.');
+        return redirect()->route('dishes.index')->with('success', 'Item eliminado correctamente.');
     }
 }
+
