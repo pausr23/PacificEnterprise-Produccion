@@ -15,32 +15,14 @@ use App\Http\Controllers\AdminDishController;
 |
 */
 
-Route::get('/dishes', function () {
-    return view('dishes.index');
-});
-
-Route::get('/create', function () {
-    return view('dishes.create');
-});
+Route::get('/dishes', [AdminDishController::class, 'index'])->name('dishes.index');
 
 Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
-Route::get('/dishes/edit', [AdminDishController::class, 'edit'])->name('dishes.edit');
 
 Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
 
+Route::get('/dishes/{id}/edit', [AdminDishController::class, 'edit'])->name('dishes.edit');
 
-Route::post('/dishes', [DishController::class, 'store'])->name('dishes.store');
-
-
-Route::resource('dishes', AdminDishController::class);
-
+Route::put('/dishes/{id}', [AdminDishController::class, 'update'])->name('dishes.update');
 
 Route::delete('/dishes/{id}', [AdminDishController::class, 'destroy'])->name('dishes.destroy');
-
-
-
-
-
-
-
-

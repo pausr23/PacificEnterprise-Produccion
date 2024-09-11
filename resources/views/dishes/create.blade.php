@@ -11,7 +11,8 @@
     </div>
 
     <!-- Formulario -->
-    <form action="{{ route('dishes.create') }}" method="GET" enctype="multipart/form-data">
+    <form action="{{ route('dishes.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="pl-20 grid grid-cols-[50%,50%]">
 
             <!-- Sección 1 -->
@@ -27,12 +28,10 @@
                 <div class="mt-2 mb-2">
                     <div>
                         <label for="dishes_categories_id" class="block mb-2 font-medium text-white font-main">Categoría:</label>
-                        <select name="dishes_categories_id" id="dishes_categories_id" class="secondary-color border border-gray-300 text-gray-900 text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white" onchange="this.form.submit()">
+                        <select name="dishes_categories_id" id="dishes_categories_id" class="secondary-color border border-gray-300 text-gray-900 text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white" onchange="filterSubcategories()">
                             <option value="">Selecciona una categoría</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ $selectedCategoryId == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -44,9 +43,6 @@
                         <label for="subcategories_id" class="block mb-2 font-medium text-white font-main">Subcategoría:</label>
                         <select name="subcategories_id" id="subcategories_id" class="secondary-color border border-gray-300 text-gray-900 text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white">
                             <option value="">Selecciona una categoría primero</option>
-                            @foreach ($subcategories as $subcategory)
-                                <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
-                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -86,4 +82,34 @@
         </div>
     </form>
 </div>
+
+<script>
+    const subcategoriesData = @json($subcategories);
+
+    function filterSubcategories() {
+        const categoryId = document.getElementById('dishes_categories_id').value;
+        const subcategorySelect = document.getElementById('subcategories_id');
+        subcategorySelect.innerHTML = '<option value="">Selecciona una subcategoría</option>';
+
+        console.log("Categoría seleccionada ID:", categoryId);
+
+        // Filtrar subcategorías
+        const filteredSubcategories = subcategoriesData.filter(subcategory => {
+            return subcategory.dishes_categories_id == categoryId;
+        });
+
+        console.log("Subcategorías filtradas:", filteredSubcategories);
+
+        if (filteredSubcategories.length === 0) {
+            subcategorySelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
+        } else {
+            filteredSubcategories.forEach(subcategory => {
+                const option = document.createElement('option');
+                option.value = subcategory.id;
+                option.textContent = subcategory.name;
+                subcategorySelect.appendChild(option);
+            });
+        }
+    }
+</script>
 @endsection

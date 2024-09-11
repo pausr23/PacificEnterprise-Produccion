@@ -40,10 +40,11 @@ class AdminDishController extends Controller
     public function create(Request $request)
     {
         $selectedCategoryId = $request->input('dishes_categories_id');
-        
+
         $categories = DishesCategory::all();
-        $subcategories = $selectedCategoryId ? Subcategory::where('dishes_categories_id', $selectedCategoryId)->get() : collect();
-    
+        // Enviar todas las subcategorías
+        $subcategories = Subcategory::all();
+
         return view('dishes.create', compact('categories', 'subcategories', 'selectedCategoryId'));
     }
 
