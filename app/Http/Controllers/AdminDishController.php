@@ -13,9 +13,14 @@ class AdminDishController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dishes = RegisteredDish::select(
+        // Obtener los valores del input de búsqueda y la categoría seleccionada
+        $searchTerm = $request->input('dish');
+        $categoryId = $request->input('category');
+    
+        // Query base
+        $query = RegisteredDish::select(
             'registered_dishes.id',
             'dishes_categories.name as category',
             'subcategories.name as subcategory',
@@ -24,15 +29,28 @@ class AdminDishController extends Controller
             'registered_dishes.dish_price'
         )
         ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
-        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
-        ->get();
-
+        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id');
+    
+        // Filtrar por nombre de platillo
+        if (!empty($searchTerm)) {
+            $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
+        }
+    
+        // Filtrar por categoría si no es "Todo" (que será la opción con valor 0)
+        if (!empty($categoryId) && $categoryId != 0) {
+            $query->where('dishes_categories.id', $categoryId);
+        }
+    
+        // Obtener los resultados
+        $dishes = $query->get();
+    
         $categories = DishesCategory::all();
         $subcategories = Subcategory::all();
         $total = $dishes->count(); 
-
+    
         return view('dishes.index', compact('dishes', 'total', 'categories', 'subcategories'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
