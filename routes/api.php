@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\RegisteredDishController;
+use App\Http\Controllers\CategoriesDishController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/dishes/all', [RegisteredDishController::class, 'index']);
+Route::get('/dishes/test', [RegisteredDishController::class, 'test']);
+Route::get('/dishes/dish/{id}', [RegisteredDishController::class, 'show']);
+
+Route::get('/categories', [CategoriesDishController::class, 'index']);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\DishesCategory;
+
 class CategoriesDishController extends Controller
 {
     /**
@@ -11,7 +13,26 @@ class CategoriesDishController extends Controller
      */
     public function index()
     {
-        //
+        $categories = DishesCategory::with(['subcategories.dishes' => function ($query) {
+            $query->select(
+                'registered_dishes.id',
+                'registered_dishes.title',
+                'registered_dishes.description',
+                'registered_dishes.dish_price',
+                'registered_dishes.image',
+                'registered_dishes.subcategories_id'
+            );
+        }])->get();
+
+        foreach ($categories as $category) {
+            foreach ($category->subcategories as $subcategory) {
+                foreach ($subcategory->dishes as $dish) {
+                    $dish->image = "http://projectPlanner.test/storage/images/".$dish->image;
+                }
+            }
+        }
+
+        return response()->json($categories);
     }
 
     /**

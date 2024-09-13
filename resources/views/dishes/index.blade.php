@@ -39,7 +39,7 @@
             </div>
                 
             <div class="content-end">
-                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white font-medium rounded-xl text-center" href="{{ route('dishes.create') }}">
+                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center" href="{{ route('dishes.create') }}">
                     Agregar un Item
                 </a>
             </div>

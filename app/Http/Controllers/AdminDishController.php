@@ -42,7 +42,6 @@ class AdminDishController extends Controller
         $selectedCategoryId = $request->input('dishes_categories_id');
 
         $categories = DishesCategory::all();
-        // Enviar todas las subcategorías
         $subcategories = Subcategory::all();
 
         return view('dishes.create', compact('categories', 'subcategories', 'selectedCategoryId'));
@@ -62,7 +61,7 @@ class AdminDishController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $file_name = 'default.jpg'; // Valor por defecto
+        $file_name = 'default.jpg'; 
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -131,10 +130,10 @@ class AdminDishController extends Controller
         ]);
 
         $dish = RegisteredDish::find($id);
-        $file_name = $dish->image; // Mantener la imagen existente
+        $file_name = $dish->image; 
 
         if ($request->hasFile('image')) {
-            // Eliminar la imagen anterior
+          
             if (File::exists(public_path('storage/images/' . $file_name)) && $file_name != 'default.jpg') {
                 File::delete(public_path('storage/images/' . $file_name));
             }

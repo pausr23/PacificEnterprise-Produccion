@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\RegisteredDish;
+
 class RegisteredDishController extends Controller
 {
     /**
@@ -12,7 +14,24 @@ class RegisteredDishController extends Controller
     public function index()
     {
         //
-        
+        $dishes = RegisteredDish::select(
+            'registered_dishes.id',
+            'registered_dishes.title',
+            'registered_dishes.image',
+            'registered_dishes.dish_price',
+            'registered_dishes.description',
+            'dishes_categories.name as category',
+            'subcategories.name as subcategory',
+        )
+        ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
+        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
+        ->get();
+    
+        foreach ($dishes as $dish) {
+            $dish->image = "http://pacificenterprise.test/storage/images/".$dish->image;
+        }
+    
+        return $dishes;
     }
 
     /**
@@ -49,7 +68,6 @@ class RegisteredDishController extends Controller
      */
     public function show(string $id)
     {
-        //
         $dish = RegisteredDish::select(
             'dishes_categories.name as category',
             'registered_dishes.title',
@@ -58,14 +76,18 @@ class RegisteredDishController extends Controller
             'registered_dishes.image',
             'subcategories.name as subcategory'
         )
-        ->join('dishes_categories', 'registered_dishes.dishes_categories.id', '=', 'dishes_categories.id')
-        ->join('subcategories', 'registered_dishes.subcategories.id', '=', 'subcategories.id')
+        ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
+        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
         ->where('registered_dishes.id', $id)
-        ->get();
-
-        $dish[0]->image = "http://pacificenterprise.test/storage/images/".$dish[0]->image;
-
-        return $dish;
+        ->first();
+    
+        if (!$dish) {
+            return response()->json(['message' => 'Dish not found'], 404);
+        }
+    
+        $dish->image = "http://pacificenterprise.test/storage/images/".$dish->image;
+    
+        return response()->json($dish);
     }
 
     /**

@@ -9,6 +9,14 @@ class DishesCategory extends Model
 {
     use HasFactory;
 
-    
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class, 'dishes_categories_id');
+    }
     
 }
