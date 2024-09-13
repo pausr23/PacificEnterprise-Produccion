@@ -25,4 +25,4 @@ Route::get('/dishes/all', [RegisteredDishController::class, 'index']);
 Route::get('/dishes/test', [RegisteredDishController::class, 'test']);
 Route::get('/dishes/dish/{id}', [RegisteredDishController::class, 'show']);
 
-Route::get('/categories', [CategoriesDishController::class, 'index']);
+Route::get('/categories/{categoryId}', [CategoriesDishController::class, 'index']);

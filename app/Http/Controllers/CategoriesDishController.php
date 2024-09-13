@@ -11,23 +11,25 @@ class CategoriesDishController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($categoryId)
     {
-        $categories = DishesCategory::with(['subcategories.dishes' => function ($query) {
-            $query->select(
-                'registered_dishes.id',
-                'registered_dishes.title',
-                'registered_dishes.description',
-                'registered_dishes.dish_price',
-                'registered_dishes.image',
-                'registered_dishes.subcategories_id'
-            );
-        }])->get();
+        $categories = DishesCategory::where('id', $categoryId)
+            ->with(['subcategories.dishes' => function ($query) {
+                $query->select(
+                    'registered_dishes.id',
+                    'registered_dishes.title',
+                    'registered_dishes.description',
+                    'registered_dishes.dish_price',
+                    'registered_dishes.image',
+                    'registered_dishes.subcategories_id'
+                );
+            }])
+            ->get();
 
         foreach ($categories as $category) {
             foreach ($category->subcategories as $subcategory) {
                 foreach ($subcategory->dishes as $dish) {
-                    $dish->image = "http://projectPlanner.test/storage/images/".$dish->image;
+                    $dish->image = "http://projectPlanner.test/storage/images/" . $dish->image;
                 }
             }
         }
