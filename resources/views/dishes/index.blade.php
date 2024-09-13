@@ -36,12 +36,12 @@
                 </div>
 
                 <div class="grid content-end">
-                    <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 w-28 rounded-xl text-center">Buscar</button>
+                    <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 w-28 rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
                 </div>
             </form>
 
             <div class="content-end">
-                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white font-medium rounded-xl text-center" href="{{ route('dishes.create') }}">
+                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white font-medium rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('dishes.create') }}">
                     Agregar un Item
                 </a>
             </div>
@@ -67,12 +67,12 @@
                                 <td>{{ $dish->category }}</td>
                                 <td>{{ $dish->subcategory }}</td>
                                 <td class="py-6">
-                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2" href="">Ver</a>
-                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 py-2 me-2" href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
+                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="">Ver</a>
+                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-100" href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
                                     <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="bg-rose-300 rounded-lg text-black font-semibold px-4 py-2 me-2" type="submit">Eliminar</button>
+                                        <button class="bg-rose-300 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-100" type="submit">Eliminar</button>
                                     </form>
                                 </td>
                             </tr>
