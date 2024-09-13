@@ -6,7 +6,7 @@
     <div class="flex justify-center items-center mb-10">
         <div class="grid grid-cols-2 gap-96">
             <h1 class="text-2xl font-bold text-white font-main">Añade un nuevo platillo</h1>
-            <a class="font-main text-white w-[30%] secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
+            <a class="font-main text-white w-[30%] secondary-color text-white hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
 
@@ -78,7 +78,7 @@
 
         <!-- Botón de guardar -->
         <div class="flex justify-end mt-5 pr-20">
-            <button type="submit" class="font-main text-white w-[40%] secondary-color hover:bg-lime-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center">Guardar</button>
+            <button type="submit" class="font-main text-white w-[8%] secondary-color text-white hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mt-6 mb-10">Guardar</button>
         </div>
     </form>
 </div>

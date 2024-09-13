@@ -18,33 +18,35 @@
     </div>
 
     <div>
-        <div class="grid grid-cols-[20%,20%,20%,20%]">
-            <div class="grid">
-                <label class="text-white font-main pb-2 font-bold" for="dish">Nombre:</label>
-                <input class="secondary-color rounded text-xs font-light h-8 text-center w-40 text-white" id= "dish" type="text" name="dish" placeholder="Nombre de platillo">
-            </div>
+        <div class="grid grid-cols-[70%,20%]">
+            <form method="GET" action="{{ route('dishes.index') }}" class="grid grid-cols-3 ">
+                <div class="grid">
+                    <label class="text-white font-main pb-2 font-bold" for="dish">Nombre:</label>
+                    <input class="secondary-color rounded text-xs font-light h-8 text-center w-40 text-white" id="dish" type="text" name="dish" placeholder="Nombre de platillo">
+                </div>
 
-            <div class="grid">
-                <label class="text-white font-main pb-2 font-bold" for="category">Categoria:</label>
-                <select class="secondary-color rounded h-8 text-center w-40 text-white" id="category" name="category" >
-                    <option value="0">Todo</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+                <div class="grid">
+                    <label class="text-white font-main pb-2 font-bold" for="category">Categoría:</label>
+                    <select class="secondary-color rounded h-8 text-center w-40 text-white" id="category" name="category">
+                        <option value="0">Todo</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <div class="content-end">
-                <a class="font-bold flex items-center justify-center font-main text-black bg-white h-10 w-28 rounded-xl text-center" for="search">Buscar</a>
-            </div>
-                
+                <div class="grid content-end">
+                    <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 w-28 rounded-xl text-center">Buscar</button>
+                </div>
+            </form>
+
             <div class="content-end">
                 <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white font-medium rounded-xl text-center" href="{{ route('dishes.create') }}">
                     Agregar un Item
                 </a>
             </div>
-
         </div>
+
 
         <div class="w-[90%] grid gap-16">
             <div class="py-10 rounded-lg">
