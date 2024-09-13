@@ -41,15 +41,7 @@
             </form>
 
             <div class="content-end">
-<<<<<<< HEAD
-                <a class="font-bold flex items-center justify-center font-main text-black bg-white h-10 w-28 rounded-xl text-center" for="search">Buscar</a>
-            </div>
-                
-            <div class="content-end">
-                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center" href="{{ route('dishes.create') }}">
-=======
-                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white font-medium rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('dishes.create') }}">
->>>>>>> 991d0e2b41d2d5e5bf40cc46ec4be95fe61e19fe
+                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('dishes.create') }}">
                     Agregar un Item
                 </a>
             </div>
@@ -64,7 +56,7 @@
                             <th scope="col" class="rounded-l-lg px-12 py-3">Nombre</th>
                             <th scope="col" class="px-12 py-3">Categoria</th>
                             <th scope="col" class="px-12 py-3">Subcategoria</th>
-                            <th scope="col" class="rounded-r-lg px-32 py-3" width="280px">Accion</th>
+                            <th scope="col" class="rounded-r-lg px-32 py-3">Accion</th>
                         </tr>
                     </thead>
                     

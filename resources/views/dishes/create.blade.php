@@ -6,11 +6,7 @@
     <div class="flex justify-center items-center mb-10">
         <div class="grid grid-cols-2 gap-96">
             <h1 class="text-2xl font-bold text-white font-main">Añade un nuevo platillo</h1>
-<<<<<<< HEAD
-            <a class="font-main text-white w-[30%] secondary-color bg-cyan-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
-=======
-            <a class="font-main text-white w-[30%] secondary-color text-white hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
->>>>>>> 991d0e2b41d2d5e5bf40cc46ec4be95fe61e19fe
+            <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
 
@@ -28,7 +24,7 @@
                 <div class="mt-2 mb-2">
                     <div>
                         <label for="dishes_categories_id" class="block mb-2 font-medium text-white font-main">Categoría:</label>
-                        <select name="dishes_categories_id" id="dishes_categories_id" class="secondary-color border border-gray-300 text-gray-900 text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white" onchange="filterSubcategories()">
+                        <select name="dishes_categories_id" id="dishes_categories_id" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white" onchange="filterSubcategories()">
                             <option value="">Selecciona una categoría</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -40,7 +36,7 @@
                 <div class="mt-2 mb-2">
                     <div>
                         <label for="subcategories_id" class="block mb-2 font-medium text-white font-main">Subcategoría:</label>
-                        <select name="subcategories_id" id="subcategories_id" class="secondary-color border border-gray-300 text-gray-900 text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white">
+                        <select name="subcategories_id" id="subcategories_id" class="secondary-color border border-gray-300  text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white">
                             <option value="">Selecciona una categoría primero</option>
                         </select>
                     </div>
@@ -73,7 +69,7 @@
         </div>
 
         <div class="flex justify-end mt-5 pr-20">
-            <button type="submit" class="font-main text-white w-[8%] secondary-color text-white hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mt-6 mb-10">Guardar</button>
+            <button type="submit" class="font-main text-white w-[8%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mt-6 mb-10">Guardar</button>
         </div>
     </form>
 </div>
