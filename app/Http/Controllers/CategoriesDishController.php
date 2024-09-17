@@ -19,6 +19,7 @@ class CategoriesDishController extends Controller
                     'registered_dishes.id',
                     'registered_dishes.title',
                     'registered_dishes.description',
+                    'registered_dishes.units',
                     'registered_dishes.dish_price',
                     'registered_dishes.image',
                     'registered_dishes.subcategories_id'

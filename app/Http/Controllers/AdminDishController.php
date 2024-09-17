@@ -25,6 +25,7 @@ class AdminDishController extends Controller
             'dishes_categories.name as category',
             'subcategories.name as subcategory',
             'registered_dishes.title',
+            'registered_dishes.units',
             'registered_dishes.description',
             'registered_dishes.dish_price'
         )
@@ -74,6 +75,7 @@ class AdminDishController extends Controller
             'title' => 'required|string|max:255',
             'dish_price' => 'required|numeric',
             'description' => 'nullable|string',
+            'units' => 'required|integer',
             'dishes_categories_id' => 'required|exists:dishes_categories,id',
             'subcategories_id' => 'required|exists:subcategories,id',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
@@ -92,6 +94,7 @@ class AdminDishController extends Controller
             'subcategories_id' => $request->subcategories_id,
             'title' => $request->title,
             'description' => $request->description,
+            'units' => $request->units,
             'image' => $file_name,
             'dish_price' => $request->dish_price,
         ]);
@@ -110,6 +113,7 @@ class AdminDishController extends Controller
             'registered_dishes.description',
             'registered_dishes.image',
             'registered_dishes.dish_price',
+            'registered_dishes.units',
             'subcategories.name as subcategory'
         )
         ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
@@ -142,6 +146,7 @@ class AdminDishController extends Controller
             'title' => 'required|string|max:255',
             'dish_price' => 'required|numeric',
             'description' => 'nullable|string',
+            'units' => 'required|integer',
             'dishes_categories_id' => 'required|exists:dishes_categories,id',
             'subcategories_id' => 'required|exists:subcategories,id',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
@@ -166,6 +171,7 @@ class AdminDishController extends Controller
             'subcategories_id' => $request->subcategories_id,
             'title' => $request->title,
             'description' => $request->description,
+            'units' => $request->units,
             'image' => $file_name,
             'dish_price' => $request->dish_price,
         ]);
@@ -188,6 +194,45 @@ class AdminDishController extends Controller
         }
 
         return redirect()->route('dishes.index')->with('success', 'Item eliminado correctamente.');
+    }
+
+    public function inventory(Request $request)
+    {
+        // Obtener los valores del input de búsqueda y la categoría seleccionada
+        $searchTerm = $request->input('dish');
+        $categoryId = $request->input('category');
+    
+        // Query base
+        $query = RegisteredDish::select(
+            'registered_dishes.id',
+            'dishes_categories.name as category',
+            'subcategories.name as subcategory',
+            'registered_dishes.title',
+            'registered_dishes.units',
+            'registered_dishes.description',
+            'registered_dishes.dish_price'
+        )
+        ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
+        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id');
+    
+        // Filtrar por nombre de platillo
+        if (!empty($searchTerm)) {
+            $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
+        }
+    
+        // Filtrar por categoría si no es "Todo" (que será la opción con valor 0)
+        if (!empty($categoryId) && $categoryId != 0) {
+            $query->where('dishes_categories.id', $categoryId);
+        }
+    
+        // Obtener los resultados
+        $dishes = $query->get();
+    
+        $categories = DishesCategory::all();
+        $subcategories = Subcategory::all();
+        $total = $dishes->count(); 
+    
+        return view('dishes.inventory', compact('dishes', 'total', 'categories', 'subcategories'));
     }
 }
 

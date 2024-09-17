@@ -15,9 +15,11 @@ use App\Http\Controllers\AdminDishController;
 |
 */
 
-Route::get('/dishes', [AdminDishController::class, 'index'])->name('dishes.index');
+Route::get('/', [AdminDishController::class, 'index'])->name('dishes.index');
 
 Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
+
+Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
 
 Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
 
