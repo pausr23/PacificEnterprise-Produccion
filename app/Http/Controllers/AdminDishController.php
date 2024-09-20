@@ -15,11 +15,9 @@ class AdminDishController extends Controller
      */
     public function index(Request $request)
     {
-        // Obtener los valores del input de búsqueda y la categoría seleccionada
         $searchTerm = $request->input('dish');
         $categoryId = $request->input('category');
     
-        // Query base
         $query = RegisteredDish::select(
             'registered_dishes.id',
             'dishes_categories.name as category',
@@ -31,17 +29,14 @@ class AdminDishController extends Controller
         ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
         ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id');
     
-        // Filtrar por nombre de platillo
         if (!empty($searchTerm)) {
             $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
         }
     
-        // Filtrar por categoría si no es "Todo" (que será la opción con valor 0)
         if (!empty($categoryId) && $categoryId != 0) {
             $query->where('dishes_categories.id', $categoryId);
         }
-    
-        // Obtener los resultados
+
         $dishes = $query->get();
     
         $categories = DishesCategory::all();

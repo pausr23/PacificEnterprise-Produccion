@@ -15,7 +15,7 @@ use App\Http\Controllers\AdminDishController;
 |
 */
 
-Route::get('/dishes', [AdminDishController::class, 'index'])->name('dishes.index');
+Route::get('', [AdminDishController::class, 'index'])->name('dishes.index');
 
 Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
