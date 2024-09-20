@@ -41,6 +41,11 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="grid mb-2">
+                    <label class="block mb-2 font-medium text-white font-main">Unidades</label>
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" placeholder="Unidades disponibles">
+                </div>
             
             </div>
 
@@ -68,8 +73,8 @@
 
         </div>
 
-        <div class="flex justify-end mt-5 pr-20">
-            <button type="submit" class="font-main text-white w-[8%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mt-6 mb-10">Guardar</button>
+        <div class="flex justify-end pr-20">
+            <button type="submit" class="font-main text-white w-[8%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mb-10">Guardar</button>
         </div>
     </form>
 </div>

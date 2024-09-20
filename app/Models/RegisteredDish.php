@@ -15,6 +15,7 @@ class RegisteredDish extends Model
        'title',
        'dish_price',
        'description',
+       'units',
        'image',
     ];
 

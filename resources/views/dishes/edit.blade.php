@@ -47,6 +47,12 @@
                         </select>
                     </div>
                 </div>
+
+                <!-- Unidades -->
+                <div class="grid mb-2">
+                    <label class="block mb-2 font-medium text-white font-main">Unidades</label>
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" placeholder="Unidades disponibles">
+                </div>
             
             </div>
 
