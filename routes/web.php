@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminDishController;
-use App\Http\Controllers\RegisteredDishController;
+use App\Http\Controllers\AdminSupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,7 @@ use App\Http\Controllers\RegisteredDishController;
 |
 */
 
-Route::get('/', [AdminDishController::class, 'index'])->name('dishes.index');
+Route::get('', [AdminDishController::class, 'index'])->name('dishes.index');
 
 Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
@@ -30,5 +30,17 @@ Route::put('/dishes/{id}', [AdminDishController::class, 'update'])->name('dishes
 
 Route::delete('/dishes/{id}', [AdminDishController::class, 'destroy'])->name('dishes.destroy');
 
-Route::get('/downloadimagedata', [RegisteredDishController::class, 'getImages'])->name('dishes.downloadimagedata');
+/* SUPPLIERS */
 
+Route::get('/suppliers/create', [AdminSupplierController::class, 'create'])->name('suppliers.create');
+
+Route::get('/suppliers/index', [AdminSupplierController::class, 'index'])->name('suppliers.index');
+
+Route::post('/suppliers', [AdminSupplierController::class, 'store'])->name('suppliers.store');
+
+Route::delete('suppliers/{supplier}', [AdminSupplierController::class, 'destroy'])->name('suppliers.destroy');
+
+Route::resource('suppliers', AdminSupplierController::class);
+
+
+Route::get('/factures/ordering', [AdminDishController::class, 'factures'])->name('factures.ordering');
