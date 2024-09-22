@@ -43,4 +43,5 @@ Route::delete('suppliers/{supplier}', [AdminSupplierController::class, 'destroy'
 Route::resource('suppliers', AdminSupplierController::class);
 
 
-Route::get('/factures/ordering', [AdminDishController::class, 'factures'])->name('factures.ordering');
+Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
+

@@ -23,5 +23,15 @@ class RegisteredDish extends Model
         'created_at',
         'updated_at',
     ];
+
+        public function category()
+    {
+        return $this->belongsTo(DishesCategory::class, 'dishes_categories_id');
+    }
+
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class, 'subcategories_id');
+    }
     
 }

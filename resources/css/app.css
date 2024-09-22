@@ -10,3 +10,13 @@
     font-family: "Inter", sans-serif;
     font-style: normal;
 }
+
+select {
+    color: white; 
+    background-color: #323035; 
+}
+
+select:focus {
+    background-color: #16161A;
+    color: white; 
+}

@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('details_transaction_rest', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dishes_categories_id')->constrained();
-            $table->foreignId('registered_dishes_id')->constrained();
-            $table->decimal('registered_dishes_price');
-            $table->decimal('total');
-            $table->string('payment_method');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('details_transaction_rest');
+        Schema::dropIfExists('payment_method');
     }
 };

@@ -14,6 +14,11 @@ class DishesCategory extends Model
         'updated_at',
     ];
 
+    public function registeredDishes()
+    {
+        return $this->hasMany(RegisteredDish::class, 'dishes_categories_id');
+    }
+
     public function subcategories()
     {
         return $this->hasMany(Subcategory::class, 'dishes_categories_id');

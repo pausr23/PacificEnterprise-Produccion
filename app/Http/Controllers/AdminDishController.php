@@ -174,6 +174,57 @@ class AdminDishController extends Controller
         return redirect()->route('dishes.index')->with('success', 'Item actualizado correctamente.');
     }
 
+    public function order(Request $request) 
+    {
+    $searchTerm = $request->input('dish');
+    $categoryId = $request->input('category');
+    $subcategoryId = $request->input('subcategory');
+
+    $query = RegisteredDish::with('category', 'subcategory'); 
+
+    if (!empty($searchTerm)) {
+        $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
+    }
+
+    if (!empty($categoryId) && $categoryId != 0) {
+        $query->where('dishes_categories.id', $categoryId);
+    }
+
+    if (!empty($subcategoryId) && $subcategoryId != 0) {
+        $query->where('subcategories.id', $subcategoryId);
+    }
+
+    $dishes = $query->get();
+    
+    // Obtener las categorías
+    $categories = DishesCategory::with('subcategories')->get();
+
+    // Obtener subcategorías
+    $subcategories = !empty($categoryId) ? 
+        Subcategory::where('dishes_categories_id', $categoryId)->get() : 
+        Subcategory::all(); 
+
+    // Procesar los platos agregados
+    $addedItems = $request->input('addedItems'); // Suponiendo que es un array de platos con cantidades
+    $total = 0;
+
+    if ($addedItems) {
+        foreach ($addedItems as $item) {
+            $dishId = $item['id'];
+            $quantity = $item['quantity'];
+            $dish = RegisteredDish::find($dishId);
+
+            if ($dish) {
+                $total += $dish->dish_price * $quantity;
+            }
+        }
+    }
+
+    return view('factures.ordering', compact('dishes', 'total', 'categories', 'subcategories', 'addedItems'));
+    }
+
+    
+
     /**
      * Remove the specified resource from storage.
      */
@@ -181,7 +232,6 @@ class AdminDishController extends Controller
     {
         $dish = RegisteredDish::find($id);
         if ($dish) {
-            // Eliminar la imagen del disco
             if (File::exists(public_path('storage/images/' . $dish->image)) && $dish->image != 'default.jpg') {
                 File::delete(public_path('storage/images/' . $dish->image));
             }
@@ -190,14 +240,14 @@ class AdminDishController extends Controller
 
         return redirect()->route('dishes.index')->with('success', 'Item eliminado correctamente.');
     }
+    
 
     public function inventory(Request $request)
     {
-        // Obtener los valores del input de búsqueda y la categoría seleccionada
+
         $searchTerm = $request->input('dish');
         $categoryId = $request->input('category');
     
-        // Query base
         $query = RegisteredDish::select(
             'registered_dishes.id',
             'dishes_categories.name as category',
@@ -210,17 +260,14 @@ class AdminDishController extends Controller
         ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
         ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id');
     
-        // Filtrar por nombre de platillo
         if (!empty($searchTerm)) {
             $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
         }
     
-        // Filtrar por categoría si no es "Todo" (que será la opción con valor 0)
         if (!empty($categoryId) && $categoryId != 0) {
             $query->where('dishes_categories.id', $categoryId);
         }
     
-        // Obtener los resultados
         $dishes = $query->get();
     
         $categories = DishesCategory::all();

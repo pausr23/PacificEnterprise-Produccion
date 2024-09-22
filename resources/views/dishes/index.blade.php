@@ -23,7 +23,7 @@
             <form method="GET" action="{{ route('dishes.index') }}" class="grid grid-cols-3 ">
                 <div class="grid">
                     <label class="text-white font-main pb-2 font-bold" for="dish">Nombre:</label>
-                    <input class="secondary-color rounded text-xs font-light h-8 text-center w-40 text-white" id="dish" type="text" name="dish" placeholder="Nombre de platillo">
+                    <input class="secondary-color rounded text-xs font-light h-8 text-center w-40 text-white" id="dish" type="text" name="dish" placeholder="Nombre de item">
                 </div>
 
                 <div class="grid">
