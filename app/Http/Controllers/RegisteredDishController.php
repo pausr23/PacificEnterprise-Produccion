@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 use App\Models\RegisteredDish;
 
 class RegisteredDishController extends Controller
@@ -12,27 +13,26 @@ class RegisteredDishController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-        $dishes = RegisteredDish::select(
-            'registered_dishes.id',
-            'registered_dishes.title',
-            'registered_dishes.image',
-            'registered_dishes.dish_price',
-            'registered_dishes.description',
-            'dishes_categories.name as category',
-            'subcategories.name as subcategory',
-        )
+{
+    $dishes = RegisteredDish::select(
+        'registered_dishes.id',
+        'registered_dishes.title',
+        'registered_dishes.image',
+        'registered_dishes.dish_price',
+        'registered_dishes.description',
+        'dishes_categories.name as category',
+        'subcategories.name as subcategory',
+    )
         ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
         ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
         ->get();
-    
-        foreach ($dishes as $dish) {
-            $dish->image = "http://pacificenterprise.test/storage/images/".$dish->image;
-        }
-    
-        return $dishes;
+
+    foreach ($dishes as $dish) {
+        $dish->image = url('storage/images/' . $dish->image);
     }
+
+    return response()->json($dishes);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -49,16 +49,16 @@ class RegisteredDishController extends Controller
     {
         //
         $file = $request->file('image');
-        $file_name ='activity_' . time() . '.' . $file->geyClientOriginalExtension();
+        $file_name = 'activity_' . time() . '.' . $file->geyClientOriginalExtension();
         $path = $file->storeAs('public/images', $file_name);
 
         RegisteredDish::create([
             'dishes_categories_id' => $request->dishes_categories_id,
             'subcategories_id' => $request->subcategories_id,
-            'title' =>$request->title,
-            'description' =>$request->description,
-            'dish_price' =>$request->dish_price,
-            'image'=>$file_name,
+            'title' => $request->title,
+            'description' => $request->description,
+            'dish_price' => $request->dish_price,
+            'image' => $file_name,
         ]);
         return "Dish registered sucesfully";
     }
@@ -76,17 +76,17 @@ class RegisteredDishController extends Controller
             'registered_dishes.image',
             'subcategories.name as subcategory'
         )
-        ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
-        ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
-        ->where('registered_dishes.id', $id)
-        ->first();
-    
+            ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
+            ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
+            ->where('registered_dishes.id', $id)
+            ->first();
+
         if (!$dish) {
             return response()->json(['message' => 'Dish not found'], 404);
         }
-    
-        $dish->image = "http://pacificenterprise.test/storage/images/".$dish->image;
-    
+
+        $dish->image = "http://pacificenterprise-produccion.test/storage/images/" . $dish->image;
+
         return response()->json($dish);
     }
 
@@ -113,4 +113,40 @@ class RegisteredDishController extends Controller
     {
         //
     }
+    public function getImages()
+{
+    $dishes = RegisteredDish::all();
+
+    if ($dishes->isEmpty()) {
+        return response()->json(['error' => 'No images found'], 404);
+    }
+
+    $zip = new ZipArchive;
+    $zipFileName = 'images.zip';
+
+    // Crear el archivo ZIP en el almacenamiento temporal
+    if ($zip->open(public_path($zipFileName), ZipArchive::CREATE) === TRUE) {
+        foreach ($dishes as $dish) {
+            if ($dish->image) {
+                $imagePath = 'public/images/' . $dish->image; // Ajustar la ruta según sea necesario
+
+                // Verificar si la imagen existe en el sistema de archivos
+                if (Storage::exists($imagePath)) {
+                    // Añadir el archivo al ZIP
+                    $zip->addFile(Storage::path($imagePath), $dish->image);
+                } else {
+                    return response()->json(['error' => 'Image not found: ' . $dish->image], 404);
+                }
+            }
+        }
+
+        // Cerrar el archivo ZIP
+        $zip->close();
+
+        // Retornar el archivo ZIP como una respuesta de descarga
+        return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+    } else {
+        return response()->json(['error' => 'Failed to create ZIP file'], 500);
+    }
+}
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminDishController;
+use App\Http\Controllers\RegisteredDishController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,6 @@ Route::get('/dishes/{id}/edit', [AdminDishController::class, 'edit'])->name('dis
 Route::put('/dishes/{id}', [AdminDishController::class, 'update'])->name('dishes.update');
 
 Route::delete('/dishes/{id}', [AdminDishController::class, 'destroy'])->name('dishes.destroy');
+
+Route::get('/downloadimagedata', [RegisteredDishController::class, 'getImages'])->name('dishes.downloadimagedata');
+
