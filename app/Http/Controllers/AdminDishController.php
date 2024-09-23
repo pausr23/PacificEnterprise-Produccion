@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\DishesCategory;
@@ -219,6 +221,31 @@ class AdminDishController extends Controller
 
         return view('factures.ordering', compact('dishes', 'total', 'categories', 'subcategories', 'addedItems'));
     }
+
+    public function storeOrder(Request $request)
+{
+    $addedItems = json_decode($request->input('addedItems'), true);
+    $paymentMethodId = $request->input('payment_method_id');
+
+    foreach ($addedItems as $item) {
+        $dish = RegisteredDish::find($item['id']); 
+
+        if ($dish) {
+            DB::table('details_transaction_rest')->insert([
+                'dishes_categories_id' => $dish->dishes_categories_id,
+                'registered_dishes_id' => $item['id'],
+                'payment_method_id' => $paymentMethodId,
+                'registered_dishes_price' => $dish->dish_price, 
+                'quantity' => $item['quantity'],
+                'total' => $dish->dish_price * $item['quantity'], 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+    }
+
+    return redirect()->route('factures.ordering')->with('success', 'Orden guardada exitosamente!');
+}
 
     /**
      * Remove the specified resource from storage.

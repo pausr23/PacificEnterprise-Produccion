@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('dishes_categories_id')->constrained();
             $table->foreignId('registered_dishes_id')->constrained();
+            $table->foreignId('payment_method_id')->constrained('payment_methods');
             $table->decimal('registered_dishes_price');
+            $table->integer('quantity');
             $table->decimal('total');
-            $table->string('payment_method');
             $table->timestamps();
         });
     }

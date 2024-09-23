@@ -8,12 +8,12 @@
         <img src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
         <div class="grid pl-12 pt-12 text-white font-light text-sm font-main ">
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block" href="">Panel Principal</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block" href="">Punto de Venta</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block" href="">Historial</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block" href="{{ route('dishes.index') }}">Admin</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block" href="{{ route('dishes.inventory') }}">Inventario</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block" href="{{ route('suppliers.index') }}">Proveedores</a>
+            <a class="py-1 mb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
+            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Punto de Venta</a>
+            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Historial</a>
+            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
+            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
         </div>
         
     </div>
@@ -27,7 +27,7 @@
 
             <div class="grid grid-cols-2 gap-2 mr-12 mt-10">
                 @foreach($categories as $category)
-                    <div class="bg-[#FFFF9F] rounded-md category-button" data-id="{{ $category->id }}" style="cursor: pointer;">
+                    <div class="bg-[#FFFF9F] rounded-md category-button transition-colors duration-200 hover:bg-[#CDA0CB] focus:bg-[#CDA0CB] cursor-pointer" tabindex="0" data-id="{{ $category->id }}" role="button">
                     <img class="mb-4 ml-5 mt-3 w-8" width="50" height="50" src="https://img.icons8.com/ios-filled/50/street-food--v2.png" alt="street-food--v2"/>
                         <h1 class="font-bold ml-5">{{ $category->name }}</h1>
                         <h2 class="text-xs ml-5 mb-3">{{ $category->registeredDishes->count() }} productos</h2>
@@ -135,116 +135,144 @@
             
     </div>
         
-            <div>
-                <div class="secondary-color h-auto">
-                    <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturacion</h2>    
-                <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
+    <div>
+    <div class="secondary-color h-auto">
+        <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>    
+        <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
 
-            <hr class="border-b-1 border-white mt-2" />
-            <div class="grid grid-cols-2">
-                <h2 class="text-white font-main font-semibold text-lg ml-5 mt-5">Total</h2>
-                <h3 id="total-amount" class="text-white text-xs font-semibold  ml-5 mt-6 text-center font-main">₡0</h3>
+        <hr class="border-b-1 border-white mt-2" />
+        <div class="grid grid-cols-2">
+            <h2 class="text-white font-main font-semibold text-lg ml-5 mt-5">Total</h2>
+            <h3 id="total-amount" class="text-white text-xs font-semibold ml-5 mt-6 text-center font-main">₡0</h3>
+        </div>
+
+        <form method="POST" action="{{ route('store.order') }}" id="order-form">
+            @csrf
+            <input type="hidden" name="addedItems" id="addedItemsInput" value='[]'>
+            <input type="hidden" name="payment_method_id" id="paymentMethodInput" value="">
+
+            <h2 class="text-gray-400 text-xs ml-5 mt-2 font-main">Método de Pago</h2>
+            <div class="flex justify-around p-4">
+                <div class="group">
+                    <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="1">
+                        <img class="w-8" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png" alt="banknotes"/>
+                    </button>
+                    <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
+                </div>
+
+                <div class="group">
+                    <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="2">
+                        <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png" alt="credit-card-front"/>
+                    </button>
+                    <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
+                </div>
+
+                <div class="group">
+                    <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="3">
+                        <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png" alt="mobile-payment"/>
+                    </button>
+                    <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
+                </div>
             </div>
 
-            
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    let billing = {};
+            <div class="flex justify-center">
+                <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
+                    <h1 class="font-main text-md">Terminar orden</h1>
+                </button>
+            </div>
+        </form>
 
-                    function updateQuantity(dishId, change) {
-                        if (!billing[dishId]) {
-                            const productElement = document.querySelector(`.product-item[data-dish-id='${dishId}']`);
-                            if (productElement) {
-                                const price = parseFloat(productElement.getAttribute('data-dish-price')) || 0;
+        @if (session('success'))
+            <div class="bg-green-500 text-white p-4 mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
 
-                                billing[dishId] = {
-                                    quantity: 0,
-                                    title: productElement.querySelector('h2').innerText,
-                                    price: price
-                                };
-                            }
-                        }
+    </div>
 
-                        billing[dishId].quantity += change;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let billing = {};
 
-                        if (billing[dishId].quantity < 0) {
-                            billing[dishId].quantity = 0;
-                        }
+            function updateQuantity(dishId, change) {
+                if (!billing[dishId]) {
+                    const productElement = document.querySelector(`.product-item[data-dish-id='${dishId}']`);
+                    if (productElement) {
+                        const price = parseFloat(productElement.getAttribute('data-dish-price')) || 0;
 
-                        renderBilling();
+                        billing[dishId] = {
+                            quantity: 0,
+                            title: productElement.querySelector('h2').innerText,
+                            price: price
+                        };
                     }
+                }
 
-                    function renderBilling() {
-                        const billingList = document.getElementById('billing-list');
-                        billingList.innerHTML = ''; 
+                billing[dishId].quantity += change;
 
-                        let total = 0;
+                if (billing[dishId].quantity < 0) {
+                    billing[dishId].quantity = 0;
+                }
 
-                        for (const id in billing) {
-                            if (billing[id].quantity > 0) {
-                                const itemTotal = billing[id].quantity * billing[id].price;
-                                total += itemTotal;
+                renderBilling();
+            }
 
-                                const itemDiv = document.createElement('div');
-                                itemDiv.className = 'grid grid-cols-3 text-white font-main text-xs gap-x-5 mb-2';
-                                itemDiv.innerHTML = `
-                                    <h2>${billing[id].quantity}</h2>
-                                    <h2>${billing[id].title}</h2>
-                                    <h2>₡${itemTotal.toFixed(2)}</h2>
-                                `;
-                                billingList.appendChild(itemDiv);
-                            }
-                        } 
+            function renderBilling() {
+                const billingList = document.getElementById('billing-list');
+                billingList.innerHTML = ''; 
 
-                        document.getElementById('total-amount').innerText = `₡${total.toFixed(2)}`;
+                let total = 0;
+
+                for (const id in billing) {
+                    if (billing[id].quantity > 0) {
+                        const itemTotal = billing[id].quantity * billing[id].price;
+                        total += itemTotal;
+
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'grid grid-cols-3 text-white font-main text-xs gap-x-5 mb-2';
+                        itemDiv.innerHTML = `
+                            <h2>${billing[id].quantity}</h2>
+                            <h2>${billing[id].title}</h2>
+                            <h2>₡${itemTotal.toFixed(2)}</h2>
+                        `;
+                        billingList.appendChild(itemDiv);
                     }
+                } 
 
-                    document.querySelectorAll('.product-item button:nth-of-type(1)').forEach(button => {
-                        button.addEventListener('click', function() {
-                            const dishId = this.closest('.product-item').dataset.dishId;
-                            updateQuantity(dishId, 1);
-                        });
-                    });
+                document.getElementById('total-amount').innerText = `₡${total.toFixed(2)}`;
+            }
 
-                    document.querySelectorAll('.product-item button:nth-of-type(2)').forEach(button => {
-                        button.addEventListener('click', function() {
-                            const dishId = this.closest('.product-item').dataset.dishId;
-                            updateQuantity(dishId, -1);
-                        });
-                    });
+            document.querySelectorAll('.product-item button:nth-of-type(1)').forEach(button => {
+                button.addEventListener('click', function() {
+                    const dishId = this.closest('.product-item').dataset.dishId;
+                    updateQuantity(dishId, 1);
                 });
-            </script>
+            });
 
-                <h2 class="text-gray-400 text-xs ml-5 mt-2 font-main">Método de Pago</h2>
-                <div class="flex justify-around p-4">
-                    <div class="group">
-                        <button class="w-12 h-8 border-2 border-white flex justify-center items-center bg-transparent hover:bg-white hover:bg-opacity-20 transition duration-200 focus:bg-white focus:bg-opacity-20 focus:outline-none">
-                        <img class="w-8" width="64" height="64" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png" alt="banknotes"/>
-                        </button>
-                        <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
-                    </div>
+            document.querySelectorAll('.product-item button:nth-of-type(2)').forEach(button => {
+                button.addEventListener('click', function() {
+                    const dishId = this.closest('.product-item').dataset.dishId;
+                    updateQuantity(dishId, -1);
+                });
+            });
 
-                    <div class="group">
-                        <button class="w-12 h-8 border-2 border-white flex justify-center items-center bg-transparent hover:bg-white hover:bg-opacity-20 transition duration-200 focus:bg-white focus:bg-opacity-20 focus:outline-none">
-                        <img class="w-8" width="50" height="50" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png" alt="credit-card-front"/>
-                        </button>
-                        <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
-                    </div>
+            document.querySelectorAll('.payment-method').forEach(button => {
+                button.addEventListener('click', function() {
+                    const methodId = this.dataset.value;
+                    document.getElementById('paymentMethodInput').value = methodId;
+                });
+            });
 
-                    <div class="group">
-                        <button class="w-12 h-8 border-2 border-white flex justify-center items-center bg-transparent hover:bg-white hover:bg-opacity-20 transition duration-200 focus:bg-white focus:bg-opacity-20 focus:outline-none">
-                        <img class="w-7" width="50" height="50" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png" alt="mobile-payment"/>
-                        </button>
-                        <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
-                    </div>
-                </div>
-
-                <div class="flex justify-center">
-                    <button class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
-                        <h1 class="font-main text-md">Terminar orden</h1>
-                    </button>
-                </div>
-            </div> 
+            document.getElementById('order-form').onsubmit = function() {
+                const billingArray = Object.keys(billing).map(id => ({
+                    id: id,
+                    quantity: billing[id].quantity
+                }));
+                document.getElementById('addedItemsInput').value = JSON.stringify(billingArray);
+            };
+        });
+    </script>
+</div>
         </div>
     </div>
 
