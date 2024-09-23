@@ -176,54 +176,49 @@ class AdminDishController extends Controller
 
     public function order(Request $request) 
     {
-    $searchTerm = $request->input('dish');
-    $categoryId = $request->input('category');
-    $subcategoryId = $request->input('subcategory');
+        $searchTerm = $request->input('dish');
+        $categoryId = $request->input('category');
+        $subcategoryId = $request->input('subcategory');
 
-    $query = RegisteredDish::with('category', 'subcategory'); 
+        $query = RegisteredDish::with('category', 'subcategory'); 
 
-    if (!empty($searchTerm)) {
-        $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
-    }
+        if (!empty($searchTerm)) {
+            $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
+        }
 
-    if (!empty($categoryId) && $categoryId != 0) {
-        $query->where('dishes_categories.id', $categoryId);
-    }
+        if (!empty($categoryId) && $categoryId != 0) {
+            $query->where('dishes_categories.id', $categoryId);
+        }
 
-    if (!empty($subcategoryId) && $subcategoryId != 0) {
-        $query->where('subcategories.id', $subcategoryId);
-    }
+        if (!empty($subcategoryId) && $subcategoryId != 0) {
+            $query->where('subcategories.id', $subcategoryId);
+        }
 
-    $dishes = $query->get();
-    
-    // Obtener las categorías
-    $categories = DishesCategory::with('subcategories')->get();
+        $dishes = $query->get();
+        
+        $categories = DishesCategory::with('subcategories')->get();
 
-    // Obtener subcategorías
-    $subcategories = !empty($categoryId) ? 
-        Subcategory::where('dishes_categories_id', $categoryId)->get() : 
-        Subcategory::all(); 
+        $subcategories = !empty($categoryId) ? 
+            Subcategory::where('dishes_categories_id', $categoryId)->get() : 
+            Subcategory::all(); 
 
-    // Procesar los platos agregados
-    $addedItems = $request->input('addedItems'); // Suponiendo que es un array de platos con cantidades
-    $total = 0;
+        $addedItems = $request->input('addedItems');
+        $total = 0;
 
-    if ($addedItems) {
-        foreach ($addedItems as $item) {
-            $dishId = $item['id'];
-            $quantity = $item['quantity'];
-            $dish = RegisteredDish::find($dishId);
+        if ($addedItems) {
+            foreach ($addedItems as $item) {
+                $dishId = $item['id'];
+                $quantity = $item['quantity'];
+                $dish = RegisteredDish::find($dishId);
 
-            if ($dish) {
-                $total += $dish->dish_price * $quantity;
+                if ($dish) {
+                    $total += $dish->dish_price * $quantity;
+                }
             }
         }
-    }
 
-    return view('factures.ordering', compact('dishes', 'total', 'categories', 'subcategories', 'addedItems'));
+        return view('factures.ordering', compact('dishes', 'total', 'categories', 'subcategories', 'addedItems'));
     }
-
-    
 
     /**
      * Remove the specified resource from storage.

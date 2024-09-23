@@ -30,7 +30,7 @@ Route::put('/dishes/{id}', [AdminDishController::class, 'update'])->name('dishes
 
 Route::delete('/dishes/{id}', [AdminDishController::class, 'destroy'])->name('dishes.destroy');
 
-/* SUPPLIERS */
+/* Supliers */
 
 Route::get('/suppliers/create', [AdminSupplierController::class, 'create'])->name('suppliers.create');
 
@@ -42,6 +42,7 @@ Route::delete('suppliers/{supplier}', [AdminSupplierController::class, 'destroy'
 
 Route::resource('suppliers', AdminSupplierController::class);
 
+/* Factures */
 
 Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
