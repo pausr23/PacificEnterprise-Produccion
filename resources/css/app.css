@@ -20,3 +20,16 @@ select:focus {
     background-color: #16161A;
     color: white; 
 }
+
+.products-container::-webkit-scrollbar {
+    width: 8px; 
+}
+
+.products-container::-webkit-scrollbar-thumb {
+    background-color: #ceccce; 
+    border-radius: 10px; 
+}
+
+.products-container::-webkit-scrollbar-track {
+    background: #323035; 
+}

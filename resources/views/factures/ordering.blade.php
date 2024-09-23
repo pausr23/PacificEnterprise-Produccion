@@ -5,15 +5,16 @@
 <div class="grid grid-cols-[20%,80%] pl-12">
 
     <div class="mr-8">
-        <img src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+        <img class="w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
-        <div class="grid pl-12 pt-12 text-white font-light text-sm font-main ">
-            <a class="py-1 mb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Punto de Venta</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Historial</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
-            <a class="pb-8 hover:bg-gray-600 focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
+        <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
+            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="">Punto de Venta</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Órdenes</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Historial</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
         </div>
         
     </div>
@@ -22,10 +23,10 @@
 
         <div>
             <div class="grid">
-                <input class="secondary-color rounded text-xs font-light h-8 text-left text-white w-[92.5%]" id="dish" type="text" name="dish" placeholder="Nombre de item">
+                <input class="pl-4 secondary-color rounded text-xs font-light h-8 text-left text-white w-[95%]" id="dish" type="text" name="dish" placeholder="Nombre de item">
             </div>
 
-            <div class="grid grid-cols-2 gap-2 mr-12 mt-10">
+            <div class="grid grid-cols-2 gap-3 mr-12 mt-8">
                 @foreach($categories as $category)
                     <div class="bg-[#FFFF9F] rounded-md category-button transition-colors duration-200 hover:bg-[#CDA0CB] focus:bg-[#CDA0CB] cursor-pointer" tabindex="0" data-id="{{ $category->id }}" role="button">
                     <img class="mb-4 ml-5 mt-3 w-8" width="50" height="50" src="https://img.icons8.com/ios-filled/50/street-food--v2.png" alt="street-food--v2"/>
@@ -35,13 +36,13 @@
                 @endforeach
             </div>
 
-        <select id="subcategory-select" class="text-white font-main my-6 font-semibold text-xl bg-transparent rounded p-2 focus:outline-none">
+        <select id="subcategory-select" class="text-white font-main my-5 font-semibold text-xl bg-transparent rounded p-2 focus:outline-none">
             <option value="" disabled selected>Subcategoría</option>
         </select>
 
-        <div class="grid grid-cols-4 gap-2 mr-12 products-container">
+        <div class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;"">
         @foreach($dishes as $dish)
-            <div class="product-item text-white font-main secondary-color rounded-lg pl-2" data-dish-id="{{ $dish->id }}" data-subcategory-id="{{ $dish->subcategories_id }}" data-dish-price="{{ $dish->dish_price }}" style="border-left: 6px solid #CDA0CB;">
+            <div class="product-item text-white font-main secondary-color rounded-lg pl-3" data-dish-id="{{ $dish->id }}" data-subcategory-id="{{ $dish->subcategories_id }}" data-dish-price="{{ $dish->dish_price }}" style="border-left: 6px solid #8FC08B;">
                 <div class="flex flex-col h-full justify-between">
                     <div>
                         <p class="text-xs font-extralight mt-2 mb-3">{{ $dish->subcategory->name }}</p>
@@ -64,7 +65,6 @@
                 </div>
             </div>
         @endforeach
-
         </div>
 
         <script>
@@ -73,12 +73,27 @@
                 const subcategorySelect = document.getElementById('subcategory-select');
                 const productsContainer = document.querySelector('.products-container');
 
-                document.querySelectorAll('.category-button').forEach(function (categoryDiv) {
+                const colors = ['#FFFF9F', '#CDA0CB', '#B0E1DF', '#F19DB4'];
+
+                document.querySelectorAll('.category-button').forEach(function (categoryDiv, index) {
+                    const color = colors[index % colors.length]; 
+                    categoryDiv.style.backgroundColor = color;
+
                     categoryDiv.addEventListener('click', function () {
                         const categoryId = this.getAttribute('data-id');
                         const selectedCategory = categories.find(category => category.id == categoryId);
 
-                        subcategorySelect.innerHTML = '<option value="" disabled selected>Subcategoría</option>';
+                        subcategorySelect.innerHTML = ''; 
+
+                        if (selectedCategory) {
+                            const categoryOption = document.createElement('option');
+                            categoryOption.value = "";
+                            categoryOption.textContent = selectedCategory.name;
+                            categoryOption.disabled = true;
+                            categoryOption.selected = true; 
+                            subcategorySelect.appendChild(categoryOption);
+                        }
+
                         if (selectedCategory && selectedCategory.subcategories.length > 0) {
                             selectedCategory.subcategories.forEach(function (subcategory) {
                                 const option = document.createElement('option');
@@ -93,7 +108,9 @@
                             subcategorySelect.appendChild(option);
                         }
 
-                        filterProductsBySubcategory(''); 
+                        applyBorderColorToProducts(color);
+
+                        filterProductsBySubcategory('');
                     });
                 });
 
@@ -101,6 +118,13 @@
                     const selectedSubcategoryId = this.value;
                     filterProductsBySubcategory(selectedSubcategoryId);
                 });
+
+                function applyBorderColorToProducts(color) {
+                    const products = document.querySelectorAll('.product-item');
+                    products.forEach(function (product) {
+                        product.style.borderLeft = `6px solid ${color}`;
+                    });
+                }
 
                 function filterProductsBySubcategory(subcategoryId) {
                     const products = document.querySelectorAll('.product-item');
@@ -136,144 +160,143 @@
     </div>
         
     <div>
-    <div class="secondary-color h-auto">
-        <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>    
-        <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
+        <div class="secondary-color h-auto">
+            <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>    
+            <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
+            <hr class="border-b-1 border-white mt-2" />
 
-        <hr class="border-b-1 border-white mt-2" />
-        <div class="grid grid-cols-2">
-            <h2 class="text-white font-main font-semibold text-lg ml-5 mt-5">Total</h2>
-            <h3 id="total-amount" class="text-white text-xs font-semibold ml-5 mt-6 text-center font-main">₡0</h3>
+            <div class="grid grid-cols-2">
+                <h2 class="text-white font-main font-semibold text-lg ml-5 mt-5">Total</h2>
+                <h3 id="total-amount" class="text-white text-xs font-semibold ml-5 mt-6 text-center font-main">₡0</h3>
+            </div>
+
+            <form method="POST" action="{{ route('store.order') }}" id="order-form">
+                @csrf
+                <input type="hidden" name="addedItems" id="addedItemsInput" value='[]'>
+                <input type="hidden" name="payment_method_id" id="paymentMethodInput" value="">
+
+                <h2 class="text-gray-400 text-xs ml-5 mt-2 font-main">Método de Pago</h2>
+                <div class="flex justify-around p-4">
+                    <div class="group">
+                        <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="1">
+                            <img class="w-8" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png" alt="banknotes"/>
+                        </button>
+                        <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
+                    </div>
+
+                    <div class="group">
+                        <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="2">
+                            <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png" alt="credit-card-front"/>
+                        </button>
+                        <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
+                    </div>
+
+                    <div class="group">
+                        <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="3">
+                            <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png" alt="mobile-payment"/>
+                        </button>
+                        <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
+                        <h1 class="font-main text-md">Terminar orden</h1>
+                    </button>
+                </div>
+            </form>
+
+            @if (session('success'))
+                <div class="bg-green-500 text-white p-4 mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
         </div>
 
-        <form method="POST" action="{{ route('store.order') }}" id="order-form">
-            @csrf
-            <input type="hidden" name="addedItems" id="addedItemsInput" value='[]'>
-            <input type="hidden" name="payment_method_id" id="paymentMethodInput" value="">
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let billing = {};
 
-            <h2 class="text-gray-400 text-xs ml-5 mt-2 font-main">Método de Pago</h2>
-            <div class="flex justify-around p-4">
-                <div class="group">
-                    <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="1">
-                        <img class="w-8" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png" alt="banknotes"/>
-                    </button>
-                    <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
-                </div>
+                function updateQuantity(dishId, change) {
+                    if (!billing[dishId]) {
+                        const productElement = document.querySelector(`.product-item[data-dish-id='${dishId}']`);
+                        if (productElement) {
+                            const price = parseFloat(productElement.getAttribute('data-dish-price')) || 0;
 
-                <div class="group">
-                    <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="2">
-                        <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png" alt="credit-card-front"/>
-                    </button>
-                    <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
-                </div>
+                            billing[dishId] = {
+                                quantity: 0,
+                                title: productElement.querySelector('h2').innerText,
+                                price: price
+                            };
+                        }
+                    }
 
-                <div class="group">
-                    <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="3">
-                        <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png" alt="mobile-payment"/>
-                    </button>
-                    <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
-                </div>
-            </div>
+                    billing[dishId].quantity += change;
 
-            <div class="flex justify-center">
-                <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
-                    <h1 class="font-main text-md">Terminar orden</h1>
-                </button>
-            </div>
-        </form>
+                    if (billing[dishId].quantity < 0) {
+                        billing[dishId].quantity = 0;
+                    }
 
-        @if (session('success'))
-            <div class="bg-green-500 text-white p-4 mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
+                    renderBilling();
+                }
 
+                function renderBilling() {
+                    const billingList = document.getElementById('billing-list');
+                    billingList.innerHTML = ''; 
+
+                    let total = 0;
+
+                    for (const id in billing) {
+                        if (billing[id].quantity > 0) {
+                            const itemTotal = billing[id].quantity * billing[id].price;
+                            total += itemTotal;
+
+                            const itemDiv = document.createElement('div');
+                            itemDiv.className = 'grid grid-cols-3 text-white font-main text-xs gap-x-5 mb-2';
+                            itemDiv.innerHTML = `
+                                <h2>${billing[id].quantity}</h2>
+                                <h2>${billing[id].title}</h2>
+                                <h2>₡${itemTotal.toFixed(2)}</h2>
+                            `;
+                            billingList.appendChild(itemDiv);
+                        }
+                    } 
+
+                    document.getElementById('total-amount').innerText = `₡${total.toFixed(2)}`;
+                }
+
+                document.querySelectorAll('.product-item button:nth-of-type(1)').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const dishId = this.closest('.product-item').dataset.dishId;
+                        updateQuantity(dishId, 1);
+                    });
+                });
+
+                document.querySelectorAll('.product-item button:nth-of-type(2)').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const dishId = this.closest('.product-item').dataset.dishId;
+                        updateQuantity(dishId, -1);
+                    });
+                });
+
+                document.querySelectorAll('.payment-method').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const methodId = this.dataset.value;
+                        document.getElementById('paymentMethodInput').value = methodId;
+                    });
+                });
+
+                document.getElementById('order-form').onsubmit = function() {
+                    const billingArray = Object.keys(billing).map(id => ({
+                        id: id,
+                        quantity: billing[id].quantity
+                    }));
+                    document.getElementById('addedItemsInput').value = JSON.stringify(billingArray);
+                };
+            });
+        </script>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let billing = {};
-
-            function updateQuantity(dishId, change) {
-                if (!billing[dishId]) {
-                    const productElement = document.querySelector(`.product-item[data-dish-id='${dishId}']`);
-                    if (productElement) {
-                        const price = parseFloat(productElement.getAttribute('data-dish-price')) || 0;
-
-                        billing[dishId] = {
-                            quantity: 0,
-                            title: productElement.querySelector('h2').innerText,
-                            price: price
-                        };
-                    }
-                }
-
-                billing[dishId].quantity += change;
-
-                if (billing[dishId].quantity < 0) {
-                    billing[dishId].quantity = 0;
-                }
-
-                renderBilling();
-            }
-
-            function renderBilling() {
-                const billingList = document.getElementById('billing-list');
-                billingList.innerHTML = ''; 
-
-                let total = 0;
-
-                for (const id in billing) {
-                    if (billing[id].quantity > 0) {
-                        const itemTotal = billing[id].quantity * billing[id].price;
-                        total += itemTotal;
-
-                        const itemDiv = document.createElement('div');
-                        itemDiv.className = 'grid grid-cols-3 text-white font-main text-xs gap-x-5 mb-2';
-                        itemDiv.innerHTML = `
-                            <h2>${billing[id].quantity}</h2>
-                            <h2>${billing[id].title}</h2>
-                            <h2>₡${itemTotal.toFixed(2)}</h2>
-                        `;
-                        billingList.appendChild(itemDiv);
-                    }
-                } 
-
-                document.getElementById('total-amount').innerText = `₡${total.toFixed(2)}`;
-            }
-
-            document.querySelectorAll('.product-item button:nth-of-type(1)').forEach(button => {
-                button.addEventListener('click', function() {
-                    const dishId = this.closest('.product-item').dataset.dishId;
-                    updateQuantity(dishId, 1);
-                });
-            });
-
-            document.querySelectorAll('.product-item button:nth-of-type(2)').forEach(button => {
-                button.addEventListener('click', function() {
-                    const dishId = this.closest('.product-item').dataset.dishId;
-                    updateQuantity(dishId, -1);
-                });
-            });
-
-            document.querySelectorAll('.payment-method').forEach(button => {
-                button.addEventListener('click', function() {
-                    const methodId = this.dataset.value;
-                    document.getElementById('paymentMethodInput').value = methodId;
-                });
-            });
-
-            document.getElementById('order-form').onsubmit = function() {
-                const billingArray = Object.keys(billing).map(id => ({
-                    id: id,
-                    quantity: billing[id].quantity
-                }));
-                document.getElementById('addedItemsInput').value = JSON.stringify(billingArray);
-            };
-        });
-    </script>
+        
 </div>
-        </div>
-    </div>
-
 @endsection
