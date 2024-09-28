@@ -15,5 +15,6 @@ class DetailTransactionRest extends Model
         'payment_method_id',
         'registered_dishes_price',
         'total',
+        'note',
     ];
 }

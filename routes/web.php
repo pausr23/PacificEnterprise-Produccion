@@ -47,3 +47,6 @@ Route::resource('suppliers', AdminSupplierController::class);
 Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
 Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
+
+Route::get('/factures/history', [AdminDishController::class, 'history'])->name('factures.history');
+

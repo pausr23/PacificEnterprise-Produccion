@@ -12,8 +12,8 @@
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.ordering') }}">Punto de Venta</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Órdenes</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
-            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('dishes.inventory') }}">Inventario</a>
+            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('dishes.index') }}">Admin</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
         </div>
         
@@ -21,20 +21,15 @@
 
     <div>
         <div class="grid grid-cols-[70%,20%]">
-            <form method="GET" action="{{ route('dishes.inventory') }}" class="grid grid-cols-3 ">
-
+            <form method="GET" action="{{ route('factures.history') }}">
                 <div class="grid">
-                    <label class="text-white font-main pb-2 font-bold" for="category">Filtrar por:</label>
-                    <select class="bg-rose-300 rounded h-8 text-center w-40 text-white" id="category" name="category">
+                    <label class="text-white font-main pb-2 font-bold" for="payment_method">Método de Pago:</label>
+                    <select class="secondary-color rounded h-8 text-center w-40 text-white" id="payment_method" name="payment_method" onchange="this.form.submit()">
                         <option value="0">Todo</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @foreach ($paymentMethods as $method)
+                            <option value="{{ $method->id }}">{{ $method->name }}</option>
                         @endforeach
                     </select>
-                </div>
-
-                <div class="grid content-end">
-                    <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 w-28 rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
                 </div>
             </form>
 
@@ -46,22 +41,24 @@
                 <table class="w-full rounded-lg">
                     <thead class="rounded-lg text-white font-main font-bold secondary-color">
                         <tr>
-                            <th scope="col" class="rounded-l-lg px-12 py-3">Nombre</th>
-                            <th scope="col" class="px-12 py-3">Categoria</th>
-                            <th scope="col" class="px-12 py-3">Subcategoria</th>
-                            <th scope="col" class="px-12 py-3">Precio Indiviual</th>
-                            <th scope="col" class="px-12 py-3 rounded-r-lg">Unidades</th>
+                            <th scope="col" class="rounded-l-lg px-12 py-3">ID</th>
+                            <th scope="col" class="px-12 py-3">Total</th>
+                            <th scope="col" class="px-12 py-3">Tipo de pago</th>
+                            <th scope="col" class="px-12 py-3">Notas</th>
+                            <th scope="col" class="rounded-r-lg px-12 py-3">Accion</th>
                         </tr>
                     </thead>
                     
                     <tbody>
-                        @foreach ($dishes as $dish)
+                        @foreach ($orders as $order)
                             <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10">
-                                <td scope="col" class="px-12 py-3">{{ $dish->title }}</td>
-                                <td>{{ $dish->category }}</td>
-                                <td>{{ $dish->subcategory }}</td>
-                                <td>{{ $dish->dish_price }}</td>
-                                <td>{{ $dish->units }}</td>
+                                <td>{{ $order->registered_dishes_id }}</td>
+                                <td>{{ $order->total }}</td>
+                                <td>{{ $order->payment_method_name }}</td>
+                                <td>{{ $order->note }}</td>
+                                <td class="py-6">
+                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="">Ver</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

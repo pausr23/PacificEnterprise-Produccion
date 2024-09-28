@@ -226,6 +226,7 @@ class AdminDishController extends Controller
 {
     $addedItems = json_decode($request->input('addedItems'), true);
     $paymentMethodId = $request->input('payment_method_id');
+    $note = $request->input('note', '');
 
     foreach ($addedItems as $item) {
         $dish = RegisteredDish::find($item['id']); 
@@ -237,7 +238,8 @@ class AdminDishController extends Controller
                 'payment_method_id' => $paymentMethodId,
                 'registered_dishes_price' => $dish->dish_price, 
                 'quantity' => $item['quantity'],
-                'total' => $dish->dish_price * $item['quantity'], 
+                'total' => $dish->dish_price * $item['quantity'],
+                'note' => $note, 
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -246,6 +248,25 @@ class AdminDishController extends Controller
 
     return redirect()->route('factures.ordering')->with('success', 'Orden guardada exitosamente!');
 }
+
+    public function history(Request $request)
+    {
+        $paymentMethodId = $request->input('payment_method');
+ 
+        $query = DB::table('details_transaction_rest')
+            ->join('payment_methods', 'details_transaction_rest.payment_method_id', '=', 'payment_methods.id')
+            ->select('details_transaction_rest.*', 'payment_methods.name as payment_method_name'); 
+
+        if (!empty($paymentMethodId) && $paymentMethodId != 0) {
+            $query->where('details_transaction_rest.payment_method_id', $paymentMethodId);
+        }
+
+        $orders = $query->get();
+        $paymentMethods = DB::table('payment_methods')->get();
+
+        return view('factures.history', compact('orders', 'paymentMethods'));
+    }
+
 
     /**
      * Remove the specified resource from storage.
