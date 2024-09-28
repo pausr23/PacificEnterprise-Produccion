@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('registered_dishes_price');
             $table->integer('quantity');
             $table->decimal('total');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

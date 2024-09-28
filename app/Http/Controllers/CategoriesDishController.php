@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+
 
 use App\Models\DishesCategory;
 
@@ -57,9 +59,13 @@ class CategoriesDishController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        // Obtener todas las categorías con sus subcategorías
+        $categories = DishesCategory::with('subcategories')->get();
+
+        // Devolver los datos en formato JSON
+        return response()->json($categories);
     }
 
     /**
