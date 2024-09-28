@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminDishController;
 use App\Http\Controllers\AdminSupplierController;
 
@@ -15,6 +16,9 @@ use App\Http\Controllers\AdminSupplierController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/login', [UsersController::class, 'index'])->name('admin.login');
+
 
 Route::get('', [AdminDishController::class, 'index'])->name('dishes.index');
 
