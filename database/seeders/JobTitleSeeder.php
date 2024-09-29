@@ -16,8 +16,6 @@ class JobTitleSeeder extends Seeder
     {
         //
         JobTitle::create(['title'=>'Administrador']);
-        JobTitle::create(['title'=>'Cajero']);
-        JobTitle::create(['title'=>'Cocinero']);
-        JobTitle::create(['title'=>'Regular']);
+        JobTitle::create(['title'=>'Empleado']);
     }
 }
