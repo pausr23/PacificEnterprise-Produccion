@@ -17,10 +17,30 @@ use App\Http\Controllers\AdminSupplierController;
 |
 */
 
-Route::get('/login', [UsersController::class, 'index'])->name('admin.login');
+/* Admin/Users */
+
+Route::resource('admin/users', UsersController::class);
+
+Route::get('', [UsersController::class, 'index'])->name('admin.login');
+
+Route::get('/admin/profile', [UsersController::class, 'profile'])->name('admin.profile');
+
+Route::get('/admin/users', [UsersController::class, 'users'])->name('admin.users');
+
+Route::get('/admin/create', [UsersController::class, 'create'])->name('admin.create');
+
+Route::post('/admin/store', [UsersController::class, 'store'])->name('admin.store');
+
+Route::get('/admin/{id}/edit', [UsersController::class, 'edit'])->name('admin.edit');
+
+Route::put('/admin/users/{id}', [UsersController::class, 'update'])->name('admin.update');
+
+Route::delete('/admin/{id}', [UsersController::class, 'destroy'])->name('admin.destroy');
 
 
-Route::get('', [AdminDishController::class, 'index'])->name('dishes.index');
+
+
+Route::get('dishes/index', [AdminDishController::class, 'index'])->name('dishes.index');
 
 Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 

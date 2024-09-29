@@ -18,10 +18,17 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'job_titles_id',  
         'name',
+        'username',       
         'email',
-        'password',
+        'password', 
     ];
+
+    public function jobTitle()
+    {
+        return $this->belongsTo(JobTitle::class, 'job_titles_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

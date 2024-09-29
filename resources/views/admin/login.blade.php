@@ -12,7 +12,7 @@
                     <input class="w-72 text-xl text-[#CDA0CB] mb-10 bg-transparent border-b-2 border-[#CDA0CB] placeholder:text-[#bc96ba] focus:outline-none" placeholder="Username" type="text">
                     <input class=" text-xl text-[#CDA0CB] mb-12 bg-transparent border-b-2 border-[#CDA0CB] placeholder:text-[#bc96ba] focus:outline-none" placeholder="Password" type="text">
 
-                    <button class="hover:bg-[#bc96ba] active:bg-[#b080a8] bg-[#CDA0CB] w-[60%] justify-self-center text-lg font-main font-semibold  py-2 px-4 rounded-2xl">Log in</button>
+                    <a href="{{ route('dishes.index') }}" class="text-center hover:bg-[#bc96ba] active:bg-[#b080a8] bg-[#CDA0CB] w-[60%] justify-self-center text-lg font-main font-semibold  py-2 px-4 rounded-2xl">Log in</a>
 
                     <a class="text-white text-center mt-5 text-sm" href="">Forgot password?</a>
                 </div>
