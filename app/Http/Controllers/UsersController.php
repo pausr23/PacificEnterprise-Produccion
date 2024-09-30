@@ -25,20 +25,23 @@ class UsersController extends Controller
     }
 
     public function login(Request $request)
-    {
+{
+    $request->validate([
+        'username' => 'required|string',
+        'password' => 'required|string',
+    ]);
 
-        $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-
-            return redirect()->route('dishes.index')->with('success', '¡Has iniciado sesión correctamente!');
+    if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        // Redirigir según el job_titles_id
+        if (Auth::user()->job_titles_id == 1) {
+            return redirect()->route('dishes.index')->with('success', '¡Has iniciado sesión como Administrador!');
+        } elseif (Auth::user()->job_titles_id == 2) {
+            return redirect()->route('factures.ordering')->with('success', '¡Has iniciado sesión como Empleado!');
         }
-
-        return redirect()->route('admin.login')->withErrors(['login_error' => 'Credenciales incorrectas.']);
     }
+
+    return redirect()->route('admin.login')->withErrors(['login_error' => 'Credenciales incorrectas.']);
+}
 
     public function profile()
     {
