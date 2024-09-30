@@ -17,8 +17,8 @@
             <a href="{{ route('admin.profile') }}" class="flex cursor-pointer">
                 <img class="w-16" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
                 <div class="mt-2 ml-2">
-                    <p class="text-lg font-semibold">Nombre</p>
-                    <p>User</p>
+                    <p class="text-lg font-semibold">{{ auth()->user()->name }}</p>
+                    <p>@ {{ auth()->user()->username }}</p>
                 </div>
             </a>
         </div>

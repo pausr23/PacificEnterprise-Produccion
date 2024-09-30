@@ -5,16 +5,30 @@
 
     <img class="w-80 ml-10 mb-10" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
-        <div class="grid m-20 rounded-xl secondary-color w-[50%]">
+        <div class="grid m-20 rounded-xl secondary-color w-[60%]">
             <div class="grid grid-cols-[20%,80%] p-8">
                 <img class="rounded-full bg-white" src="https://img.icons8.com/?size=100&id=HNn3lC0m5uKR&format=png&color=000000" alt="">
                 <div class="ml-10 grid grid-cols-2 items-start">
                     <div>
-                        <h1 class="text-3xl mb-5 font-bold text-white font-main">Hola, Maria</h1>
-                        <p class="text-lg mb-5 font-semibold text-white font-main">Puesto: Administrador</p>
-                        <p class="text-lg text-white font-main">@mari123</p>
+                    @if(auth()->check())
+                        <h1 class="text-3xl mb-5 font-bold text-white font-main">
+                            Hola, {{ auth()->user()->name }}
+                        </h1>
+                        <p class="text-lg mb-5 font-semibold text-white font-main">
+                            Puesto: {{ auth()->user()->jobTitle->title ?? 'No especificado' }}
+                        </p>
+                        <p class="text-lg text-white font-main">
+                            @ {{ auth()->user()->username }}
+                        </p>
+                    @else
+                        <h1 class="text-3xl mb-5 font-bold text-white font-main">
+                            Hola, Invitado
+                        </h1>
+                    @endif
                     </div>
                     <a class="font-main justify-self-end text-white py-2 px-4 w-[50%] bg-pink-500 hover:bg-pink-700  font-medium rounded-lg text-center" href="{{ route('admin.users') }}">Administrador de Usuarios</a>
+
+                    
                 </div>
             </div>
         </div>

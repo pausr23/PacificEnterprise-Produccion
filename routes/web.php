@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminSupplierController;
 
 /* Admin/Users */
 
+
 Route::middleware('auth')->group(function () {
     Route::resource('admin/users', UsersController::class);
 
