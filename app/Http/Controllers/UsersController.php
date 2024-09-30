@@ -76,6 +76,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6',
+            'job_titles_id' => 'required|exists:job_titles,id',
+        ]);
+
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
@@ -87,12 +95,15 @@ class UsersController extends Controller
         return redirect()->route('admin.users')->with('success', 'Usuario creado correctamente.');
     }
 
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        
+        $user = User::with('jobTitle')->findOrFail($id);  
+
+        return view('admin.seeUser', compact('user'));
     }
 
     /**
@@ -111,28 +122,29 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'job_titles_id' => 'required|exists:job_titles,id',
             'password' => 'nullable|string|min:6',
         ]);
-    
+
         $user = User::findOrFail($id);
-    
+
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
         $user->job_titles_id = $request->job_titles_id;
-    
+
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
-    
+
         $user->save();
-    
-        return redirect()->route('admin.users')->with('success', 'Usuario actualizado correctamente.');
+
+        return redirect()->route('admin.show', $user->id)->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**

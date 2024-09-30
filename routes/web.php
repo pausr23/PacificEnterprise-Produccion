@@ -37,7 +37,7 @@ Route::put('/admin/users/{id}', [UsersController::class, 'update'])->name('admin
 
 Route::delete('/admin/{id}', [UsersController::class, 'destroy'])->name('admin.destroy');
 
-
+Route::get('/admin/users/{id}', [UsersController::class, 'show'])->name('admin.show');
 
 
 Route::get('dishes/index', [AdminDishController::class, 'index'])->name('dishes.index');
