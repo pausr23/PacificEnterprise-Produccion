@@ -26,14 +26,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
     Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
-    
+
     Route::get('/factures/history', [AdminDishController::class, 'history'])->name('factures.history');
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     Route::resource('admin/users', UsersController::class);
-
-    Route::get('/admin/profile', [UsersController::class, 'profile'])->name('admin.profile');
 
     Route::get('/admin/users', [UsersController::class, 'users'])->name('admin.users');
 

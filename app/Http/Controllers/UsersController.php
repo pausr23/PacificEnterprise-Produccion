@@ -34,9 +34,9 @@ class UsersController extends Controller
     if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
         // Redirigir según el job_titles_id
         if (Auth::user()->job_titles_id == 1) {
-            return redirect()->route('dishes.index')->with('success', '¡Has iniciado sesión como Administrador!');
+            return redirect()->route('dishes.index');
         } elseif (Auth::user()->job_titles_id == 2) {
-            return redirect()->route('factures.ordering')->with('success', '¡Has iniciado sesión como Empleado!');
+            return redirect()->route('factures.ordering');
         }
     }
 

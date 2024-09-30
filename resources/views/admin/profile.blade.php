@@ -26,15 +26,16 @@
                         </h1>
                     @endif
                     </div>
-                    <a class="font-main justify-self-end text-white py-2 px-4 w-[50%] bg-pink-500 hover:bg-pink-700  font-medium rounded-lg text-center" href="{{ route('admin.users') }}">Administrador de Usuarios</a>
-
+                    @if(Auth::check() && Auth::user()->job_titles_id == 1)
+                        <a class="font-main justify-self-end text-white py-2 px-4 w-[50%] bg-pink-500 hover:bg-pink-700  font-medium rounded-lg text-center" href="{{ route('admin.users') }}">Administrador de Usuarios</a>
+                    @endif
                     
                 </div>
             </div>
         </div>
 
         <div class="grid grid-cols-2 ml-24 w-[20%] gap-x-4">
-            <a class=" p-6 secondary-color text-white font-main font-semibold hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}"> Volver</a>
+            <a class=" p-6 secondary-color text-white font-main font-semibold hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-5 py-2.5 text-center" href="{{ route('factures.ordering') }}"> Volver</a>
 
             <form action="{{ route('admin.logout') }}" method="POST" class="inline">
                 @csrf
