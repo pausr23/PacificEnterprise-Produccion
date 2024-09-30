@@ -21,7 +21,14 @@
 
         <div class="grid grid-cols-2 ml-24 w-[20%] gap-x-4">
             <a class=" p-6 secondary-color text-white font-main font-semibold hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}"> Volver</a>
-            <a class="p-6 secondary-color text-white font-main font-semibold hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-5 py-2.5 text-center" href="{{ route('admin.login') }}"> Cerrar Sesion</a>
-        </div>
 
+            <form action="{{ route('admin.logout') }}" method="POST" class="inline">
+                @csrf
+                <button type="submit" class="p-6 secondary-color text-white font-main font-semibold hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-5 py-2.5 text-center">
+                    Cerrar Sesion
+                </button>
+            </form>
+
+        </div>
+        
 @endsection

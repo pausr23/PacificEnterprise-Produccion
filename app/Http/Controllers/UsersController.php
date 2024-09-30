@@ -24,6 +24,24 @@ class UsersController extends Controller
         return view('admin.login');
     }
 
+    public function login(Request $request)
+    {
+        // Validar los datos del formulario
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        // Intentar autenticar al usuario
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            // Si la autenticación es exitosa, redirigir a la página de usuarios
+            return redirect()->route('dishes.index')->with('success', '¡Has iniciado sesión correctamente!');
+        }
+
+        // Si la autenticación falla, redirigir de nuevo con un mensaje de error
+        return redirect()->route('admin.login')->withErrors(['login_error' => 'Credenciales incorrectas.']);
+    }
+
     public function profile()
     {
         //
