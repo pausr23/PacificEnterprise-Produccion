@@ -67,6 +67,7 @@
                     </div>
 
                     <div class="flex items-center mb-4">
+                        
                         <button class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center" onclick="updateQuantity('{{ $dish->id }}', 1)">
                             <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/FFFFFF/plus-math.png" alt="plus-math"/>
                         </button>

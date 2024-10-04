@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('details_transaction_rest', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_number');
             $table->foreignId('dishes_categories_id')->constrained();
             $table->foreignId('registered_dishes_id')->constrained();
             $table->foreignId('payment_method_id')->constrained('payment_methods');

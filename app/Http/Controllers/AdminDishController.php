@@ -228,6 +228,8 @@ class AdminDishController extends Controller
     $paymentMethodId = $request->input('payment_method_id');
     $note = $request->input('note', '');
 
+    $invoiceNumber = uniqid('');  
+
     foreach ($addedItems as $item) {
         $dish = RegisteredDish::find($item['id']); 
 
@@ -239,7 +241,8 @@ class AdminDishController extends Controller
                 'registered_dishes_price' => $dish->dish_price, 
                 'quantity' => $item['quantity'],
                 'total' => $dish->dish_price * $item['quantity'],
-                'note' => $note, 
+                'note' => $note,
+                'invoice_number' => $invoiceNumber, 
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
