@@ -42,9 +42,7 @@
                     </select>
                 </div>
             </form>
-
         </div>
-
 
         <div class="w-[90%] grid gap-16">
             <div class="py-10 rounded-lg">
@@ -52,9 +50,9 @@
                     <thead class="rounded-lg text-white font-main font-bold secondary-color">
                         <tr>
                             <th scope="col" class="rounded-l-lg px-12 py-3">ID</th>
-                            <th scope="col" class="px-12 py-3">Total</th>
-                            <th scope="col" class="px-12 py-3">Tipo de pago</th>
+                            <th scope="col" class="px-12 py-3">Método de pago</th>
                             <th scope="col" class="px-12 py-3">Notas</th>
+                            <th scope="col" class="px-12 py-3">Total</th>
                             <th scope="col" class="rounded-r-lg px-12 py-3">Accion</th>
                         </tr>
                     </thead>
@@ -62,10 +60,10 @@
                     <tbody>
                         @foreach ($orders as $order)
                             <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10">
-                                <td>{{ $order->registered_dishes_id }}</td>
-                                <td>{{ $order->total }}</td>
+                                <td>{{ $order->invoice_number }}</td>
                                 <td>{{ $order->payment_method_name }}</td>
                                 <td>{{ $order->note }}</td>
+                                <td>{{ $order->total }}</td>
                                 <td class="py-6">
                                     <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="">Ver</a>
                                 </td>
@@ -79,4 +77,4 @@
     </div>
 </div>
        
-@endsection
+@endsection 

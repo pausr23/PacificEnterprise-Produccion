@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('details_transaction_rest', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('invoice_number');
-            $table->foreignId('dishes_categories_id')->constrained();
-            $table->foreignId('registered_dishes_id')->constrained();
+        Schema::create('invoices', function (Blueprint $table) {
+            $table->id(); 
+            $table->bigInteger('invoice_number')->unique();  
             $table->foreignId('payment_method_id')->constrained('payment_methods');
-            $table->decimal('registered_dishes_price');
-            $table->integer('quantity');
-            $table->decimal('total');
+            $table->decimal('total', 8, 2);
             $table->string('note')->nullable();
             $table->timestamps();
         });
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('details_transaction_rest');
+        Schema::dropIfExists('invoices');
     }
 };
