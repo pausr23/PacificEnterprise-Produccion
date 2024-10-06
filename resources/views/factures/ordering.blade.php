@@ -11,10 +11,21 @@
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
             <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="">Punto de Venta</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Órdenes</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Historial</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial</a>
+
+            @if(Auth::check() && Auth::user()->job_titles_id == 1)
+                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
+                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
+            @endif
+            
+            <a class="flex cursor-pointer" href="{{ route('admin.profile') }}" >
+                <img class="w-16" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
+                <div class="mt-2 ml-2">
+                    <p class="text-lg font-semibold">{{ auth()->user()->name }}</p>
+                    <p>@ {{ auth()->user()->username }}</p>
+                </div>
+            </a>
         </div>
         
     </div>
@@ -23,7 +34,7 @@
 
         <div>
             <div class="grid">
-                <input class="pl-4 secondary-color rounded text-xs font-light h-8 text-left text-white w-[95%]" id="dish" type="text" name="dish" placeholder="Nombre de item">
+                <input class="pl-4 secondary-color rounded text-xs font-light h-8 text-left text-white w-[95%]" id="dish" type="text" name="dish" placeholder="Nombre de item" oninput="filterDishes()" />
             </div>
 
             <div class="grid grid-cols-2 gap-3 mr-12 mt-8">
@@ -40,9 +51,14 @@
             <option value="" disabled selected>Subcategoría</option>
         </select>
 
-        <div class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;"">
+        <div id="dishes-list" class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;"">
         @foreach($dishes as $dish)
-            <div class="product-item text-white font-main secondary-color rounded-lg pl-3" data-dish-id="{{ $dish->id }}" data-subcategory-id="{{ $dish->subcategories_id }}" data-dish-price="{{ $dish->dish_price }}" style="border-left: 6px solid #8FC08B;">
+        <div class="product-item text-white font-main secondary-color rounded-lg pl-3" 
+             data-dish-id="{{ $dish->id }}" 
+             data-subcategory-id="{{ $dish->subcategories_id }}" 
+             data-dish-price="{{ $dish->dish_price }}" 
+             data-dish-title="{{ strtolower($dish->title) }}" 
+             style="border-left: 6px solid #8FC08B;">
                 <div class="flex flex-col h-full justify-between">
                     <div>
                         <p class="text-xs font-extralight mt-2 mb-3">{{ $dish->subcategory->name }}</p>
@@ -51,6 +67,7 @@
                     </div>
 
                     <div class="flex items-center mb-4">
+                        
                         <button class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center" onclick="updateQuantity('{{ $dish->id }}', 1)">
                             <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/FFFFFF/plus-math.png" alt="plus-math"/>
                         </button>
@@ -66,6 +83,8 @@
             </div>
         @endforeach
         </div>
+
+        <script src="{{ asset('js/filterDishes.js') }}"></script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -197,6 +216,11 @@
                         </button>
                         <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
                     </div>
+                </div>
+
+                <div class="grid grid-cols-1 mb-2">
+                    <label class="text-white font-main font-semibold  ml-5 mt-5 text-base mb-2">Notas</label>
+                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-80 mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                 </div>
 
                 <div class="flex justify-center">

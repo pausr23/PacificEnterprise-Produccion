@@ -223,29 +223,77 @@ class AdminDishController extends Controller
     }
 
     public function storeOrder(Request $request)
-{
-    $addedItems = json_decode($request->input('addedItems'), true);
-    $paymentMethodId = $request->input('payment_method_id');
-
-    foreach ($addedItems as $item) {
-        $dish = RegisteredDish::find($item['id']); 
-
-        if ($dish) {
-            DB::table('details_transaction_rest')->insert([
-                'dishes_categories_id' => $dish->dishes_categories_id,
-                'registered_dishes_id' => $item['id'],
-                'payment_method_id' => $paymentMethodId,
-                'registered_dishes_price' => $dish->dish_price, 
-                'quantity' => $item['quantity'],
-                'total' => $dish->dish_price * $item['quantity'], 
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+    {
+        $addedItems = json_decode($request->input('addedItems'), true);
+        $paymentMethodId = $request->input('payment_method_id');
+        $note = $request->input('note', '');
+    
+        $total = 0;
+    
+        foreach ($addedItems as $item) {
+            $dish = RegisteredDish::find($item['id']); 
+    
+            if ($dish) {
+                $total += $dish->dish_price * $item['quantity'];
+            }
         }
+    
+        $lastInvoice = DB::table('invoices')->orderBy('invoice_number', 'desc')->first();
+        $invoiceNumber = $lastInvoice ? $lastInvoice->invoice_number + 1 : 1;
+    
+        $invoiceId = DB::table('invoices')->insertGetId([
+            'invoice_number' => $invoiceNumber,
+            'payment_method_id' => $paymentMethodId,
+            'total' => $total,
+            'note' => $note,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    
+        foreach ($addedItems as $item) {
+            $dish = RegisteredDish::find($item['id']);
+    
+            if ($dish) {
+                DB::table('details_transaction_rest')->insert([
+                    'invoice_number' => $invoiceNumber, 
+                    'dishes_categories_id' => $dish->dishes_categories_id,
+                    'registered_dishes_id' => $item['id'],
+                    'payment_method_id' => $paymentMethodId,
+                    'registered_dishes_price' => $dish->dish_price, 
+                    'quantity' => $item['quantity'],
+                    'total' => $dish->dish_price * $item['quantity'],
+                    'note' => $note,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+    
+        return redirect()->route('factures.ordering')->with('success', 'Orden guardada exitosamente!');
     }
+    
 
-    return redirect()->route('factures.ordering')->with('success', 'Orden guardada exitosamente!');
-}
+    public function history(Request $request)
+    {
+        $paymentMethodId = $request->input('payment_method');
+    
+        $query = DB::table('invoices')
+            ->join('payment_methods', 'invoices.payment_method_id', '=', 'payment_methods.id')
+            ->select('invoices.*', 'payment_methods.name as payment_method_name')
+            ->orderBy('invoices.created_at', 'desc'); 
+    
+        if (!empty($paymentMethodId) && $paymentMethodId != 0) {
+            $query->where('invoices.payment_method_id', $paymentMethodId);
+        }
+    
+        $orders = $query->get();
+        $paymentMethods = DB::table('payment_methods')->get();
+
+        return view('factures.history', compact('orders', 'paymentMethods'));
+    }
+    
+    
+
 
     /**
      * Remove the specified resource from storage.

@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminDishController;
 use App\Http\Controllers\AdminSupplierController;
 
@@ -16,34 +18,69 @@ use App\Http\Controllers\AdminSupplierController;
 |
 */
 
-Route::get('', [AdminDishController::class, 'index'])->name('dishes.index');
+/* Admin/Users */
 
-Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/profile', [UsersController::class, 'profile'])->name('admin.profile');
+    
+    Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
-Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
+    Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
 
-Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
+    Route::get('/factures/history', [AdminDishController::class, 'history'])->name('factures.history');
+});
 
-Route::get('/dishes/{id}/edit', [AdminDishController::class, 'edit'])->name('dishes.edit');
+Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
+    Route::resource('admin/users', UsersController::class);
 
-Route::put('/dishes/{id}', [AdminDishController::class, 'update'])->name('dishes.update');
+    Route::get('/admin/users', [UsersController::class, 'users'])->name('admin.users');
 
-Route::delete('/dishes/{id}', [AdminDishController::class, 'destroy'])->name('dishes.destroy');
+    Route::get('/admin/create', [UsersController::class, 'create'])->name('admin.create');
 
-/* Supliers */
+    Route::post('/admin/store', [UsersController::class, 'store'])->name('admin.store');
 
-Route::get('/suppliers/create', [AdminSupplierController::class, 'create'])->name('suppliers.create');
+    Route::get('/admin/{id}/edit', [UsersController::class, 'edit'])->name('admin.edit');
 
-Route::get('/suppliers/index', [AdminSupplierController::class, 'index'])->name('suppliers.index');
+    Route::put('/admin/users/{id}', [UsersController::class, 'update'])->name('admin.update');
 
-Route::post('/suppliers', [AdminSupplierController::class, 'store'])->name('suppliers.store');
+    Route::delete('/admin/{id}', [UsersController::class, 'destroy'])->name('admin.destroy');
 
-Route::delete('suppliers/{supplier}', [AdminSupplierController::class, 'destroy'])->name('suppliers.destroy');
+    Route::get('/admin/users/{id}', [UsersController::class, 'show'])->name('admin.show');
 
-Route::resource('suppliers', AdminSupplierController::class);
+    /* Admin/Dishes */
+    Route::get('dishes/index', [AdminDishController::class, 'index'])->name('dishes.index');
 
-/* Factures */
+    Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
-Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
+    Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
 
-Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
+    Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
+
+    Route::get('/dishes/{id}/edit', [AdminDishController::class, 'edit'])->name('dishes.edit');
+
+    Route::put('/dishes/{id}', [AdminDishController::class, 'update'])->name('dishes.update');
+
+    Route::delete('/dishes/{id}', [AdminDishController::class, 'destroy'])->name('dishes.destroy');
+
+    /* Suppliers */
+    Route::get('/suppliers/create', [AdminSupplierController::class, 'create'])->name('suppliers.create');
+
+    Route::get('/suppliers/index', [AdminSupplierController::class, 'index'])->name('suppliers.index');
+
+    Route::post('/suppliers', [AdminSupplierController::class, 'store'])->name('suppliers.store');
+
+    Route::delete('suppliers/{supplier}', [AdminSupplierController::class, 'destroy'])->name('suppliers.destroy');
+
+    Route::resource('suppliers', AdminSupplierController::class);
+
+});
+
+
+
+
+// Ruta de inicio de sesión
+Route::get('', [UsersController::class, 'index'])->name('admin.login');
+Route::post('/login', [UsersController::class, 'login'])->name('admin.login.submit');
+
+// Ruta de cierre de sesión
+Route::post('/logout', function () {Auth::logout(); return redirect()->route('admin.login');})->name('admin.logout');
