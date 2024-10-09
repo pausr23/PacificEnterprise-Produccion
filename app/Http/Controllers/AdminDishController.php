@@ -296,23 +296,6 @@ class AdminDishController extends Controller
     
         return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath'));
     }
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function history(Request $request)
     {
@@ -332,7 +315,6 @@ class AdminDishController extends Controller
 
         return view('factures.history', compact('orders', 'paymentMethods'));
     }
-    
 
     /**
      * Remove the specified resource from storage.
