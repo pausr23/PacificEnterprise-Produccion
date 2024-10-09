@@ -9,12 +9,12 @@
 
         <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
-            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="">Punto de Venta</a>
+            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Órdenes</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial</a>
 
             @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
+                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
                 <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
                 <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
             @endif
@@ -189,12 +189,27 @@
                 <h3 id="total-amount" class="text-white text-xs font-semibold ml-5 mt-6 text-center font-main">₡0</h3>
             </div>
 
-            <form method="POST" action="{{ route('store.order') }}" id="order-form">
+            <div class="grid grid-cols-2 mt-5">
+                <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Monto recibido:</label>
+                <input id="customer-payment" type="number" class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-36" placeholder="Monto" />
+            </div>
+
+            <div class="grid grid-cols-2 mt-5">
+                <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Cambio:</label>
+                <h3 id="change-amount" class="text-white text-xs font-semibold ml-5 mt-2 text-center font-main">₡0</h3>
+            </div>
+
+            <form method="POST" action="{{ route('factures.invoice') }}" id="order-form">
                 @csrf
                 <input type="hidden" name="addedItems" id="addedItemsInput" value='[]'>
                 <input type="hidden" name="payment_method_id" id="paymentMethodInput" value="">
 
-                <h2 class="text-gray-400 text-xs ml-5 mt-2 font-main">Método de Pago</h2>
+                <div class="grid grid-cols-1 mb-2">
+                    <label class="text-gray-400 text-sm ml-5 mt-2 font-main mt-5 mb-5">Notas:</label>
+                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-80 mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
+                </div>
+
+                <h2 class="text-gray-400 text-sm ml-5 mt-2 font-main mt-5">Método de Pago:</h2>
                 <div class="flex justify-around p-4">
                     <div class="group">
                         <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="1">
@@ -218,11 +233,6 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 mb-2">
-                    <label class="text-white font-main font-semibold  ml-5 mt-5 text-base mb-2">Notas</label>
-                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-80 mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
-                </div>
-
                 <div class="flex justify-center">
                     <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
                         <h1 class="font-main text-md">Terminar orden</h1>
@@ -241,6 +251,22 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 let billing = {};
+
+
+                function updateChange() {
+                const total = parseFloat(document.getElementById('total-amount').innerText.replace('₡', '')) || 0;
+                const payment = parseFloat(document.getElementById('customer-payment').value) || 0;
+                const change = payment - total;
+
+                const changeElement = document.getElementById('change-amount');
+                changeElement.innerText = `₡${change.toFixed(2)}`;
+
+                if (change < 0) {
+                    changeElement.innerText = `₡0`;
+                }
+            }
+
+            document.getElementById('customer-payment').addEventListener('input', updateChange);
 
                 function updateQuantity(dishId, change) {
                     if (!billing[dishId]) {
@@ -288,6 +314,8 @@
                     } 
 
                     document.getElementById('total-amount').innerText = `₡${total.toFixed(2)}`;
+
+                    updateChange();
                 }
 
                 document.querySelectorAll('.product-item button:nth-of-type(1)').forEach(button => {

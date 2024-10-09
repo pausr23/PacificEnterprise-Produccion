@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\DishesCategory;
@@ -222,6 +225,22 @@ class AdminDishController extends Controller
         return view('factures.ordering', compact('dishes', 'total', 'categories', 'subcategories', 'addedItems'));
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function storeOrder(Request $request)
     {
         $addedItems = json_decode($request->input('addedItems'), true);
@@ -230,11 +249,22 @@ class AdminDishController extends Controller
     
         $total = 0;
     
+        $addedItemsWithDetails = [
+            
+        ];
+    
         foreach ($addedItems as $item) {
             $dish = RegisteredDish::find($item['id']); 
     
             if ($dish) {
                 $total += $dish->dish_price * $item['quantity'];
+    
+                $addedItemsWithDetails[] = [
+                    'id' => $item['id'],
+                    'title' => $dish->title,
+                    'quantity' => $item['quantity'],
+                    'price' => $dish->dish_price
+                ];
             }
         }
     
@@ -269,9 +299,36 @@ class AdminDishController extends Controller
             }
         }
     
-        return redirect()->route('factures.ordering')->with('success', 'Orden guardada exitosamente!');
+        $pdf = new Dompdf();
+        $pdf->loadHtml(view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total'))->render());
+    
+        $pdf->setPaper('A4', 'portrait');
+    
+        $pdf->render();
+    
+        $output = $pdf->output();
+        $filePath = 'invoices/invoice_' . $invoiceNumber . '.pdf'; 
+        file_put_contents(public_path($filePath), $output); 
+    
+        return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath')); 
     }
     
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function history(Request $request)
     {
@@ -292,8 +349,6 @@ class AdminDishController extends Controller
         return view('factures.history', compact('orders', 'paymentMethods'));
     }
     
-    
-
 
     /**
      * Remove the specified resource from storage.
@@ -346,5 +401,11 @@ class AdminDishController extends Controller
     
         return view('dishes.inventory', compact('dishes', 'total', 'categories', 'subcategories'));
     }
+
+
+
+
+    
+    
 }
 

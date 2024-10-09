@@ -73,6 +73,8 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::resource('suppliers', AdminSupplierController::class);
 
+    Route::post('/factures/invoice', [AdminDishController::class, 'storeOrder'])->name('factures.invoice');
+
 });
 
 
