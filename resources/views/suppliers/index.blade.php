@@ -50,13 +50,13 @@
                 </div>
             @else
                 @foreach ($suppliers as $supplier)
-                    <div class="py-4 rounded-lg secondary-color text-white p-3 flex flex-col w-[300px]"> 
+                    <div class="py-4 rounded-lg secondary-color text-white p-3 flex flex-col w-[300px]">
                         <div class="grid grid-cols-3 items-center">
                             <div class="text-center">
                                 <h2 class="font-bold text-sm">{{ $supplier->name }}</h2>
                             </div>
                             <div class="flex items-center justify-center">
-                                <div class="h-10 w-px bg-neutral-200 mx-2"></div> 
+                                <div class="h-10 w-px bg-neutral-200 mx-2"></div>
                             </div>
                             <div class="text-center">
                                 <p class="text-sm font-bold">{{ $supplier->phone_number }}</p>
