@@ -188,17 +188,7 @@
                 <h2 class="text-white font-main font-semibold text-lg ml-5 mt-5">Total</h2>
                 <h3 id="total-amount" class="text-white text-xs font-semibold ml-5 mt-6 text-center font-main">₡0</h3>
             </div>
-
-            <div class="grid grid-cols-2 mt-5">
-                <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Monto recibido:</label>
-                <input id="customer-payment" type="number" class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-36" placeholder="Monto" />
-            </div>
-
-            <div class="grid grid-cols-2 mt-5">
-                <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Cambio:</label>
-                <h3 id="change-amount" class="text-white text-xs font-semibold ml-5 mt-2 text-center font-main">₡0</h3>
-            </div>
-
+            
             <form method="POST" action="{{ route('factures.invoice') }}" id="order-form">
                 @csrf
                 <input type="hidden" name="addedItems" id="addedItemsInput" value='[]'>
@@ -210,28 +200,38 @@
                 </div>
 
                 <h2 class="text-gray-400 text-sm ml-5 mt-2 font-main mt-5">Método de Pago:</h2>
-                <div class="flex justify-around p-4">
-                    <div class="group">
-                        <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="1">
-                            <img class="w-8" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png" alt="banknotes"/>
-                        </button>
-                        <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
+                    <div class="flex justify-around p-4">
+                        <div class="group">
+                            <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="1">
+                                <img class="w-8" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png" alt="banknotes"/>
+                            </button>
+                            <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
+                        </div>
+
+                        <div class="group">
+                            <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="2">
+                                <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png" alt="credit-card-front"/>
+                            </button>
+                            <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
+                        </div>
+
+                        <div class="group">
+                            <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="3">
+                                <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png" alt="mobile-payment"/>
+                            </button>
+                            <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
+                        </div>
                     </div>
 
-                    <div class="group">
-                        <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="2">
-                            <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png" alt="credit-card-front"/>
-                        </button>
-                        <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
+                    <div class="grid grid-cols-2 mt-5" id="payment-amount-section" style="display: none;">
+                        <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Monto recibido:</label>
+                        <input id="customer-payment" type="number" class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-36" placeholder="Monto" />
                     </div>
 
-                    <div class="group">
-                        <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="3">
-                            <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png" alt="mobile-payment"/>
-                        </button>
-                        <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
+                    <div class="grid grid-cols-2 mt-5" id="change-section" style="display: none;">
+                        <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Cambio:</label>
+                        <h3 id="change-amount" class="text-white text-xs font-semibold ml-5 mt-2 text-center font-main">₡0</h3>
                     </div>
-                </div>
 
                 <div class="flex justify-center">
                     <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
@@ -346,7 +346,25 @@
                     }));
                     document.getElementById('addedItemsInput').value = JSON.stringify(billingArray);
                 };
-            });
+
+                document.querySelectorAll('.payment-method').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const methodId = this.dataset.value;
+
+                        document.getElementById('payment-amount-section').style.display = 'none';
+                        document.getElementById('change-section').style.display = 'none';
+
+                        if (methodId === "1") { 
+                            document.getElementById('payment-amount-section').style.display = 'grid';
+                            document.getElementById('change-section').style.display = 'grid';
+                        }
+
+                        document.getElementById('paymentMethodInput').value = methodId; 
+                    });
+                });
+
+                document.getElementById('customer-payment').addEventListener('input', updateChange);
+                });
         </script>
     </div>
         
