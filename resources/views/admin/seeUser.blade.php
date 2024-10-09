@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="flex items-start ml-20 mb-8"> 
+    <div class="flex items-start ml-20 mb-8">
         <img class="w-80 mr-4" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
         @if(session('success'))
@@ -19,7 +19,7 @@
 
     
 
-    <div class="ml-16 mt-8"> 
+    <div class="ml-16 mt-8">
         <h1 class="text-2xl mb-6 font-bold">Detalles del usuario</h1>
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 w-3/4"><strong>Nombre:</strong> <span class="pl-2">{{ $user->name }}</span></p>
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 w-3/4"><strong>Nombre de usuario:</strong> <span class="pl-2">@ {{ $user->username }}</span></p>

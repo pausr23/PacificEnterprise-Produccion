@@ -47,7 +47,7 @@ class AdminDishController extends Controller
     
         $categories = DishesCategory::all();
         $subcategories = Subcategory::all();
-        $total = $dishes->count(); 
+        $total = $dishes->count();
     
         return view('dishes.index', compact('dishes', 'total', 'categories', 'subcategories'));
     }
@@ -81,7 +81,7 @@ class AdminDishController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $file_name = 'default.jpg'; 
+        $file_name = 'default.jpg';
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -153,7 +153,7 @@ class AdminDishController extends Controller
         ]);
 
         $dish = RegisteredDish::find($id);
-        $file_name = $dish->image; 
+        $file_name = $dish->image;
 
         if ($request->hasFile('image')) {
           
@@ -179,13 +179,13 @@ class AdminDishController extends Controller
         return redirect()->route('dishes.index')->with('success', 'Item actualizado correctamente.');
     }
 
-    public function order(Request $request) 
+    public function order(Request $request)
     {
         $searchTerm = $request->input('dish');
         $categoryId = $request->input('category');
         $subcategoryId = $request->input('subcategory');
 
-        $query = RegisteredDish::with('category', 'subcategory'); 
+        $query = RegisteredDish::with('category', 'subcategory');
 
         if (!empty($searchTerm)) {
             $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
@@ -203,9 +203,9 @@ class AdminDishController extends Controller
         
         $categories = DishesCategory::with('subcategories')->get();
 
-        $subcategories = !empty($categoryId) ? 
-            Subcategory::where('dishes_categories_id', $categoryId)->get() : 
-            Subcategory::all(); 
+        $subcategories = !empty($categoryId) ?
+            Subcategory::where('dishes_categories_id', $categoryId)->get() :
+            Subcategory::all();
 
         $addedItems = $request->input('addedItems');
         $total = 0;
@@ -225,22 +225,6 @@ class AdminDishController extends Controller
         return view('factures.ordering', compact('dishes', 'total', 'categories', 'subcategories', 'addedItems'));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function storeOrder(Request $request)
     {
         $addedItems = json_decode($request->input('addedItems'), true);
@@ -254,7 +238,7 @@ class AdminDishController extends Controller
         ];
     
         foreach ($addedItems as $item) {
-            $dish = RegisteredDish::find($item['id']); 
+            $dish = RegisteredDish::find($item['id']);
     
             if ($dish) {
                 $total += $dish->dish_price * $item['quantity'];
@@ -285,11 +269,11 @@ class AdminDishController extends Controller
     
             if ($dish) {
                 DB::table('details_transaction_rest')->insert([
-                    'invoice_number' => $invoiceNumber, 
+                    'invoice_number' => $invoiceNumber,
                     'dishes_categories_id' => $dish->dishes_categories_id,
                     'registered_dishes_id' => $item['id'],
                     'payment_method_id' => $paymentMethodId,
-                    'registered_dishes_price' => $dish->dish_price, 
+                    'registered_dishes_price' => $dish->dish_price,
                     'quantity' => $item['quantity'],
                     'total' => $dish->dish_price * $item['quantity'],
                     'note' => $note,
@@ -307,10 +291,10 @@ class AdminDishController extends Controller
         $pdf->render();
     
         $output = $pdf->output();
-        $filePath = 'invoices/invoice_' . $invoiceNumber . '.pdf'; 
-        file_put_contents(public_path($filePath), $output); 
+        $filePath = 'invoices/invoice_' . $invoiceNumber . '.pdf';
+        file_put_contents(public_path($filePath), $output);
     
-        return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath')); 
+        return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath'));
     }
     
     
@@ -337,7 +321,7 @@ class AdminDishController extends Controller
         $query = DB::table('invoices')
             ->join('payment_methods', 'invoices.payment_method_id', '=', 'payment_methods.id')
             ->select('invoices.*', 'payment_methods.name as payment_method_name')
-            ->orderBy('invoices.created_at', 'desc'); 
+            ->orderBy('invoices.created_at', 'desc');
     
         if (!empty($paymentMethodId) && $paymentMethodId != 0) {
             $query->where('invoices.payment_method_id', $paymentMethodId);
@@ -397,7 +381,7 @@ class AdminDishController extends Controller
     
         $categories = DishesCategory::all();
         $subcategories = Subcategory::all();
-        $total = $dishes->count(); 
+        $total = $dishes->count();
     
         return view('dishes.inventory', compact('dishes', 'total', 'categories', 'subcategories'));
     }

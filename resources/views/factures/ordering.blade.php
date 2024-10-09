@@ -53,11 +53,11 @@
 
         <div id="dishes-list" class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;"">
         @foreach($dishes as $dish)
-        <div class="product-item text-white font-main secondary-color rounded-lg pl-3" 
-             data-dish-id="{{ $dish->id }}" 
-             data-subcategory-id="{{ $dish->subcategories_id }}" 
-             data-dish-price="{{ $dish->dish_price }}" 
-             data-dish-title="{{ strtolower($dish->title) }}" 
+        <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
+             data-dish-id="{{ $dish->id }}"
+             data-subcategory-id="{{ $dish->subcategories_id }}"
+             data-dish-price="{{ $dish->dish_price }}"
+             data-dish-title="{{ strtolower($dish->title) }}"
              style="border-left: 6px solid #8FC08B;">
                 <div class="flex flex-col h-full justify-between">
                     <div>
@@ -95,21 +95,21 @@
                 const colors = ['#FFFF9F', '#CDA0CB', '#B0E1DF', '#F19DB4'];
 
                 document.querySelectorAll('.category-button').forEach(function (categoryDiv, index) {
-                    const color = colors[index % colors.length]; 
+                    const color = colors[index % colors.length];
                     categoryDiv.style.backgroundColor = color;
 
                     categoryDiv.addEventListener('click', function () {
                         const categoryId = this.getAttribute('data-id');
                         const selectedCategory = categories.find(category => category.id == categoryId);
 
-                        subcategorySelect.innerHTML = ''; 
+                        subcategorySelect.innerHTML = '';
 
                         if (selectedCategory) {
                             const categoryOption = document.createElement('option');
                             categoryOption.value = "";
                             categoryOption.textContent = selectedCategory.name;
                             categoryOption.disabled = true;
-                            categoryOption.selected = true; 
+                            categoryOption.selected = true;
                             subcategorySelect.appendChild(categoryOption);
                         }
 
@@ -180,7 +180,7 @@
         
     <div>
         <div class="secondary-color h-auto">
-            <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>    
+            <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>
             <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
             <hr class="border-b-1 border-white mt-2" />
 
@@ -293,7 +293,7 @@
 
                 function renderBilling() {
                     const billingList = document.getElementById('billing-list');
-                    billingList.innerHTML = ''; 
+                    billingList.innerHTML = '';
 
                     let total = 0;
 
@@ -311,7 +311,7 @@
                             `;
                             billingList.appendChild(itemDiv);
                         }
-                    } 
+                    }
 
                     document.getElementById('total-amount').innerText = `₡${total.toFixed(2)}`;
 
