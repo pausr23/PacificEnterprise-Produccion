@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('payment_method_id')->constrained();
             $table->datetime('transaction_date');
             $table->decimal('total_amount');
+            $table->integer('is_ready')->default(1); 
             $table->timestamps();
         });
     }
