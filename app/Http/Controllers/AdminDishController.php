@@ -69,8 +69,9 @@ class AdminDishController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
+
         $request->validate([
             'title' => 'required|string|max:255',
             'dish_price' => 'required|numeric',
@@ -81,12 +82,19 @@ class AdminDishController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $file_name = 'default.jpg';
+        $file_name = 'dish_.jpg';
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $file_name = 'dish_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/images', $file_name);
+            $file_name = 'dish_' . $file->getClientOriginalName();
+
+            $destinationPath = public_path('storage/images');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            $file->move($destinationPath, $file_name);
         }
 
         RegisteredDish::create([
