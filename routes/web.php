@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
-    Route::get('/factures/order', [AdminDishController::class, 'showOrderInKitchen'])->name('order');
+    Route::get('/factures/order', [AdminDishController::class, 'showOrderInKitchen'])->name('factures.order');
 
     Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
 

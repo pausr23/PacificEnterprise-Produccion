@@ -321,13 +321,11 @@ class AdminDishController extends Controller
 
     public function showOrderInKitchen()
     {
-        // Recuperar solo los 'id' de la tabla 'transaction' donde 'is_ready' sea igual a 1
         $transactionIds = DB::table('transaction')
             ->where('is_ready', 1)
             ->pluck('id')
             ->toArray();
 
-        // Recuperar los detalles de las transacciones correspondientes, incluyendo 'quantity'
         $details = DB::table('details_transaction_rest')
             ->whereIn('invoice_number', $transactionIds)
             ->select('invoice_number', 'registered_dishes_id', 'dishes_categories_id', 'quantity')
@@ -337,18 +335,15 @@ class AdminDishController extends Controller
             })
             ->toArray();
 
-        // Recuperar los títulos de los platos registrados
         $registeredDishes = DB::table('registered_dishes')
             ->whereIn('id', array_column($details, 'registered_dishes_id'))
             ->pluck('title', 'id')
             ->toArray();
 
-        // Añadir el título a cada detalle
         foreach ($details as &$detail) {
             $detail['title'] = $registeredDishes[$detail['registered_dishes_id']] ?? 'Unknown';
         }
 
-        // Crear un array donde el 'id' sea la clave y 'items' sea el valor
         $transactions = [];
         foreach ($transactionIds as $id) {
             $transactions[$id] = [
@@ -358,7 +353,6 @@ class AdminDishController extends Controller
             ];
         }
 
-        // Pasar los registros a la vista
         return view('factures.order', ['transactions' => $transactions]);
     }
 
