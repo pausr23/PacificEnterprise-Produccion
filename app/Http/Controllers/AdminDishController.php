@@ -319,56 +319,6 @@ class AdminDishController extends Controller
         return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath'));
     }
 
-    public function showOrderInKitchen()
-    {
-        $transactionIds = DB::table('transaction')
-            ->where('is_ready', 1)
-            ->pluck('id')
-            ->toArray();
-
-        $details = DB::table('details_transaction_rest')
-            ->whereIn('invoice_number', $transactionIds)
-            ->select('invoice_number', 'registered_dishes_id', 'dishes_categories_id', 'quantity')
-            ->get()
-            ->map(function ($item) {
-                return (array) $item;
-            })
-            ->toArray();
-
-        $registeredDishes = DB::table('registered_dishes')
-            ->whereIn('id', array_column($details, 'registered_dishes_id'))
-            ->pluck('title', 'id')
-            ->toArray();
-
-        foreach ($details as &$detail) {
-            $detail['title'] = $registeredDishes[$detail['registered_dishes_id']] ?? 'Unknown';
-        }
-
-        $transactions = [];
-        foreach ($transactionIds as $id) {
-            $transactions[$id] = [
-                'items' => array_filter($details, function ($detail) use ($id) {
-                    return $detail['invoice_number'] == $id;
-                })
-            ];
-        }
-
-        return view('factures.order', ['transactions' => $transactions]);
-    }
-
-    public function markOrderAsReady(Request $request)
-    {
-        $invoiceNumber = $request->input('invoice_number');
-    
-        DB::table('transaction')
-            ->where('id', $invoiceNumber)
-            ->update(['is_ready' => 0]);
-    
-        return redirect()->back()->with('success', 'Orden marcada como lista.');
-    }
-
-
-
     public function history(Request $request)
     {
         $paymentMethodId = $request->input('payment_method');
