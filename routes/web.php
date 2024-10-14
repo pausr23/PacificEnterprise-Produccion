@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/factures/history', [AdminDishController::class, 'history'])->name('factures.history');
     
     Route::post('/mark-order-as-ready', [AdminDishController::class, 'markOrderAsReady'])->name('markOrderAsReady');
+
+    Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
@@ -56,7 +58,7 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
-    Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
+    
 
     Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
 

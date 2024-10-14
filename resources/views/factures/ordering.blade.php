@@ -10,13 +10,8 @@
         <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
             <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
-<<<<<<< HEAD
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Órdenes</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Ventas</a>
-=======
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial</a>
->>>>>>> 35a62fe33cbf6303c43589f2cf7763ef601d21e4
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Ventas</a>
 
             @if(Auth::check() && Auth::user()->job_titles_id == 1)
                 <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
@@ -56,14 +51,14 @@
             <option value="" disabled selected>Subcategoría</option>
         </select>
 
-        <div id="dishes-list" class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;"">
-        @foreach($dishes as $dish)
-        <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
-             data-dish-id="{{ $dish->id }}"
-             data-subcategory-id="{{ $dish->subcategories_id }}"
-             data-dish-price="{{ $dish->dish_price }}"
-             data-dish-title="{{ strtolower($dish->title) }}"
-             style="border-left: 6px solid #8FC08B;">
+        <div id="dishes-list" class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;">
+            @foreach($dishes as $dish)
+            <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
+                data-dish-id="{{ $dish->id }}"
+                data-subcategory-id="{{ $dish->subcategories_id }}"
+                data-dish-price="{{ $dish->dish_price }}"
+                data-dish-title="{{ strtolower($dish->title) }}"
+                style="border-left: 6px solid #8FC08B;">
                 <div class="flex flex-col h-full justify-between">
                     <div>
                         <p class="text-xs font-extralight mt-2 mb-3">{{ $dish->subcategory->name }}</p>
@@ -72,21 +67,20 @@
                     </div>
 
                     <div class="flex items-center mb-4">
-                        
-                        <button class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center" onclick="updateQuantity('{{ $dish->id }}', 1)">
+                        <button id="add-btn-{{ $dish->id }}" class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center" onclick="addProduct('{{ $dish->id }}')">
                             <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/FFFFFF/plus-math.png" alt="plus-math"/>
                         </button>
 
-                        <span id="quantity-{{ $dish->id }}" class="text-xs mx-2 font-light">0</span>
+                        <span id="quantity-{{ $dish->id }}" class="text-xs mx-2 font-light">{{ $dish->units }}</span>
 
-                        <button class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center" onclick="updateQuantity('{{ $dish->id }}', -1)">
+                        <button id="remove-btn-{{ $dish->id }}" class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center" onclick="removeProduct('{{ $dish->id }}')" disabled>
                             <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/FFFFFF/minus-math.png" alt="minus-math"/>
                         </button>
 
                     </div>
                 </div>
             </div>
-        @endforeach
+            @endforeach
         </div>
 
         <script src="{{ asset('js/filterDishes.js') }}"></script>
@@ -163,23 +157,71 @@
             });
         </script>
 
-        <script>
-        
-            function updateQuantity(dishId, change) {
-            
+    <script>
+        const addedProducts = {};
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const products = document.querySelectorAll('.product-item');
+            products.forEach(product => {
+                const dishId = product.getAttribute('data-dish-id');
                 const quantityElement = document.querySelector(`#quantity-${dishId}`);
-                let currentQuantity = parseInt(quantityElement.textContent) || 0;
+                const addButton = document.querySelector(`#add-btn-${dishId}`);
+                const currentQuantity = parseInt(quantityElement.textContent) || 0;
 
-                currentQuantity += change;
+                if (currentQuantity === 0) {
+                    addButton.disabled = true;
+                }
+            });
+        });
 
-            
-                if (currentQuantity < 0) {
-                    currentQuantity = 0;
+        function addProduct(dishId, maxUnits) {
+            const quantityElement = document.querySelector(`#quantity-${dishId}`);
+            const addButton = document.querySelector(`#add-btn-${dishId}`);
+            const removeButton = document.querySelector(`#remove-btn-${dishId}`);
+            let currentQuantity = parseInt(quantityElement.textContent) || 0;
+
+            if (!addedProducts[dishId]) {
+                addedProducts[dishId] = 0;
+            }
+
+            if (currentQuantity > 0) {
+                currentQuantity -= 1;
+                quantityElement.textContent = currentQuantity;
+
+                addedProducts[dishId] += 1;
+
+                if (addedProducts[dishId] > 0) {
+                    removeButton.disabled = false;
                 }
 
-                quantityElement.textContent = currentQuantity;
+                if (currentQuantity === 0) {
+                    addButton.disabled = true;
+                }
             }
-        </script>
+        }
+
+        function removeProduct(dishId, maxUnits) {
+            const quantityElement = document.querySelector(`#quantity-${dishId}`);
+            const addButton = document.querySelector(`#add-btn-${dishId}`);
+            const removeButton = document.querySelector(`#remove-btn-${dishId}`);
+            let currentQuantity = parseInt(quantityElement.textContent) || 0;
+
+            if (addedProducts[dishId] > 0) {
+                currentQuantity += 1;
+                quantityElement.textContent = currentQuantity;
+
+                addedProducts[dishId] -= 1;
+
+                if (addedProducts[dishId] === 0) {
+                    removeButton.disabled = true;
+                }
+
+                if (currentQuantity > 0) {
+                    addButton.disabled = false;
+                }
+            }
+        }
+    </script>
             
     </div>
         

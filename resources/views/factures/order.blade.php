@@ -17,7 +17,7 @@
             <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300"
                 href="{{ route('factures.order') }}">Órdenes</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                href="{{ route('factures.history') }}">Historial</a>
+                href="{{ route('factures.history') }}">Historial de Venta</a>
 
             @if(Auth::check() && Auth::user()->job_titles_id == 1)
                 <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
