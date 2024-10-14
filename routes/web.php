@@ -25,9 +25,13 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
+    Route::get('/factures/order', [AdminDishController::class, 'showOrderInKitchen'])->name('factures.order');
+
     Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
 
     Route::get('/factures/history', [AdminDishController::class, 'history'])->name('factures.history');
+    
+    Route::post('/mark-order-as-ready', [AdminDishController::class, 'markOrderAsReady'])->name('markOrderAsReady');
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
@@ -74,6 +78,7 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     Route::resource('suppliers', AdminSupplierController::class);
 
     Route::post('/factures/invoice', [AdminDishController::class, 'storeOrder'])->name('factures.invoice');
+    
 
 });
 
