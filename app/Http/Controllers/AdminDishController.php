@@ -266,7 +266,7 @@ class AdminDishController extends Controller
             'updated_at' => now(),
         ]);
 
-        DB::table('transaction')->insert([
+        DB::table('transactions')->insert([
             'id' => $invoiceNumber,
             'transaction_Date' => now(),
             'total_amount' => $dish->dish_price * $item['quantity'],
@@ -316,7 +316,7 @@ class AdminDishController extends Controller
 
     public function showOrderInKitchen()
     {
-        $transactionIds = DB::table('transaction')
+        $transactionIds = DB::table('transactions')
             ->where('is_ready', 1)
             ->pluck('id')
             ->toArray();
@@ -355,7 +355,7 @@ class AdminDishController extends Controller
     {
         $invoiceNumber = $request->input('invoice_number');
     
-        DB::table('transaction')
+        DB::table('transactions')
             ->where('id', $invoiceNumber)
             ->update(['is_ready' => 0]);
     

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminDishController;
 use App\Http\Controllers\AdminSupplierController;
+use App\Http\Controllers\DashboardSummaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/mark-order-as-ready', [AdminDishController::class, 'markOrderAsReady'])->name('markOrderAsReady');
 
     Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
+
+    Route::get('/dashboard/principal', [DashboardSummaryController::class, 'index'])->name('dashboard.principal');
+
+    Route::post('/dashboard/principal', [DashboardSummaryController::class, 'showStatistics'])->name('principal.show');
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {

@@ -8,7 +8,7 @@
         <img class="w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
         <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
             <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Ventas</a>
@@ -242,11 +242,11 @@
                 <input type="hidden" name="payment_method_id" id="paymentMethodInput" value="">
 
                 <div class="grid grid-cols-1 mb-2">
-                    <label class="text-gray-400 text-sm ml-5 mt-2 font-main mt-5 mb-5">Notas:</label>
+                    <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
                     <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-80 mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                 </div>
 
-                <h2 class="text-gray-400 text-sm ml-5 mt-2 font-main mt-5">Método de Pago:</h2>
+                <h2 class="text-gray-400 text-sm ml-5 font-main mt-5">Método de Pago:</h2>
                     <div class="flex justify-around p-4">
                         <div class="group">
                             <button type="button" class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2" data-value="1">

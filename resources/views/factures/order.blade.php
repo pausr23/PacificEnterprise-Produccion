@@ -97,7 +97,7 @@
 
     @if(session('success'))
         <script>
-            alert('{{ session('success') }}');
+            alert('{{ session("success") }}');
             window.location.reload();
         </script>
     @endif

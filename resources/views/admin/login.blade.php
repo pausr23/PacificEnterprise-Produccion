@@ -22,7 +22,7 @@
                         <div class="text-red-500 mt-4 text-center">{{ $errors->first('login_error') }}</div>
                     @endif
 
-                    <a class="text-white text-center mt-5 text-sm" href="">Forgot password?</a>
+                
                 </div>
             </div>
     
