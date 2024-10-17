@@ -6,7 +6,7 @@
         <img class="w-80 ml-20 mb-8" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
         <a class="font-main ml-20 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('admin.show', $user->id) }}">Atrás</a>
         
-        <h1 class="ml-20 mt-10 mb-10 text-2xl font-bold text-white font-main">Actualiza el usuario</h1> 
+        <h1 class="ml-20 mt-10 mb-10 text-2xl font-bold text-white font-main">Actualiza el usuario</h1>
 
 
         @if ($errors->any())

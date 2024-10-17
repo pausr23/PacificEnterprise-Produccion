@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\DishesCategory;
@@ -44,7 +47,7 @@ class AdminDishController extends Controller
     
         $categories = DishesCategory::all();
         $subcategories = Subcategory::all();
-        $total = $dishes->count(); 
+        $total = $dishes->count();
     
         return view('dishes.index', compact('dishes', 'total', 'categories', 'subcategories'));
     }
@@ -78,7 +81,7 @@ class AdminDishController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $file_name = 'default.jpg'; 
+        $file_name = 'default.jpg';
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -150,7 +153,7 @@ class AdminDishController extends Controller
         ]);
 
         $dish = RegisteredDish::find($id);
-        $file_name = $dish->image; 
+        $file_name = $dish->image;
 
         if ($request->hasFile('image')) {
           
@@ -176,13 +179,13 @@ class AdminDishController extends Controller
         return redirect()->route('dishes.index')->with('success', 'Item actualizado correctamente.');
     }
 
-    public function order(Request $request) 
+    public function order(Request $request)
     {
         $searchTerm = $request->input('dish');
         $categoryId = $request->input('category');
         $subcategoryId = $request->input('subcategory');
 
-        $query = RegisteredDish::with('category', 'subcategory'); 
+        $query = RegisteredDish::with('category', 'subcategory');
 
         if (!empty($searchTerm)) {
             $query->where('registered_dishes.title', 'like', '%' . $searchTerm . '%');
@@ -197,12 +200,12 @@ class AdminDishController extends Controller
         }
 
         $dishes = $query->get();
-        
+
         $categories = DishesCategory::with('subcategories')->get();
 
-        $subcategories = !empty($categoryId) ? 
-            Subcategory::where('dishes_categories_id', $categoryId)->get() : 
-            Subcategory::all(); 
+        $subcategories = !empty($categoryId) ?
+            Subcategory::where('dishes_categories_id', $categoryId)->get() :
+            Subcategory::all();
 
         $addedItems = $request->input('addedItems');
         $total = 0;
@@ -227,20 +230,33 @@ class AdminDishController extends Controller
         $addedItems = json_decode($request->input('addedItems'), true);
         $paymentMethodId = $request->input('payment_method_id');
         $note = $request->input('note', '');
-    
+
         $total = 0;
-    
+
+        $addedItemsWithDetails = [
+
+        ];
+
         foreach ($addedItems as $item) {
-            $dish = RegisteredDish::find($item['id']); 
-    
+            $dish = RegisteredDish::find($item['id']);
             if ($dish) {
                 $total += $dish->dish_price * $item['quantity'];
+
+                $addedItemsWithDetails[] = [
+                    'id' => $item['id'],
+                    'title' => $dish->title,
+                    'quantity' => $item['quantity'],
+                    'price' => $dish->dish_price
+                ];
+
+                $dish->units -= $item['quantity'];
+                $dish->save(); 
             }
         }
-    
+
         $lastInvoice = DB::table('invoices')->orderBy('invoice_number', 'desc')->first();
         $invoiceNumber = $lastInvoice ? $lastInvoice->invoice_number + 1 : 1;
-    
+
         $invoiceId = DB::table('invoices')->insertGetId([
             'invoice_number' => $invoiceNumber,
             'payment_method_id' => $paymentMethodId,
@@ -249,29 +265,102 @@ class AdminDishController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-    
+
+        DB::table('transactions')->insert([
+            'id' => $invoiceNumber,
+            'transaction_Date' => now(),
+            'total_amount' => $dish->dish_price * $item['quantity'],
+            'payment_method' => $paymentMethodId,
+            'is_ready' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         foreach ($addedItems as $item) {
             $dish = RegisteredDish::find($item['id']);
-    
+
+
+
             if ($dish) {
                 DB::table('details_transaction_rest')->insert([
-                    'invoice_number' => $invoiceNumber, 
+                    'invoice_number' => $invoiceNumber,
                     'dishes_categories_id' => $dish->dishes_categories_id,
                     'registered_dishes_id' => $item['id'],
                     'payment_method_id' => $paymentMethodId,
-                    'registered_dishes_price' => $dish->dish_price, 
+                    'registered_dishes_price' => $dish->dish_price,
                     'quantity' => $item['quantity'],
                     'total' => $dish->dish_price * $item['quantity'],
                     'note' => $note,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+
+
             }
         }
-    
-        return redirect()->route('factures.ordering')->with('success', 'Orden guardada exitosamente!');
+
+
+        $pdf = new Dompdf();
+        $pdf->loadHtml(view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total'))->render());
+
+        $pdf->setPaper('A4', 'portrait');
+
+        $pdf->render();
+
+        $output = $pdf->output();
+        $filePath = 'invoices/invoice_' . $invoiceNumber . '.pdf';
+        file_put_contents(public_path($filePath), $output);
+
+        return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath'));
     }
+
+    public function showOrderInKitchen()
+    {
+        $transactionIds = DB::table('transactions')
+            ->where('is_ready', 1)
+            ->pluck('id')
+            ->toArray();
+
+        $details = DB::table('details_transaction_rest')
+            ->whereIn('invoice_number', $transactionIds)
+            ->select('invoice_number', 'registered_dishes_id', 'dishes_categories_id', 'quantity')
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+
+        $registeredDishes = DB::table('registered_dishes')
+            ->whereIn('id', array_column($details, 'registered_dishes_id'))
+            ->pluck('title', 'id')
+            ->toArray();
+
+        foreach ($details as &$detail) {
+            $detail['title'] = $registeredDishes[$detail['registered_dishes_id']] ?? 'Unknown';
+        }
+
+        $transactions = [];
+        foreach ($transactionIds as $id) {
+            $transactions[$id] = [
+                'items' => array_filter($details, function ($detail) use ($id) {
+                    return $detail['invoice_number'] == $id;
+                })
+            ];
+        }
+
+        return view('factures.order', ['transactions' => $transactions]);
+    }
+
+    public function markOrderAsReady(Request $request)
+    {
+        $invoiceNumber = $request->input('invoice_number');
     
+        DB::table('transactions')
+            ->where('id', $invoiceNumber)
+            ->update(['is_ready' => 0]);
+    
+        return redirect()->back()->with('success', 'Orden marcada como lista.');
+    }
 
     public function history(Request $request)
     {
@@ -280,7 +369,7 @@ class AdminDishController extends Controller
         $query = DB::table('invoices')
             ->join('payment_methods', 'invoices.payment_method_id', '=', 'payment_methods.id')
             ->select('invoices.*', 'payment_methods.name as payment_method_name')
-            ->orderBy('invoices.created_at', 'desc'); 
+            ->orderBy('invoices.created_at', 'desc');
     
         if (!empty($paymentMethodId) && $paymentMethodId != 0) {
             $query->where('invoices.payment_method_id', $paymentMethodId);
@@ -291,9 +380,6 @@ class AdminDishController extends Controller
 
         return view('factures.history', compact('orders', 'paymentMethods'));
     }
-    
-    
-
 
     /**
      * Remove the specified resource from storage.
@@ -342,9 +428,15 @@ class AdminDishController extends Controller
     
         $categories = DishesCategory::all();
         $subcategories = Subcategory::all();
-        $total = $dishes->count(); 
+        $total = $dishes->count();
     
         return view('dishes.inventory', compact('dishes', 'total', 'categories', 'subcategories'));
     }
+
+
+
+
+    
+    
 }
 

@@ -6,11 +6,11 @@
     <div class="mr-8 ">
         <img class="w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
         <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Panel Principal</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.ordering') }}">Punto de Venta</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="">Órdenes</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Admin</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Venta</a>
+            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
             <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
             <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('suppliers.index') }}">Proveedores</a>
 
@@ -50,13 +50,13 @@
                 </div>
             @else
                 @foreach ($suppliers as $supplier)
-                    <div class="py-4 rounded-lg secondary-color text-white p-3 flex flex-col w-[300px]"> 
+                    <div class="py-4 rounded-lg secondary-color text-white p-3 flex flex-col w-[300px]">
                         <div class="grid grid-cols-3 items-center">
                             <div class="text-center">
                                 <h2 class="font-bold text-sm">{{ $supplier->name }}</h2>
                             </div>
                             <div class="flex items-center justify-center">
-                                <div class="h-10 w-px bg-neutral-200 mx-2"></div> 
+                                <div class="h-10 w-px bg-neutral-200 mx-2"></div>
                             </div>
                             <div class="text-center">
                                 <p class="text-sm font-bold">{{ $supplier->phone_number }}</p>

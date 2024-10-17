@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminDishController;
 use App\Http\Controllers\AdminSupplierController;
+use App\Http\Controllers\DashboardSummaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,19 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
+    Route::get('/factures/order', [AdminDishController::class, 'showOrderInKitchen'])->name('factures.order');
+
     Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
 
     Route::get('/factures/history', [AdminDishController::class, 'history'])->name('factures.history');
+    
+    Route::post('/mark-order-as-ready', [AdminDishController::class, 'markOrderAsReady'])->name('markOrderAsReady');
+
+    Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
+
+    Route::get('/dashboard/principal', [DashboardSummaryController::class, 'index'])->name('dashboard.principal');
+
+    Route::post('/dashboard/principal', [DashboardSummaryController::class, 'showStatistics'])->name('principal.show');
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
@@ -52,7 +63,7 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
-    Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
+    
 
     Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
 
@@ -72,6 +83,9 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     Route::delete('suppliers/{supplier}', [AdminSupplierController::class, 'destroy'])->name('suppliers.destroy');
 
     Route::resource('suppliers', AdminSupplierController::class);
+
+    Route::post('/factures/invoice', [AdminDishController::class, 'storeOrder'])->name('factures.invoice');
+    
 
 });
 

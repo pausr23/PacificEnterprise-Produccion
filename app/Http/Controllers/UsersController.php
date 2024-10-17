@@ -120,7 +120,7 @@ class UsersController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::with('jobTitle')->findOrFail($id);  
+        $user = User::with('jobTitle')->findOrFail($id);
 
         return view('admin.seeUser', compact('user'));
     }
@@ -173,9 +173,9 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         if ($user) {
-            $user->delete(); 
+            $user->delete();
         }
 
-        return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente.'); 
+        return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente.');
     }
 }

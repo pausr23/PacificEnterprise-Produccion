@@ -57,9 +57,9 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->title }}</td>
                             <td class="py-6">
-                                <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-200" href="{{ route('admin.show', ['id' => $user->id]) }}">Ver más</a>   
+                                <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-200" href="{{ route('admin.show', ['id' => $user->id]) }}">Ver más</a>
                             </td>
-                        </tr>  
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

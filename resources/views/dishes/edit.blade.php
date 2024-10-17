@@ -5,7 +5,7 @@
     <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
         <div class="grid grid-cols-2 gap-96">
-            <h1 class="text-2xl font-bold text-white font-main">Edita el platillo</h1>
+            <h1 class="text-2xl font-bold text-white font-main">Edita el producto</h1>
             <a class="font-main  w-[50%] secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 <!-- Name -->
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Nombre</label>
-                    <input class="secondary-color border border-gray-300  text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="title" value="{{ $dish->title }}" placeholder="Nombre del platillo">
+                    <input class="secondary-color border border-gray-300  text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="title" value="{{ $dish->title }}" placeholder="Nombre del producto">
                 </div>
 
                 <!-- Categories -->
@@ -51,7 +51,7 @@
                 <!-- Unidades -->
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Unidades</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" placeholder="Unidades disponibles">
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" value="{{ $dish->units }}" placeholder="Unidades disponibles">
                 </div>
             
             </div>
@@ -62,13 +62,13 @@
                 <!-- Precio -->
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Precio</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="dish_price" value="{{ $dish->dish_price }}" placeholder="Precio del platillo">
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="dish_price" value="{{ $dish->dish_price }}" placeholder="Precio del producto">
                 </div>
 
                 <!-- Description -->
                 <div class="grid grid-cols-1 mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Descripción</label>
-                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" name="description" cols="30" rows="3" placeholder="Descripción del platillo">{{ $dish->description }}</textarea>
+                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" name="description" cols="30" rows="3" placeholder="Descripción del producto">{{ $dish->description }}</textarea>
                 </div>
 
                 <!-- Image -->
