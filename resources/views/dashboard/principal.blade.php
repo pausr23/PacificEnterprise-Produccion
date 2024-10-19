@@ -48,23 +48,32 @@
             </div>
 
             <div class="secondary-color rounded-md w-[92%] p-8">
-                <img class="w-12 rounded-full bg-gray-300 p-2 mb-12" src="https://img.icons8.com/isometric-line/50/stack-of-money.png" alt="stack-of-money">
+                <img class="w-12 rounded-full bg-gray-300 p-2 mb-12" src="https://img.icons8.com/ios/50/1A1A1A/order-completed--v2.png" alt="order-completed" alt="stack-of-money">
                 <p class="text-white font-main text-xs font-light mb-2">Cantidad de pedidos</p>
                 <p class="text-white font-main text-3xl">{{ $invoiceCount }}</p>
             </div>
         </div>
-        <div class="grid grid-cols-[30%,65%] gap-4 mt-12">
+        <div class="grid grid-cols-[30%,65%] gap-4 mt-10">
 
-            <div class="border grid grid-cols-2 text-white border-gray-300 rounded-md p-4">
-                <h1 class="font-main text-lg">Pedidos de hoy</h1>
-                <a class="underline opacity-60 content-center justify-self-end text-sm" href="{{ route('factures.history') }}">Ver historial</a>
-                <div class="flex items-center mt-2">
-                    <img class="secondary-color rounded-md w-10  p-1" src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/bank-card-back-side.png" alt="bank-card-back-side" alt="card">
-                    <div class="grid">
-                        <p class="ml-2">Orden #57</p>
-                        <p class="ml-2">$43.0</p>
-                    </div>
+            <div class="border grid text-white border-gray-300 rounded-md p-4">
+                <div class="grid grid-cols-2">
+                    <h1 class="font-main text-lg">Pedidos de hoy</h1>
+                    <a class="underline opacity-60 content-center justify-self-end text-sm" href="{{ route('factures.history') }}">Ver historial</a>
                 </div>
+                @foreach($recentInvoices as $invoice)
+                    <div class="flex items-center mt-2">
+                        <img class="secondary-color rounded-md w-10 p-1" src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/bank-card-back-side.png" alt="bank-card-back-side" alt="card">
+                        <div class="grid">
+                            <p class="ml-2">Orden #{{ $invoice->invoice_number }}</p>
+                            <p class="ml-2">${{ $invoice->total }}</p>
+                        </div>
+                    </div>
+                @endforeach
+
+
+                @if($recentInvoices->isEmpty())
+                    <p class="mt-4">No hay pedidos hoy.</p>
+                @endif
 
             </div>
 

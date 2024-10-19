@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/principal', [DashboardSummaryController::class, 'index'])->name('dashboard.principal');
 
     Route::post('/dashboard/principal', [DashboardSummaryController::class, 'showStatistics'])->name('principal.show');
+
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {

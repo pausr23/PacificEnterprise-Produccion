@@ -19,10 +19,15 @@ class DashboardSummaryController extends Controller
 
         $invoices = Invoice::whereDate('created_at', $today)->get();
 
+        $recentInvoices = Invoice::whereDate('created_at', $today)
+        ->latest() 
+        ->take(5)  
+        ->get();
+
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
 
-        return view('dashboard.principal', compact('invoices', 'totalEarnings', 'invoiceCount', 'selectedDate'));
+        return view('dashboard.principal', compact('invoices', 'recentInvoices', 'totalEarnings', 'invoiceCount', 'selectedDate'));
     }
 
     public function showStatistics(Request $request)
@@ -50,6 +55,7 @@ class DashboardSummaryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
         //
