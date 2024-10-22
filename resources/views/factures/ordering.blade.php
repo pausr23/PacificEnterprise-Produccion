@@ -9,9 +9,9 @@
 
         <div class="grid pl-2 pt-6 text-white font-light text-sm font-main ">
             <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
-            <a class="py-3 mb-6 pl-2 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg secondary-color transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
             <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
-            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Ventas</a>
+            <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]" href="{{ route('factures.history') }}">Historial de Ventas</a>
 
             @if(Auth::check() && Auth::user()->job_titles_id == 1)
                 <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
@@ -52,7 +52,7 @@
             <option value="" disabled selected>Subcategoría</option>
         </select>
 
-        <<div id="dishes-list" class="grid lg:grid-cols-4 sm:grid-cols-2 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;">
+        <div id="dishes-list" class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;">
             @foreach($dishes as $dish)
             <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
                 data-dish-id="{{ $dish->id }}"
@@ -244,7 +244,7 @@
 
                 <div class="grid grid-cols-1 mb-2">
                     <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
-                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white lg:w-96 md:w-44 mx-auto overflow-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
+                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-80 mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                 </div>
 
                 <h2 class="text-gray-400 text-sm ml-5 font-main mt-5">Método de Pago:</h2>
@@ -282,7 +282,7 @@
                     </div>
 
                 <div class="flex justify-center">
-                    <button type="submit" class="bg-white rounded-md lg:w-56 md:w-24 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
+                    <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
                         <h1 class="font-main text-md">Facturar</h1>
                     </button>
                 </div>
