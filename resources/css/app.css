@@ -33,3 +33,20 @@ select:focus {
 .products-container::-webkit-scrollbar-track {
     background: #323035; 
 }
+
+/* Cuando el checkbox NO está marcado, el menú está oculto */
+#mobile-checkbox:not(:checked) ~ #sidebar-menu {
+    transform: translateX(-100%);
+}
+
+/* Cuando el checkbox está marcado, el menú se muestra */
+#mobile-checkbox:checked ~ #sidebar-menu {
+    transform: translateX(0);
+}
+
+/* Este estilo asegura que el menú esté siempre visible en pantallas grandes */
+@media (min-width: 1024px) {
+    #mobile-checkbox:checked ~ #sidebar-menu {
+        transform: translateX(0);
+    }
+}

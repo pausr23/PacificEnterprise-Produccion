@@ -6,7 +6,7 @@
 
 <div class="grid grid-cols-[20%,80%] pl-12">
 
-    <div class="mr-8">
+    <div class="mr-5">
         <img class="w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
         <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">

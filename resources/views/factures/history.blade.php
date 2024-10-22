@@ -2,27 +2,27 @@
 
 @section('content')
 
-<div class="grid grid-cols-1 md:grid-cols-[20%,80%] pl-4 md:pl-12">
+<div class="grid grid-cols-[20%,80%] md:pl-6">
 
-    <div class="mr-4 md:mr-8">
-        <img class="w-32 md:w-40 lg:w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
+    <div class="mr-5">
+        <img class="lg:w-40 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
-        <div class="grid pl-4 pt-6 text-white font-light text-sm font-main ">
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.ordering') }}">Punto de Venta</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
-            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.history') }}">Historial de Ventas</a>
+        <div class="grid pl-2 pt-6 text-white font-light text-sm font-main ">
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.ordering') }}">Punto de Venta</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
+            <a class="py-3 mb-6 pl-2 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.history') }}">Historial de Ventas</a>
 
             @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
+                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
+                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
             @endif
             
-            <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer m-2">
-                <img class="w-16 h-16 md:w-20 md:h-20" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                <div class="ml-2">
-                    <p class="text-base md:text-lg font-semibold">{{ auth()->user()->name }}</p>
+            <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
+                <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
+                <div class="lg:ml-2">
+                    <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
                     <p class="text-sm">@ {{ auth()->user()->username }}</p>
                 </div>
             </a>
@@ -51,22 +51,22 @@
                 <table class="min-w-full rounded-lg">
                     <thead class="rounded-lg text-white font-main font-bold secondary-color">
                         <tr>
-                            <th scope="col" class="rounded-l-lg px-4 py-3 md:px-12">ID</th>
-                            <th scope="col" class="px-4 py-3 md:px-12">Método de pago</th>
-                            <th scope="col" class="px-4 py-3 md:px-12">Notas</th>
-                            <th scope="col" class="px-4 py-3 md:px-12">Total</th>
-                            <th scope="col" class="rounded-r-lg px-4 py-3 md:px-12">Acción</th>
+                            <th scope="col" class="rounded-l-lg px-1 py-3 md:px-12">ID</th>
+                            <th scope="col" class="px-1 py-3">Método de pago</th>
+                            <th scope="col" class="px-1 py-3">Notas</th>
+                            <th scope="col" class="px-1 py-3">Total</th>
+                            <th scope="col" class="rounded-r-lg px-1 py-3">Acción</th>
                         </tr>
                     </thead>
                     
                     <tbody>
                         @foreach ($orders as $order)
                             <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10">
-                                <td class="px-2 md:px-4">{{ $order->invoice_number }}</td>
-                                <td class="px-2 md:px-4">{{ $order->payment_method_name }}</td>
-                                <td class="px-2 md:px-4">{{ $order->note }}</td>
-                                <td class="px-2 md:px-4">{{ $order->total }}</td>
-                                <td class="py-6 px-2 md:px-4 flex justify-center">
+                                <td class="px-2">{{ $order->invoice_number }}</td>
+                                <td class="px-2">{{ $order->payment_method_name }}</td>
+                                <td class="px-1">{{ $order->note }}</td>
+                                <td class="px-2">{{ $order->total }}</td>
+                                <td class="py-6 px-2 flex justify-center">
                                     <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="">Ver</a>
                                 </td>
                             </tr>
