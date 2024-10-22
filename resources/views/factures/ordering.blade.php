@@ -2,30 +2,31 @@
 
 @section('content')
 
-<div class="grid grid-cols-[20%,80%] pl-12">
+<div class="grid grid-cols-[20%,80%] md:pl-6">
 
-    <div class="mr-8">
-        <img class="w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+    <div class="mr-5">
+        <img class="lg:w-40 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
-        <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
-            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Ventas</a>
+        <div class="grid pl-2 pt-6 text-white font-light text-sm font-main ">
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
+            <a class="py-3 mb-6 pl-2 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Ventas</a>
 
             @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
+                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
+                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
             @endif
             
-            <a class="flex cursor-pointer" href="{{ route('admin.profile') }}" >
-                <img class="w-16" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                <div class="mt-2 ml-2">
-                    <p class="text-lg font-semibold">{{ auth()->user()->name }}</p>
-                    <p>@ {{ auth()->user()->username }}</p>
+            <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
+                <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
+                <div class="lg:ml-2">
+                    <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
+                    <p class="text-sm">@ {{ auth()->user()->username }}</p>
                 </div>
             </a>
+
         </div>
         
     </div>
@@ -51,7 +52,7 @@
             <option value="" disabled selected>Subcategoría</option>
         </select>
 
-        <div id="dishes-list" class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;">
+        <<div id="dishes-list" class="grid lg:grid-cols-4 sm:grid-cols-2 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;">
             @foreach($dishes as $dish)
             <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
                 data-dish-id="{{ $dish->id }}"
@@ -243,7 +244,7 @@
 
                 <div class="grid grid-cols-1 mb-2">
                     <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
-                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-80 mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
+                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white lg:w-96 md:w-44 mx-auto overflow-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                 </div>
 
                 <h2 class="text-gray-400 text-sm ml-5 font-main mt-5">Método de Pago:</h2>
@@ -281,7 +282,7 @@
                     </div>
 
                 <div class="flex justify-center">
-                    <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
+                    <button type="submit" class="bg-white rounded-md lg:w-56 md:w-24 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
                         <h1 class="font-main text-md">Facturar</h1>
                     </button>
                 </div>
