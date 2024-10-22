@@ -5,10 +5,10 @@
 <div class="grid grid-cols-[20%,80%] md:pl-6">
 
 <div class="mr-5">
-    <!-- Logo -->
+
     <img class="lg:w-40 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
-    <!-- Menú lateral -->
+
     <div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
         <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
         <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.ordering') }}">Punto de Venta</a>
@@ -21,7 +21,7 @@
             <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
         @endif
         
-        <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
+        <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0 ">
             <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
             <div class="lg:ml-2">
                 <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
@@ -30,7 +30,7 @@
         </a>
     </div>
 
-    <!-- Menú móvil (visible solo en pantallas pequeñas) -->
+
     <div id="mobile-sidebar-menu" class="absolute top-0 left-0 w-full h-screen bg-[#16161A] transform translate-x-full transition-transform duration-300 lg:hidden">
         <div class="pl-2 pt-6 text-white font-light text-sm font-main">
             <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <!-- Botón de hamburguesa -->
+
     <label class="fixed py-12 left-6 z-40 h-8 cursor-pointer xl:hidden flex items-center justify-center" for="mobile-checkbox">
         <input class="hidden" type="checkbox" id="mobile-checkbox" onClick="toggleMenu(this)" />
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,43 +63,30 @@
     </label>
 
     <div id="content" class="lg:ml-6">
-        
+
     </div>
 
     <script>
         function toggleMenu(checkbox) {
             const mobileMenu = document.getElementById('mobile-sidebar-menu');
-            const content = document.getElementById('content'); // Seleccionamos el contenido principal
+            const content = document.getElementById('content');
             const isChecked = checkbox.checked;
 
-            // Mostrar u ocultar el menú
             mobileMenu.style.transform = isChecked ? 'translateX(0)' : 'translateX(100%)';
 
-            // Ocultar el contenido principal si el menú está abierto
             content.style.display = isChecked ? 'none' : 'block';
 
-            // Ocultar el botón de hamburguesa si el menú está abierto
             const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
-            hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; // Oculta el icono del botón cuando está desplegado
+            hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; 
         }
 
-        // Asegurarse de que el menú se oculta correctamente al recargar
         window.onload = function() {
             const checkbox = document.getElementById('mobile-checkbox');
-            checkbox.checked = false; // Asegura que el checkbox esté desmarcado al cargar
-            toggleMenu(checkbox); // Inicializa el menú
+            checkbox.checked = false; 
+            toggleMenu(checkbox);
         };
     </script>
 </div>
-
-
-
-
-
-
-
-
-
 
 
     <div>
