@@ -14,7 +14,7 @@
 
     <a class="font-main ml-32 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('admin.users') }}">Atrás</a>
 
-    <div class="grid container py-8 rounded-xl secondary-color mx-auto w-[30%] text-justify  text-white">
+    <div class="grid container py-8 rounded-xl secondary-color mx-auto lg:w-[30%] md:w-[46%] text-justify  text-white">
     <img class="rounded-full mx-auto bg-white" src="https://img.icons8.com/?size=100&id=HNn3lC0m5uKR&format=png&color=000000" alt="">
 
     

@@ -5,8 +5,8 @@
     <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
         <div class="grid grid-cols-2 gap-96">
-            <h1 class="text-2xl font-bold text-white font-main">Añade un nuevo producto</h1>
-            <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
+            <h1 class="text-2xl lg:ml-0 sm:ml-7 font-bold text-white font-main">Añade un nuevo producto</h1>
+            <a class="font-main text-white lg:w-[30%] sm:w-[50%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 lg:py-2.5 sm:py-5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
 
@@ -73,8 +73,8 @@
 
         </div>
 
-        <div class="flex justify-end pr-20">
-            <button type="submit" class="font-main text-white w-[8%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mb-10">Guardar</button>
+        <div class="flex justify-end pr-20 sm:mt-5">
+            <button type="submit" class="font-main text-white lg:w-[8%] sm:w-[16%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 lg:py-2.5 sm:py-5 text-center mr-60 mb-10">Guardar</button>
         </div>
     </form>
 </div>

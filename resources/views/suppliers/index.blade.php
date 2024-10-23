@@ -2,23 +2,23 @@
 
 @section('content')
 
-<div class="grid grid-cols-[20%,80%] pl-12">
-    <div class="mr-8 ">
-        <img class="w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
-        <div class="grid pl-10 pt-12 text-white font-light text-sm font-main ">
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.ordering') }}">Punto de Venta</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Venta</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
-            <a class="py-3 mb-6 pl-4 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('suppliers.index') }}">Proveedores</a>
+<div class="grid grid-cols-[20%,80%] md:pl-6">
+    <div class="mr-5">
+        <img class="lg:w-72 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+        <div class="grid pl-2 pt-6 text-white font-light text-sm font-main ">
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.ordering') }}">Punto de Venta</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.history') }}">Historial de Venta</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+            <a class="py-3 mb-6 pl-2 block rounded-lg secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] transition-colors duration-300" href="{{ route('suppliers.index') }}">Proveedores</a>
 
-            <a href="{{ route('admin.profile') }}" class="flex cursor-pointer">
-                <img class="w-16" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                <div class="mt-2 ml-2">
-                    <p class="text-lg font-semibold">{{ auth()->user()->name }}</p>
-                    <p>@ {{ auth()->user()->username }}</p>
+            <a href="{{ route('admin.profile') }}" class="flex cursor-pointer lg:m-2 sm:m-0">
+                <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
+                <div class="lg:ml-2">
+                    <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
+                    <p class="text-sm ">@ {{ auth()->user()->username }}</p>
                 </div>
             </a>
         </div>
@@ -32,12 +32,12 @@
                     <input class="secondary-color rounded text-xs font-light h-8 text-center w-40 text-white" id="supplier" type="text" name="supplier" placeholder="Nombre del proveedor">
                 </div>
                 <div class="grid content-end">
-                    <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 w-28 rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
+                <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 lg:w-28 sm:w-20 ml-10  rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
                 </div>
             </form>
 
             <div class="content-end">
-                <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('suppliers.create') }}">
+                <a class="font-bold flex items-center justify-center h-12 lg:w-48 sm:w-40 lg:text-base sm:text-xs  secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('suppliers.create') }}">
                     Agregar un proveedor
                 </a>
             </div>
@@ -50,16 +50,16 @@
                 </div>
             @else
                 @foreach ($suppliers as $supplier)
-                    <div class="py-4 rounded-lg secondary-color text-white p-3 flex flex-col w-[300px]">
+                    <div class="py-4 rounded-lg secondary-color text-white p-3 mt-5 flex flex-col lg:w-[300px] sm:w-[190px]">
                         <div class="grid grid-cols-3 items-center">
                             <div class="text-center">
                                 <h2 class="font-bold text-sm">{{ $supplier->name }}</h2>
                             </div>
                             <div class="flex items-center justify-center">
-                                <div class="h-10 w-px bg-neutral-200 mx-2"></div>
+                                <div class="h-10 w-px bg-neutral-200  "></div>
                             </div>
                             <div class="text-center">
-                                <p class="text-sm font-bold">{{ $supplier->phone_number }}</p>
+                                <p class="text-sm p-0 font-bold">{{ $supplier->phone_number }}</p>
                             </div>
                         </div>
                         <hr class="my-2 border-neutral-200">
