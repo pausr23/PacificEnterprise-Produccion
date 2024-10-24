@@ -4,7 +4,8 @@
 
 <div class="grid grid-cols-[20%,80%] md:pl-6">
 
-<div class="mr-5">
+    <div class="mr-5">
+        <img class="lg:w-60 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
     <img class="lg:w-40 md:w-60 xxs:w-full xxs:h-auto lg:my-0 md:my-2" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
