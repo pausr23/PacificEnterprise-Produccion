@@ -1,15 +1,14 @@
 function filterDishes() {
-    const input = document.getElementById('dish').value.toLowerCase(); // Obtener el valor del input
-    const dishes = document.querySelectorAll('.product-item'); // Seleccionar todos los ítems
+    const input = document.getElementById('dish').value.toLowerCase();
+    const dishes = document.querySelectorAll('.product-item');
 
     dishes.forEach(dish => {
-        const title = dish.getAttribute('data-dish-title'); // Obtener el título del ítem
+        const title = dish.getAttribute('data-dish-title');
 
-        // Verifica si el título contiene el texto del input
         if (title.includes(input)) {
-            dish.style.display = ''; // Mostrar el ítem
+            dish.style.display = '';
         } else {
-            dish.style.display = 'none'; // Ocultar el ítem
+            dish.style.display = 'none';
         }
     });
 }

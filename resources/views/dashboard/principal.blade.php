@@ -100,28 +100,150 @@
 </div>
 
     <div>
-    <form class="my-6" action="{{ route('principal.show') }}" method="POST">
-    @csrf
-
-    <label class="font-main text-white mr-4 text-lg" for="date">Selecciona una fecha:</label>
-    <input class="rounded-lg mr-4 px-3 py-2 secondary-color text-white" type="date" name="date" value="{{ old('date', $selectedDate) }}" required>
-
-    <button class="secondary-color rounded-lg text-white px-3 py-2 font-semibold" type="submit">Enviar</button>
-</form>
-
         <div class="grid grid-cols-2">
-            <div class="secondary-color rounded-md p-8 w-[92%]">
-                <img class="w-12 rounded-full bg-gray-300 p-2 mb-12" src="https://img.icons8.com/isometric-line/50/stack-of-money.png" alt="stack-of-money">
-                <p class="text-white font-main text-xs font-light mb-2">Ganancias del día</p>
-                <p class="text-white font-main text-3xl">₡{{ number_format($totalEarnings) }}</p>
-            </div>
+            <form class="my-6" action="{{ route('principal.show') }}" method="POST">
+                @csrf
 
-            <div class="secondary-color rounded-md w-[92%] p-8">
-                <img class="w-12 rounded-full bg-gray-300 p-2 mb-12" src="https://img.icons8.com/ios/50/1A1A1A/order-completed--v2.png" alt="order-completed" alt="stack-of-money">
-                <p class="text-white font-main text-xs font-light mb-2">Cantidad de pedidos</p>
-                <p class="text-white font-main text-3xl">{{ $invoiceCount }}</p>
+                <label class="font-main text-white mr-4 text-lg" for="date">Selecciona una fecha:</label>
+                <input class="rounded-lg mr-4 px-3 py-2 secondary-color text-white" type="date" name="date" value="{{ old('date', $selectedDate) }}" required>
+                <button class="secondary-color rounded-lg text-white px-3 py-2 font-semibold" type="submit">Buscar por Día</button>
+            </form>
+
+            <div class="my-6 flex items-center">
+                <label class="switch" for="toggleSwitch">
+                    <input type="checkbox" id="toggleSwitch">
+                    <span class="slider round"></span>
+                </label>
+                <span class="font-main text-white ml-4 text-lg">Mostrar Gráficos</span>
             </div>
         </div>
+
+        <div class="grid grid-cols-2">
+            <div id="earningsView" class="secondary-color rounded-md p-8 w-[92%]">
+                <img id="earningsImage" class="w-12 rounded-full bg-gray-300 p-2 mb-12" src="https://img.icons8.com/isometric-line/50/stack-of-money.png" alt="Ganancias">
+                <p id="earningsLabel" class="text-white font-main text-xs font-light mb-2">Ganancias del día</p>
+                <p id="earningsTotal" class="text-white font-main text-3xl">₡{{ number_format($totalEarnings) }}</p>
+            </div>
+
+        <div id="earningsChartContainer" style="display: none;">
+            <canvas id="earningsChart"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const earningsView = document.getElementById('earningsView');
+                const earningsChartContainer = document.getElementById('earningsChartContainer');
+
+                const ordersView = document.getElementById('ordersView');
+                const ordersChartContainer = document.getElementById('ordersChartContainer');
+
+                earningsView.style.display = 'block';
+                earningsChartContainer.style.display = 'none';
+
+                ordersView.style.display = 'block';
+                ordersChartContainer.style.display = 'none';
+
+                const toggleSwitch = document.getElementById('toggleSwitch');
+
+                let earningsChart;
+                let ordersChart;
+
+                const earningsData = @json($earningsValues);
+                const ordersData = @json($ordersValues);
+                const labels = @json($earningsLabels);
+
+                console.log(earningsData);
+                console.log(ordersData);
+
+                function createCharts() {
+                    const ctxEarnings = document.getElementById('earningsChart').getContext('2d');
+                    earningsChart = new Chart(ctxEarnings, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Ganancias',
+                                data: earningsData,
+                                borderColor: 'rgba(205, 160, 203, 1)',
+                                backgroundColor: 'rgba(205, 160, 203, 0.2)',
+                                borderWidth: 2,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    const ctxOrders = document.getElementById('ordersChart').getContext('2d');
+                    ordersChart = new Chart(ctxOrders, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Cantidad de Pedidos',
+                                data: ordersData,
+                                backgroundColor: 'rgba(255, 255, 159, 0.8)',
+                                borderColor: 'rgba(255, 255, 159, 100)',
+                                borderWidth: 2,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+
+                createCharts();
+
+                toggleSwitch.addEventListener('change', function() {
+                    if (this.checked) {
+
+                        earningsView.style.display = 'none';
+                        earningsChartContainer.style.display = 'block';
+                        ordersView.style.display = 'none';
+                        ordersChartContainer.style.display = 'block';
+
+                    } else {
+
+                        earningsView.style.display = 'block';
+                        earningsChartContainer.style.display = 'none';
+                        ordersView.style.display = 'block';
+                        ordersChartContainer.style.display = 'none';
+                    }
+                });
+            });
+
+            function resetView() {
+                document.getElementById('earningsView').style.display = 'block';
+                document.getElementById('earningsChartContainer').style.display = 'none';
+
+                document.getElementById('ordersView').style.display = 'block';
+                document.getElementById('ordersChartContainer').style.display = 'none';
+            }
+        </script>
+
+        <div class="secondary-color rounded-md w-[92%] p-8" id="ordersView">
+            <img id="ordersImage" class="w-12 rounded-full bg-gray-300 p-2 mb-12" src="https://img.icons8.com/ios/50/1A1A1A/order-completed--v2.png" alt="Pedidos">
+            <p id="ordersLabel" class="text-white font-main text-xs font-light mb-2">Cantidad de pedidos</p>
+            <p id="ordersTotal" class="text-white font-main text-3xl">{{ $invoiceCount }}</p>
+        </div>
+
+        <div id="ordersChartContainer" style="display: none;">
+            <canvas id="ordersChart"></canvas>
+        </div>
+    </div>
+
         <div class="grid grid-cols-[30%,65%] gap-4 mt-10">
 
             <div class="border grid text-white border-gray-300 rounded-md lg:p-4 xxs:p-1">
@@ -138,7 +260,6 @@
                         </div>
                     </div>
                 @endforeach
-
 
                 @if($recentInvoices->isEmpty())
                     <p class="mt-4">No hay pedidos hoy.</p>
