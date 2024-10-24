@@ -270,7 +270,7 @@ class AdminDishController extends Controller
             'id' => $invoiceNumber,
             'transaction_Date' => now(),
             'total_amount' => $dish->dish_price * $item['quantity'],
-            'payment_method' => $paymentMethodId,
+            'payment_method_id' => $paymentMethodId,
             'is_ready' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -316,9 +316,9 @@ class AdminDishController extends Controller
 
     public function showOrderInKitchen()
     {
-        $transactionIds = DB::table('transactions')
+        $transactionIds = DB::table('invoices')
             ->where('is_ready', 1)
-            ->pluck('id')
+            ->pluck('invoice_number')
             ->toArray();
 
         $details = DB::table('details_transaction_rest')
@@ -355,8 +355,8 @@ class AdminDishController extends Controller
     {
         $invoiceNumber = $request->input('invoice_number');
     
-        DB::table('transactions')
-            ->where('id', $invoiceNumber)
+        DB::table('invoices')
+            ->where('invoice_number', $invoiceNumber)
             ->update(['is_ready' => 0]);
     
         return redirect()->back()->with('success', 'Orden marcada como lista.');
