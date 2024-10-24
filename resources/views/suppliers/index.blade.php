@@ -5,7 +5,7 @@
 <div class="grid grid-cols-[20%,80%] md:pl-6">
 <div class="mr-5">
 
-<img class="lg:w-40 md:w-60 xxs:w-40 lg:my-0 md:my-2" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
+<img class="lg:w-60 md:w-60 xxs:w-40 lg:my-0 md:my-2" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
 
 <div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
@@ -98,25 +98,25 @@ window.onload = function() {
 </div>
 
     <div>
-        <div class="grid grid-cols-[70%,20%]">
-            <form method="GET" action="{{ route('suppliers.index') }}" class="grid grid-cols-3 ">
+        <div class="grid grid-cols-[70%,20%] xxs:grid-cols-1 xxs:gap-y-4">
+            <form method="GET" action="{{ route('suppliers.index') }}" class="grid lg:grid-cols-3 xxs:grid-cols-1 gap-y-4">
                 <div class="grid">
                     <label class="text-white font-main pb-2 font-bold" for="dish">Nombre:</label>
-                    <input class="secondary-color rounded text-xs font-light h-8 text-center w-40 text-white" id="supplier" type="text" name="supplier" placeholder="Nombre del proveedor">
+                    <input class="secondary-color rounded text-xs font-light h-8 text-center w-40 xxs:w-60 text-white" id="supplier" type="text" name="supplier" placeholder="Nombre del proveedor">
                 </div>
-                <div class="grid content-end">
-                <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 lg:w-28 sm:w-20 ml-10  rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
+                <div class="grid content-end xxs:content-center">
+                <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 lg:w-28 sm:w-20 xxs:w-60 ml-10 xxs:ml-0 rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
                 </div>
             </form>
 
-            <div class="content-end">
-                <a class="font-bold flex items-center justify-center h-12 lg:w-48 sm:w-40 lg:text-base sm:text-xs  secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('suppliers.create') }}">
+            <div class="content-end xxs:content-center">
+                <a class="font-bold flex items-center justify-center h-12 lg:w-48 sm:w-40 xxs:w-60 lg:text-base sm:text-xs  secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('suppliers.create') }}">
                     Agregar un proveedor
                 </a>
             </div>
         </div>
 
-        <div class="grid mt-10 grid-cols-3">
+        <div class="grid mt-10 lg:grid-cols-3 xxs:grid-cols-1 xxs:w-94 xxs:mr-10 xxs:mb-2 sm:grid-cols-2">
             @if($suppliers->isEmpty())
                 <div class="col-span-3 text-center mt-10">
                     <p class="text-white font-main text-lg">No hay registro de proveedores.</p>
@@ -124,7 +124,7 @@ window.onload = function() {
             @else
                 @foreach ($suppliers as $supplier)
                     <div class="py-4 rounded-lg secondary-color text-white p-3 mt-5 flex flex-col lg:w-[300px] sm:w-[190px]">
-                        <div class="grid grid-cols-3 items-center">
+                        <div class="grid lg:grid-cols-3 items-center">
                             <div class="text-center">
                                 <h2 class="font-bold text-sm">{{ $supplier->name }}</h2>
                             </div>

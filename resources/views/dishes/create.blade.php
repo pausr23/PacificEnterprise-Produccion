@@ -3,16 +3,16 @@
 @section('content')
 <div>
     <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
-    <div class="flex justify-center items-center mb-10">
-        <div class="grid grid-cols-2 gap-96">
-            <h1 class="text-2xl lg:ml-0 sm:ml-7 font-bold text-white font-main">Añade un nuevo producto</h1>
+    <div class="flex justify-center items-center mb-10 xxs:mb-4">
+        <div class="grid grid-cols-2 gap-96 md:gap-16 xxs:gap-1 xxs:grid xxs:grid-cols-1">
+            <h1 class="text-2xl lg:ml-0 sm:ml-7 font-bold text-white font-main xxs:mb-2">Añade un nuevo producto</h1>
             <a class="font-main text-white lg:w-[30%] sm:w-[50%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 lg:py-2.5 sm:py-5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
 
     <form action="{{ route('dishes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="pl-20 grid grid-cols-[50%,50%]">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:gap-y-1 xxs:px-2">
 
             <div class="grid">
 
@@ -73,7 +73,7 @@
 
         </div>
 
-        <div class="flex justify-end pr-20 sm:mt-5">
+        <div class="flex lg:justify-end justify-center pr-20 sm:mt-5 xxs:pr-2 xxs:py-4">
             <button type="submit" class="font-main text-white lg:w-[8%] sm:w-[16%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 lg:py-2.5 sm:py-5 text-center mr-60 mb-10">Guardar</button>
         </div>
     </form>

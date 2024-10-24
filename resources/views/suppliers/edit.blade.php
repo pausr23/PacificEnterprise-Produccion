@@ -5,7 +5,7 @@
     <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
         <div class="grid grid-cols-2 gap-96">
-            <h1 class="text-2xl font-bold text-white font-main">Edita la información del proveedor</h1>
+            <h1 class="text-2xl font-bold text-white font-main xxs:text-sm xxs:align-center">Edita la información del proveedor</h1>
             <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('suppliers.index') }}">Atrás</a>
         </div>
     </div>
