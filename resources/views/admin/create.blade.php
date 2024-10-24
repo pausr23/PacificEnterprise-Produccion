@@ -3,10 +3,10 @@
 @section('content')
 
 <div>
-    <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
-    <div class="flex justify-center items-center mb-10">
-        <div class="grid grid-cols-2 lg:gap-96 md:gap-16">
-            <h1 class="lg:text-2xl md:text-xl font-bold text-white font-main lg:ml-0 md:ml-16">Añade un nuevo usuario</h1>
+    <img class="w-56 m-12 xxs:mx-2" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+    <div class="flex justify-center items-center mb-10 xxs:mb-4">
+        <div class="grid grid-cols-2 lg:gap-96 md:gap-16 xxs:grid xxs:grid-cols-1">
+            <h1 class="lg:text-2xl md:text-xl font-bold text-white font-main lg:ml-0 md:ml-16 xxs:mb-2">Añade un nuevo usuario</h1>
             <a class="font-main text-white lg:w-[30%] md:w-[50%] lg:h-auto md:h-auto secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('admin.users') }}">Atrás</a>
         </div>
     </div>
@@ -25,7 +25,7 @@
 
     <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="pl-20 grid grid-cols-[50%,50%]">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid xxs:grid-cols-1 xxs:gap-y-1 xxs:px-2">
 
             <div class="grid">
 
@@ -69,8 +69,8 @@
 
         </div>
 
-        <div class="flex lg:justify-end justify-center pr-20 lg:pr-0 mt-5">
-    <button type="submit" class="font-main text-white w-full lg:w-[8%] md:w-[50%] sm:w-[50%] max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">
+        <div class="flex lg:justify-end justify-center pr-20 xxs:pr-2 xxs:py-4 lg:pr-0 mt-5">
+    <button type="submit" class="font-main text-white w-full lg:w-[9%] md:w-full sm:w-full max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">
         Guardar
     </button>
 </div>
