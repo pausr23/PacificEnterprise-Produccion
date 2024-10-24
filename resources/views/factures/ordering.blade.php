@@ -31,7 +31,7 @@
 </div>
 
 
-<div id="mobile-sidebar-menu" class="absolute top-0 left-0 w-full h-screen bg-[#16161A] transform translate-x-full transition-transform duration-300 lg:hidden">
+<div id="mobile-sidebar-menu" class="absolute top-0  left-0 w-full h-screen bg-[#16161A] transform translate-x-full transition-transform duration-300 lg:hidden">
     <div class="pl-2 pt-6 text-white font-light text-sm font-main">
         <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
         <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg secondary-color transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
@@ -57,7 +57,7 @@
 
     <label class="xxs:py-4 xxs:left-6 xxs:z-40 xxs:h-8 xxs:cursor-pointer lg:hidden xxs:flex md:items-center md:justify-center lg:none" for="mobile-checkbox">
         <input class="hidden" type="checkbox" id="mobile-checkbox" onClick="toggleMenu(this)" />
-        <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 ml-5 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </label>
@@ -294,7 +294,7 @@ window.onload = function() {
     </div>
         
     <div>
-        <div class="secondary-color h-auto lg:my-0 lg:mr-0 xxs:my-8 md:my-8 xxs:mr-3 md:mr-2">
+        <div class="secondary-color h-auto lg:my-0 lg:mr-0 xxs:my-8 md:my-8 xxs:mr-10 md:mr-12">
             <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>
             <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
             <hr class="border-b-1 border-white mt-2" />

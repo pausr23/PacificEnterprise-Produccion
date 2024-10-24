@@ -14,51 +14,62 @@ class DashboardSummaryController extends Controller
      */
     public function index(Request $request)
     {
-        $today = Carbon::now()->format('Y-m-d');
+        $today = Carbon::now();
+        $selectedDate = $today->format('Y-m-d');
 
-        $selectedDate = $today;
-        $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
+        $invoices = Invoice::all();
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
 
-        $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
-            ->latest()
-            ->take(5)
-            ->get();
-
         $earningsLabels = [];
         $earningsValues = array_fill(0, 12, 0);
+
         for ($i = 1; $i <= 12; $i++) {
             $earningsLabels[] = Carbon::create()->month($i)->format('F');
         }
+
         $earningsData = Invoice::selectRaw('MONTH(created_at) as month, SUM(total) as total')
             ->groupBy('month')
             ->get();
+
         foreach ($earningsData as $data) {
             $earningsValues[$data->month - 1] = $data->total;
         }
 
         $ordersLabels = [];
         $ordersValues = array_fill(0, 12, 0);
+
         for ($i = 1; $i <= 12; $i++) {
             $ordersLabels[] = Carbon::create()->month($i)->format('F');
         }
+
         $ordersData = Invoice::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('month')
             ->get();
+
         foreach ($ordersData as $data) {
             $ordersValues[$data->month - 1] = $data->count;
         }
-        
+
         if ($request->has('date')) {
             $selectedDate = $request->input('date');
             $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
+            
             $totalEarnings = $invoices->sum('total');
             $invoiceCount = $invoices->count();
+            
             $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
                 ->latest()
                 ->take(5)
                 ->get();
+
+            $earningsLabels = [];
+            $earningsValues = [];
+            $ordersLabels = [];
+            $ordersValues = [];
+            
+        } else {
+            $recentInvoices = Invoice::latest()->take(5)->get();
         }
 
         return view('dashboard.principal', compact(

@@ -3,10 +3,10 @@
 @section('content')
 
     <div>
-        <img class="w-80 xxs:mx-2 ml-20 mb-8" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+        <img class="w-80 ml-20 mb-8" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
         <a class="font-main ml-20 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('admin.show', $user->id) }}">Atrás</a>
         
-        <h1 class="ml-20 mt-10 mb-10 text-2xl font-bold text-white font-main xxs:mb-2">Actualiza el usuario</h1>
+        <h1 class="ml-20 mt-10 mb-10 text-2xl font-bold text-white font-main">Actualiza el usuario</h1>
 
 
         @if ($errors->any())
@@ -24,7 +24,7 @@
         <form action="{{ route('admin.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid xxs:grid-cols-1 xxs:gap-y-1 xxs:px-2">
+            <div class="pl-20 grid grid-cols-[50%,50%]">
 
                 <div class="grid">
 
@@ -69,8 +69,8 @@
 
             </div>
 
-            <div class="flex lg:justify-end justify-center mt-5">
-                <button type="submit" class="font-main text-white w-full lg:w-[9%] md:w-full sm:w-full max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Guardar</button>
+            <div class="flex justify-end  mt-5">
+                <button type="submit" class="font-main text-white w-[8%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mb-10">Guardar</button>
             </div>
         </form>
     </div>
