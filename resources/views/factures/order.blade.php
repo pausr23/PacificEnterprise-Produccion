@@ -59,7 +59,7 @@
 
     <label class="xxs:py-4 xxs:left-6 xxs:z-40 xxs:h-8 xxs:cursor-pointer lg:hidden xxs:flex md:items-center md:justify-center lg:none" for="mobile-checkbox">
         <input class="hidden" type="checkbox" id="mobile-checkbox" onClick="toggleMenu(this)" />
-        <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 ml-5 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </label>
@@ -76,11 +76,11 @@ function toggleMenu(checkbox) {
 
 
     if (isChecked) {
-        mobileMenu.style.transform = 'translateX(0)'; 
-        mobileMenu.style.display = 'block';            
+        mobileMenu.style.transform = 'translateX(0)';
+        mobileMenu.style.display = 'block';
     } else {
         mobileMenu.style.transform = 'translateX(100%)';
-        mobileMenu.style.display = 'none';              
+        mobileMenu.style.display = 'none';
     }
 
    
@@ -88,23 +88,23 @@ function toggleMenu(checkbox) {
 
    
     const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
-    hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; 
+    hamburgerIcon.style.display = isChecked ? 'none' : 'flex';
 }
 
 window.onload = function() {
     const checkbox = document.getElementById('mobile-checkbox');
-    checkbox.checked = false; 
-    toggleMenu(checkbox);  
+    checkbox.checked = false;
+    toggleMenu(checkbox);
 };
 </script>
 
 </div>
 
-    <div class=" scrollbar-hide scrollbarw-full overflow-x-scroll max-h-[80%]">
-        <div class="flex overflow-x-scroll xl:overflow-visible gap-[1rem] w-full h-full p-4 scrollbar-hide">
+    <div class=" scrollbar-hide scrollbarw-full overflow-x-scroll max-h-[80%] ">
+        <div class="flex overflow-x-scroll xl:overflow-visible gap-[1rem] w-full h-full p-4 scrollbar-hide:smt-20  ">
             @foreach($transactions as $transactionId => $transaction)
                     <div
-                        class="flex flex-col flex-shrink-0 w-[calc(30%-0.2rem)] h-full  rounded-lg bg-[#2d2d2D] text-white p-4 ">
+                        class="flex flex-col flex-shrink-0 w-[calc(30%-0.2rem)] xxs:w-64 h-full  rounded-lg bg-[#2d2d2D] text-white p-4  ">
                         <p class="text-lg font-bold mb-4">Orden #{{ $transactionId }}</p>
                         <div class="border-t border-gray-400 w-full  "></div>
                         <div class="overflow-y-auto scrollbar-hide h-[80%] ">
@@ -139,7 +139,7 @@ window.onload = function() {
                                                 @if($item['dishes_categories_id'] == 1)
                                                     <div class="flex justify-between w-full">
                                                         <p>{{ $item['title'] }}</p>
-                                                        <p>{{ $item['quantity'] }}</p>
+                                                        <p ">{{ $item['quantity'] }}</p>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -150,7 +150,7 @@ window.onload = function() {
                         <form action="{{ route('markOrderAsReady') }}" method="POST" class="mt-auto">
                             @csrf
                             <input type="hidden" name="invoice_number" value="{{ $transactionId }}">
-                            <button type="submit" class="w-full bg-[#797979] py-[.5rem] rounded-[.6rem]">Finalizado</button>
+                            <button type="submit" class="w-full xxs:text-xs  bg-[#797979] py-[.5rem] rounded-[.6rem]">Finalizado</button>
                         </form>
                     </div>
             @endforeach

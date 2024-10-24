@@ -57,7 +57,7 @@
 
     <label class="xxs:py-4 xxs:left-6 xxs:z-40 xxs:h-8 xxs:cursor-pointer lg:hidden xxs:flex md:items-center md:justify-center lg:none" for="mobile-checkbox">
         <input class="hidden" type="checkbox" id="mobile-checkbox" onClick="toggleMenu(this)" />
-        <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 ml-5 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </label>
@@ -75,11 +75,11 @@
 
 
         if (isChecked) {
-            mobileMenu.style.transform = 'translateX(0)'; 
-            mobileMenu.style.display = 'block';            
+            mobileMenu.style.transform = 'translateX(0)';
+            mobileMenu.style.display = 'block';
         } else {
             mobileMenu.style.transform = 'translateX(100%)';
-            mobileMenu.style.display = 'none';              
+            mobileMenu.style.display = 'none';
         }
 
        
@@ -87,13 +87,13 @@
 
        
         const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
-        hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; 
+        hamburgerIcon.style.display = isChecked ? 'none' : 'flex';
     }
 
     window.onload = function() {
         const checkbox = document.getElementById('mobile-checkbox');
         checkbox.checked = false; 
-        toggleMenu(checkbox);  
+        toggleMenu(checkbox);
     };
 </script>
 
@@ -104,25 +104,25 @@
             <form class="my-6" action="{{ route('principal.show') }}" method="POST">
                 @csrf
 
-                <label class="font-main text-white mr-4 text-lg" for="date">Selecciona una fecha:</label>
-                <input class="rounded-lg mr-4 px-3 py-2 secondary-color text-white" type="date" name="date" value="{{ old('date', $selectedDate) }}" required>
-                <button class="secondary-color rounded-lg text-white px-3 py-2 font-semibold" type="submit">Buscar por Día</button>
+                <label class="font-main text-white mr-4 lg:text-lg md:text-md " for="date">Selecciona una fecha:</label>
+                <input class="rounded-lg mr-4 px-3 mt-2 py-2 secondary-color text-white" type="date" name="date" value="{{ old('date', $selectedDate) }}" required>
+                <button class="secondary-color rounded-lg mt-2 text-white px-3 py-2 font-semibold" type="submit">Buscar por Día</button>
             </form>
 
             <div class="my-6 flex items-center">
                 <label class="switch" for="toggleSwitch">
                     <input type="checkbox" id="toggleSwitch">
-                    <span class="slider round"></span>
+                    <span class="slider round w-14 ml-3"></span>
                 </label>
-                <span class="font-main text-white ml-4 text-lg">Mostrar Gráficos</span>
+                <span class="font-main text-white ml-9 text-lg xxs:text-xs">Mostrar Gráficos</span>
             </div>
         </div>
 
-        <div class="grid grid-cols-2">
-            <div id="earningsView" class="secondary-color rounded-md p-8 w-[92%]">
-                <img id="earningsImage" class="w-12 rounded-full bg-gray-300 p-2 mb-12" src="https://img.icons8.com/isometric-line/50/stack-of-money.png" alt="Ganancias">
+        <div class="grid grid-cols-2 xxs:mr-7">
+            <div id="earningsView" class="secondary-color rounded-md p-8 w-[92%] ">
+                <img id="earningsImage" class="w-12 rounded-full bg-gray-300 p-2 mb-12 " src="https://img.icons8.com/isometric-line/50/stack-of-money.png" alt="Ganancias">
                 <p id="earningsLabel" class="text-white font-main text-xs font-light mb-2">Ganancias del día</p>
-                <p id="earningsTotal" class="text-white font-main text-3xl">₡{{ number_format($totalEarnings) }}</p>
+                <p id="earningsTotal" class="text-white font-main lg:text-4xl md:text-3xl  ">₡{{ number_format($totalEarnings) }}</p>
             </div>
 
         <div id="earningsChartContainer" style="display: none;">
@@ -244,7 +244,7 @@
         </div>
     </div>
 
-        <div class="grid grid-cols-[30%,65%] gap-4 mt-10">
+        <div class="grid grid-cols-[30%,65%] xxs:grid-cols-[65%,50%] gap-4 mt-10 xxs:mr-20">
 
             <div class="border grid text-white border-gray-300 rounded-md lg:p-4 xxs:p-1">
                 <div class="grid lg:grid-cols-2 xxs:grid-cols-1">
@@ -253,9 +253,9 @@
                 </div>
                 @foreach($recentInvoices as $invoice)
                     <div class="flex items-center mt-2">
-                        <img class="secondary-color rounded-md w-10 p-1" src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/bank-card-back-side.png" alt="bank-card-back-side" alt="card">
+                        <img class="secondary-color rounded-md ml-2 lg:w-10 xxs:w-8 p-1" src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/bank-card-back-side.png" alt="bank-card-back-side" alt="card">
                         <div class="grid">
-                            <p class="ml-2">Orden #{{ $invoice->invoice_number }}</p>
+                            <p class="ml-2  lg:text-lg xxs:text-xs">Orden #{{ $invoice->invoice_number }}</p>
                             <p class="ml-2">${{ $invoice->total }}</p>
                         </div>
                     </div>
