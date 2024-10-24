@@ -4,41 +4,108 @@
 
 <div class="grid grid-cols-[20%,80%] md:pl-6">
 
-    <div class="mr-5">
-        <img class="lg:w-40 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
+<div class="mr-5">
 
-        <div class="grid pl-2 pt-6 text-white font-light text-sm font-main ">
-            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
-            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg secondary-color transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
-            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
-            <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]" href="{{ route('factures.history') }}">Historial de Ventas</a>
+<img class="lg:w-40 md:w-60 xxs:w-40 lg:my-0 md:my-2" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
-            @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
-                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
-                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
-            @endif
-            
-            <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
-                <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                <div class="lg:ml-2">
-                    <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
-                    <p class="text-sm">@ {{ auth()->user()->username }}</p>
-                </div>
-            </a>
 
+<div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
+    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
+    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg secondary-color transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
+    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
+    <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]" href="{{ route('factures.history') }}">Historial de Ventas</a>
+
+    @if(Auth::check() && Auth::user()->job_titles_id == 1)
+        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
+        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
+    @endif
+    
+    <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0 ">
+        <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
+        <div class="lg:ml-2">
+            <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
+            <p class="text-sm">@ {{ auth()->user()->username }}</p>
         </div>
-        
-    </div>
+    </a>
+</div>
 
-    <div class="grid grid-cols-[65%,30%]">
+
+<div id="mobile-sidebar-menu" class="absolute top-0 left-0 w-full h-screen bg-[#16161A] transform translate-x-full transition-transform duration-300 lg:hidden">
+    <div class="pl-2 pt-6 text-white font-light text-sm font-main">
+        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dashboard.principal') }}">Panel Principal</a>
+        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg secondary-color transition-colors duration-300" href="{{ route('factures.ordering') }}">Punto de Venta</a>
+        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('factures.order') }}">Órdenes</a>
+        <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]" href="{{ route('factures.history') }}">Historial de Ventas</a>
+
+        @if(Auth::check() && Auth::user()->job_titles_id == 1)
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.index') }}">Productos</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('dishes.inventory') }}">Inventario</a>
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg" href="{{ route('suppliers.index') }}">Proveedores</a>
+        @endif
+        
+        <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
+            <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10" src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
+            <div class="lg:ml-2">
+                <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
+                <p class="text-sm">@ {{ auth()->user()->username }}</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+    <label class="xxs:py-4 xxs:left-6 xxs:z-40 xxs:h-8 xxs:cursor-pointer lg:hidden xxs:flex md:items-center md:justify-center lg:none" for="mobile-checkbox">
+        <input class="hidden" type="checkbox" id="mobile-checkbox" onClick="toggleMenu(this)" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </label>
+
+<div id="content" class="lg:ml-6">
+
+</div>
+
+<script>
+function toggleMenu(checkbox) {
+    const mobileMenu = document.getElementById('mobile-sidebar-menu');
+    const content = document.getElementById('content');
+    const isChecked = checkbox.checked;
+
+
+    if (isChecked) {
+        mobileMenu.style.transform = 'translateX(0)'; 
+        mobileMenu.style.display = 'block';            
+    } else {
+        mobileMenu.style.transform = 'translateX(100%)';
+        mobileMenu.style.display = 'none';              
+    }
+
+   
+    content.style.display = isChecked ? 'none' : 'block';
+
+   
+    const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
+    hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; 
+}
+
+window.onload = function() {
+    const checkbox = document.getElementById('mobile-checkbox');
+    checkbox.checked = false; 
+    toggleMenu(checkbox);  
+};
+</script>
+
+</div>
+
+    <div class="grid lg:grid-cols-[65%,30%] xxs:grid-cols-1">
 
         <div>
             <div class="grid">
                 <input class="pl-4 secondary-color rounded text-xs font-light h-8 text-left text-white w-[95%]" id="dish" type="text" name="dish" placeholder="Nombre de item" oninput="filterDishes()" />
             </div>
 
-            <div class="grid grid-cols-2 gap-3 mr-12 mt-8">
+            <div class="grid lg:grid-cols-2 xxs:grid-cols-1 gap-3 mr-12 mt-8">
                 @foreach($categories as $category)
                     <div class="bg-[#FFFF9F] rounded-md category-button transition-colors duration-200 hover:bg-[#CDA0CB] focus:bg-[#CDA0CB] cursor-pointer" tabindex="0" data-id="{{ $category->id }}" role="button">
                     <img class="mb-4 ml-5 mt-3 w-8" width="50" height="50" src="https://img.icons8.com/ios-filled/50/street-food--v2.png" alt="street-food--v2"/>
@@ -52,7 +119,7 @@
             <option value="" disabled selected>Subcategoría</option>
         </select>
 
-        <div id="dishes-list" class="grid grid-cols-4 gap-3 mr-12 products-container overflow-y-auto" style="max-height: 315px;">
+        <div id="dishes-list" class="grid lg:grid-cols-4 xxs:grid-cols-1 gap-3 mr-12 md:my-auto products-container overflow-y-auto" style="max-height: 315px;">
             @foreach($dishes as $dish)
             <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
                 data-dish-id="{{ $dish->id }}"
@@ -227,7 +294,7 @@
     </div>
         
     <div>
-        <div class="secondary-color h-auto">
+        <div class="secondary-color h-auto lg:my-0 lg:mr-0 xxs:my-8 md:my-8 xxs:mr-3 md:mr-2">
             <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>
             <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
             <hr class="border-b-1 border-white mt-2" />
@@ -244,7 +311,7 @@
 
                 <div class="grid grid-cols-1 mb-2">
                     <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
-                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-80 mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
+                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block p-1.5 text-white lg:w-78 md:w-40 sm:w-78 xxs:w-full mx-auto" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                 </div>
 
                 <h2 class="text-gray-400 text-sm ml-5 font-main mt-5">Método de Pago:</h2>

@@ -5,6 +5,12 @@ export default {
     "./resources/**/*.js",
   ],
   theme: {
+    screens: {
+      'xxs': {'max': '430px'},
+      'sm': {'min':'640px'},
+      'md': {'min' :'768px'},
+      'lg': {'min':'1024px'}
+    },
     extend: {},
   },
   plugins: [
