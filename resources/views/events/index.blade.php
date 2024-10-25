@@ -37,7 +37,7 @@
 
     <div class="container w-full ">
         <div class="w-[78vw] mb-4">
-            <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
+            <a class=" mb-4 font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
                 href="{{ route('events.create') }}">
                 Agregar un evento
             </a>
