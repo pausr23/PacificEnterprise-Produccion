@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RegisteredDishController;
 use App\Http\Controllers\CategoriesDishController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::get('/dishes/dish/{id}', [RegisteredDishController::class, 'show']);
 
 Route::get('/categories/{categoryId}', [CategoriesDishController::class, 'index']);
 Route::get('/categories', [CategoriesDishController::class, 'show']);
+Route::get('/events', [EventController::class, 'index']);
 
 
 

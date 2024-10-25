@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -85,6 +86,12 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     Route::resource('suppliers', AdminSupplierController::class);
 
     Route::post('/factures/invoice', [AdminDishController::class, 'storeOrder'])->name('factures.invoice');
+
+    Route::get('/events', [EventController::class, 'show'])->name('events.index');
+
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
+    Route::get('events/show/{id}', [EventController::class, 'showEventDetail'])->name('events.show');
     
 
 });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 use App\Models\Invoice;
+use App\Models\Event;
 
 class DashboardSummaryController extends Controller
 {
@@ -21,8 +22,9 @@ class DashboardSummaryController extends Controller
 
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
+        $events = $this->getEvents();
+        return view('dashboard.principal', compact('invoices', 'totalEarnings', 'invoiceCount', 'selectedDate', 'events'));
 
-        return view('dashboard.principal', compact('invoices', 'totalEarnings', 'invoiceCount', 'selectedDate'));
     }
 
     public function showStatistics(Request $request)
@@ -30,21 +32,44 @@ class DashboardSummaryController extends Controller
         $request->validate([
             'date' => 'required|date',
         ]);
-
+    
         $selectedDate = $request->input('date');
-
+    
         $invoices = Invoice::whereDate('created_at', Carbon::parse($selectedDate))->get();
-
-
+    
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
-
+    
+        $events = $this->getEvents();
+    
+        // Usar dd() para depurar
+        dd($totalEarnings, $events);
+    
         return view('dashboard.principal', [
             'invoices' => $invoices,
             'totalEarnings' => $totalEarnings,
             'invoiceCount' => $invoiceCount,
             'selectedDate' => $selectedDate,
+            'events' => $events, // Pasar los eventos a la vista
         ]);
+    }
+
+
+    public function getEvents()
+    {
+        // Obtener la fecha actual
+        $today = Carbon::today();
+
+        // Realizar la consulta a la base de datos en la tabla 'events'
+        $events = Event::where('event_date', '>=', $today)->get();
+
+        // Formatear las fechas antes de devolver los eventos
+        $events->transform(function ($event) {
+            $event->event_date = Carbon::parse($event->event_date)->format('Y-m-d');
+            return $event;
+        });
+
+        return $events;
     }
 
     /**
