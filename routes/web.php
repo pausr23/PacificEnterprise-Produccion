@@ -8,6 +8,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminDishController;
 use App\Http\Controllers\AdminSupplierController;
 use App\Http\Controllers\DashboardSummaryController;
+use App\Http\Controllers\AdminInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,7 +99,7 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     Route::get('events/show/{id}', [EventController::class, 'showEventDetail'])->name('events.show');
 
     /* Information */
-    
+
     Route::resource('information', AdminInformationController::class);
     Route::get('information/{id}', [AdminInformationController::class, 'show'])->name('information.show'); 
     
