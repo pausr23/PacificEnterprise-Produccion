@@ -250,7 +250,7 @@ class AdminDishController extends Controller
                 ];
 
                 $dish->units -= $item['quantity'];
-                $dish->save(); 
+                $dish->save();
             }
         }
 

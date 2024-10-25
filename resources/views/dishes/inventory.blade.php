@@ -85,13 +85,13 @@
 
        
         const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
-        hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; 
+        hamburgerIcon.style.display = isChecked ? 'none' : 'flex';
     }
 
     window.onload = function() {
         const checkbox = document.getElementById('mobile-checkbox');
-        checkbox.checked = false; 
-        toggleMenu(checkbox);  
+        checkbox.checked = false;
+        toggleMenu(checkbox);
     };
 </script>
 

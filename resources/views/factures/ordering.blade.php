@@ -74,11 +74,11 @@ function toggleMenu(checkbox) {
 
 
     if (isChecked) {
-        mobileMenu.style.transform = 'translateX(0)'; 
-        mobileMenu.style.display = 'block';            
+        mobileMenu.style.transform = 'translateX(0)';
+        mobileMenu.style.display = 'block';
     } else {
         mobileMenu.style.transform = 'translateX(100%)';
-        mobileMenu.style.display = 'none';              
+        mobileMenu.style.display = 'none';
     }
 
    
@@ -86,13 +86,13 @@ function toggleMenu(checkbox) {
 
    
     const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
-    hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; 
+    hamburgerIcon.style.display = isChecked ? 'none' : 'flex';
 }
 
 window.onload = function() {
     const checkbox = document.getElementById('mobile-checkbox');
-    checkbox.checked = false; 
-    toggleMenu(checkbox);  
+    checkbox.checked = false;
+    toggleMenu(checkbox);
 };
 </script>
 
@@ -469,12 +469,12 @@ window.onload = function() {
                         document.getElementById('payment-amount-section').style.display = 'none';
                         document.getElementById('change-section').style.display = 'none';
 
-                        if (methodId === "1") { 
+                        if (methodId === "1") {
                             document.getElementById('payment-amount-section').style.display = 'grid';
                             document.getElementById('change-section').style.display = 'grid';
                         }
 
-                        document.getElementById('paymentMethodInput').value = methodId; 
+                        document.getElementById('paymentMethodInput').value = methodId;
                     });
                 });
 

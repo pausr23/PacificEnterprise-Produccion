@@ -5,7 +5,7 @@
 <div class="grid grid-cols-[20%,80%] md:pl-6">
 <div class="mr-5">
 
-<img class="lg:w-40 md:w-60 xxs:w-40 lg:my-0 md:my-2" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
+<img class="lg:w-60 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise">
 
 
 <div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
@@ -73,11 +73,11 @@ function toggleMenu(checkbox) {
 
 
     if (isChecked) {
-        mobileMenu.style.transform = 'translateX(0)'; 
-        mobileMenu.style.display = 'block';            
+        mobileMenu.style.transform = 'translateX(0)';
+        mobileMenu.style.display = 'block';
     } else {
         mobileMenu.style.transform = 'translateX(100%)';
-        mobileMenu.style.display = 'none';              
+        mobileMenu.style.display = 'none';
     }
 
    
@@ -85,13 +85,13 @@ function toggleMenu(checkbox) {
 
    
     const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
-    hamburgerIcon.style.display = isChecked ? 'none' : 'flex'; 
+    hamburgerIcon.style.display = isChecked ? 'none' : 'flex';
 }
 
 window.onload = function() {
     const checkbox = document.getElementById('mobile-checkbox');
-    checkbox.checked = false; 
-    toggleMenu(checkbox);  
+    checkbox.checked = false;
+    toggleMenu(checkbox);
 };
 </script>
 
