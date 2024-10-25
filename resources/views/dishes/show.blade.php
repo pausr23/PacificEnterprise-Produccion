@@ -19,7 +19,7 @@
     <img class="w-72 mx-auto rounded-lg	" src="{{ asset('storage/images/' . $dish->image) }}" alt="{{ $dish->title }}" border="0">
     <div class="mt-4 text-white">
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Descripción:</strong> {{ $dish->description }}</p>
-        <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Precio de compra:</strong> ${{ number_format($dish->purchase, 2) }}</p>
+        <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Precio de compra:</strong> ${{ number_format($dish->purchase_price, 2) }}</p>
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Precio de venta:</strong> ${{ number_format($dish->sale_price, 2) }}</p>
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Categoría:</strong> {{ $dish->category }}</p>
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Subcategoría:</strong> {{ $dish->subcategory }}</p>

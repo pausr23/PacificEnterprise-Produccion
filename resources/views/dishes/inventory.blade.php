@@ -137,7 +137,7 @@
                             <td scope="col" class="lg:px-3 xxs:px-1 lg:py-3 xxs:py-2">{{ $dish->title }}</td>
                             <td>{{ $dish->category }}</td>
                             <td>{{ $dish->subcategory }}</td>
-                            <td>{{ $dish->dish_price }}</td>
+                            <td>{{ $dish->sale_price }}</td>
                             <td>{{ $dish->units }}</td>
                         </tr>
                     @endforeach

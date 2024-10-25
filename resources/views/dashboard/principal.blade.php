@@ -276,31 +276,7 @@
 
             </div>
 
-            <div class="swiper-container" style="overflow: hidden; position: relative;">
-                <div class="swiper-wrapper">
-                    @foreach($events as $event)
-                        <div class="swiper-slide">
-                            <div class="shadow-md rounded-[2rem] overflow-hidden relative">
-                                <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}"
-                                    class="w-full h-[25vw] object-fit">
-                                <div
-                                    class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent">
-                                    <h2 class="text-white text-3xl font-bold mb-2">{{ $event->title }}</h2>
-                                    <p class="text-white mb-4">Fecha: {{ $event->event_date }}</p>
-                                    <p class="text-white">{{ $event->description }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <!-- Agregar botones de navegación -->
-                <button class="swiper-button-next swiper-button-white"
-                    style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; z-index: 10; cursor: pointer;"></button>
-                <button class="swiper-button-prev swiper-button-white"
-                    style="position: absolute; top: 50%; transform: translateY(-50%); left: 10px; z-index: 10; cursor: pointer;"></button>
-                <!-- Agregar paginación -->
-                <div class="swiper-pagination swiper-pagination-white"></div>
-            </div>
+            
         </div>
 
         <script>
