@@ -41,8 +41,7 @@
                     <p class="text-sm">@ {{ auth()->user()->username }}</p>
                 </div>
             </a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                href="{{ route('events.index') }}">Eventos</a>
+
         </div>
 
 
@@ -165,14 +164,14 @@
                                                     <div class="flex justify-between w-full">
                                                         <p>{{ $item['title'] }}</p>
                                                         <p ">{{ $item['quantity'] }}</p>
-                                                                                                                    </div>
+                                                                                                                                                    </div>
                                                 @endif
                                             @endforeach
                             @else
                                 <p>No items found.</p>
                             @endif
-                                        </div>
-                                        <form action=" {{ route('markOrderAsReady') }}" method="POST" class="mt-auto">
+                                                </div>
+                                                <form action=" {{ route('markOrderAsReady') }}" method="POST" class="mt-auto">
                                     @csrf
                                     <input type="hidden" name="invoice_number" value="{{ $transactionId }}">
                                     <button type="submit"

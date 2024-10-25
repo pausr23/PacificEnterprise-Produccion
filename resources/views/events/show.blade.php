@@ -11,9 +11,16 @@
             <p class="text-white">{{ $event->description }}</p>
         </div>
     </div>
-    <div class="flex justify-center mt-6">
+        <div class="flex justify-center mt-6 space-x-4">
         <a href="{{ route('events.index') }}"
             class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Volver a la Lista de Eventos</a>
+        <a href="{{ route('events.edit', $event->id) }}"
+            class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Editar Evento</a>
+        <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento?');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar Evento</button>
+        </form>
     </div>
 </div>
 @endsection

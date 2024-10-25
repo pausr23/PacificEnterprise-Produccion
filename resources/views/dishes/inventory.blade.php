@@ -147,37 +147,34 @@
             </form>
         </div>
 
-        <div class="lg:w-[90%] lg:grid lg:gap-16 xxs:gap-1">
-            <div class="py-10 rounded-lg ml-[-5rem]">
-                <table class="w-full rounded-lg">
-                    <thead class="rounded-lg text-white font-main font-bold secondary-color">
-                        <tr>
-                            <th scope="col" class="rounded-l-lg py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Nombre
-                            </th>
-                            <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Categoria</th>
-                            <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Subcategoria</th>
-                            <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Precio Individual</th>
-                            <th scope="col" class="rounded-r-lg py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Unidades
-                            </th>
+    <div class="lg:w-[90%] lg:grid lg:gap-16 xxs:gap-1">
+        <div class="py-10 rounded-lg xxs:ml-[-5rem]">
+            <table class="w-full rounded-lg">
+                <thead class="rounded-lg text-white font-main font-bold secondary-color">
+                    <tr>
+                        <th scope="col" class="rounded-l-lg py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Nombre</th>
+                        <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Categoria</th>
+                        <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Subcategoria</th>
+                        <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Precio Individual</th>
+                        <th scope="col" class="rounded-r-lg py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Unidades</th>
+                    </tr>
+                </thead>
+                
+                <tbody class="xxs-:mr-8">
+                    @foreach ($dishes as $dish)
+                        <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-[0.5rem] lg:px-0 xxs:px-0">
+                            <td scope="col" class="lg:px-3 xxs:px-1 lg:py-3 xxs:py-2">{{ $dish->title }}</td>
+                            <td>{{ $dish->category }}</td>
+                            <td>{{ $dish->subcategory }}</td>
+                            <td>{{ $dish->dish_price }}</td>
+                            <td>{{ $dish->units }}</td>
                         </tr>
-                    </thead>
-
-                    <tbody class="xxs-:mr-8">
-                        @foreach ($dishes as $dish)
-                            <tr
-                                class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-[0.5rem] lg:px-0 xxs:px-0">
-                                <td scope="col" class="lg:px-3 xxs:px-1 lg:py-3 xxs:py-2">{{ $dish->title }}</td>
-                                <td>{{ $dish->category }}</td>
-                                <td>{{ $dish->subcategory }}</td>
-                                <td>{{ $dish->dish_price }}</td>
-                                <td>{{ $dish->units }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
 </div>
 

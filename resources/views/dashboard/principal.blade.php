@@ -3,14 +3,11 @@
 @section('content')
 
 <head>
-    < <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </head>
 
-<head>
-    < <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-</head>
+
 
 <div class="grid grid-cols-[20%,80%] md:pl-6">
 
@@ -311,20 +308,22 @@
                 <div class="swiper-wrapper">
                     @foreach($events as $event)
                         <div class="swiper-slide">
-                            <div class="shadow-md rounded-[2rem] overflow-hidden relative">
-                                <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}"
-                                    class="w-full h-[25vw] object-fit">
-                                <div
-                                    class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent">
-                                    <h2 class="text-white text-3xl font-bold mb-2">{{ $event->title }}</h2>
-                                    <p class="text-white mb-4">Fecha: {{ $event->event_date }}</p>
-                                    <p class="text-white">{{ $event->description }}</p>
+                            <a href="{{ route('events.show', $event->id) }}" class="block">
+                                <div class="shadow-md rounded-[2rem] overflow-hidden relative">
+                                    <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}"
+                                        class="w-full h-[25vw] object-contain">
+                                    <div
+                                        class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent">
+                                        <h2 class="text-white text-3xl font-bold mb-2">{{ $event->title }}</h2>
+                                        <p class="text-white mb-4">Fecha: {{ $event->event_date }}</p>
+                                        <p class="text-white">{{ $event->description }}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>
-                <!-- Agregar botones de navegación -->
+                <!-- Agregar botones de navegación fuera del contenedor de imágenes -->
                 <button class="swiper-button-next swiper-button-white"
                     style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; z-index: 10; cursor: pointer;"></button>
                 <button class="swiper-button-prev swiper-button-white"
@@ -332,26 +331,29 @@
                 <!-- Agregar paginación -->
                 <div class="swiper-pagination swiper-pagination-white"></div>
             </div>
-        </div>
+            @endsection
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var swiper = new Swiper('.swiper-container', {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
+            @section('scripts')
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var swiper = new Swiper('.swiper-container', {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        loop: true,  // Agregar loop para un carrusel continuo
+                        autoplay: {
+                            delay: 2000,  // 2000 milisegundos = 2 segundos
+                            disableOnInteraction: false,  // Continuar el autoplay incluso después de la interacción del usuario
+                        },
+                    });
                 });
-            });
-        </script>
+            </script>
 
-    </div>
-</div>
-</div>
-@endsection
+            @endsection

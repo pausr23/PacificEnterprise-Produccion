@@ -61,26 +61,31 @@ class EventController extends Controller
         return view('events.edit', compact('event'));
     }
 
+
     public function update(Request $request, Event $event)
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required',
             'event_date' => 'required|date',
+            'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
         ]);
-
+    
+        $imageName = $event->image_path;
         if ($request->hasFile('image')) {
-            // Eliminar imagen anterior si existe
-            if ($event->image_path) {
-                Storage::disk('public')->delete($event->image_path);
-            }
-            $event->image_path = $request->file('image')->store('events', 'public');
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+            $image->storeAs('images', $imageName, 'public');
         }
-
-        $event->update($request->only('title', 'description', 'event_date'));
-
-        return redirect()->route('events.index')->with('success', 'Evento actualizado');
+    
+        $event->update([
+            'title' => $request->title,
+            'event_date' => $request->event_date,
+            'description' => $request->description,
+            'image_path' => $imageName,
+        ]);
+    
+        return redirect()->route('events.index')->with('success', 'Evento actualizado exitosamente.');
     }
 
     public function destroy(Event $event)

@@ -23,21 +23,12 @@ class DashboardSummaryController extends Controller
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
         $events = $this->getEvents();
-        if ($request->has('date')) {
-            $selectedDate = $request->input('date');
-            $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
-            $totalEarnings = $invoices->sum('total');
-            $invoiceCount = $invoices->count();
-            $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
-                ->latest()
-                ->take(5)
-                ->get();
-        } else {
-            $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
-                ->latest()
-                ->take(5)
-                ->get();
-        }
+
+
+        $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
+            ->latest()
+            ->take(5)
+            ->get();
 
         $earningsLabels = [];
         $earningsValues = array_fill(0, 12, 0);
@@ -61,6 +52,17 @@ class DashboardSummaryController extends Controller
             ->get();
         foreach ($ordersData as $data) {
             $ordersValues[$data->month - 1] = $data->count;
+        }
+
+        if ($request->has('date')) {
+            $selectedDate = $request->input('date');
+            $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
+            $totalEarnings = $invoices->sum('total');
+            $invoiceCount = $invoices->count();
+            $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
+                ->latest()
+                ->take(5)
+                ->get();
         }
 
         $events = $this->getEvents();
@@ -100,6 +102,7 @@ class DashboardSummaryController extends Controller
     
     public function showStatistics(Request $request)
     {
+        $events = $this->getEvents();
         $request->validate([
             'date' => 'required|date',
         ]);
@@ -167,6 +170,7 @@ class DashboardSummaryController extends Controller
             'earningsLabels' => $earningsLabels,
             'earningsValues' => $earningsValues,
             'ordersLabels' => $ordersLabels,
+            'events'=> $events, 
             'ordersValues' => $ordersValues,
         ]);
     }
@@ -176,6 +180,8 @@ class DashboardSummaryController extends Controller
         $request->validate([
             'month' => 'required|date_format:Y-m',
         ]);
+
+        $events = $this->getEvents();
 
         $selectedMonth = $request->input('month');
         $startOfMonth = Carbon::parse($selectedMonth)->startOfMonth();
@@ -229,6 +235,7 @@ class DashboardSummaryController extends Controller
             'earningsValues' => $earningsValues,
             'ordersLabels' => $ordersLabels,
             'ordersValues' => $ordersValues,
+            'events' => $events,
         ]);
     }
 }

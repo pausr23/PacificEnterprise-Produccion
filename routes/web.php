@@ -24,7 +24,7 @@ use App\Http\Controllers\DashboardSummaryController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/profile', [UsersController::class, 'profile'])->name('admin.profile');
-    
+
     Route::get('/factures/ordering', [AdminDishController::class, 'order'])->name('factures.ordering');
 
     Route::get('/factures/order', [AdminDishController::class, 'showOrderInKitchen'])->name('factures.order');
@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/store', [AdminDishController::class, 'storeOrder'])->name('store.order');
 
     Route::get('/factures/history', [AdminDishController::class, 'history'])->name('factures.history');
-    
+
     Route::post('/mark-order-as-ready', [AdminDishController::class, 'markOrderAsReady'])->name('markOrderAsReady');
 
     Route::get('/dishes/inventory', [AdminDishController::class, 'inventory'])->name('dishes.inventory');
@@ -67,7 +67,7 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
-    
+
 
     Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
 
@@ -93,9 +93,18 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     Route::get('/events', [EventController::class, 'show'])->name('events.index');
 
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
     Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
+
     Route::get('events/show/{id}', [EventController::class, 'showEventDetail'])->name('events.show');
-    
+
+    Route::get('/events/edit/{event}', [EventController::class, 'edit'])->name('events.edit');
+
+    Route::put('/events/update{event}', [EventController::class, 'update'])->name('events.update');
+
+    Route::delete('/events/destroy/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+
+
 
 });
 
@@ -104,4 +113,6 @@ Route::get('', [UsersController::class, 'index'])->name('admin.login');
 Route::post('/login', [UsersController::class, 'login'])->name('admin.login.submit');
 
 // Ruta de cierre de sesión
-Route::post('/logout', function () {Auth::logout(); return redirect()->route('admin.login');})->name('admin.logout');
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect()->route('admin.login'); })->name('admin.logout');
