@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="grid grid-cols-[20%,80%] px-12">
+<div class="grid grid-cols-[20%,80%]">
 
     <div class="mr-8">
         <img class="w-72" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
@@ -35,29 +35,29 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="w-full mb-4">
+    <div class="container w-full ">
+        <div class="w-[78vw] mb-4">
             <a class="font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
                 href="{{ route('events.create') }}">
                 Agregar un evento
             </a>
-        </div>
-        <div class="grid grid-cols-4 gap-4">
-            @foreach($events as $event)
-                <div class="border w-full min-h-[18rem] bg-[#2D2D2D] border-none rounded-[2rem]">
-                    <div class="flex h-40 w-full overflow-hidden relative">
-                        <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}"
-                            class="absolute top-0 left-0 w-full h-full object-cover rounded-t-[2rem]">
+            <div class="grid grid-cols-4 gap-4 w-full">
+                @foreach($events as $event)
+                    <div class="border w-full min-h-[18rem] bg-[#2D2D2D] border-none rounded-[2rem]">
+                        <div class="flex h-40 w-full overflow-hidden relative">
+                            <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}"
+                                class="absolute top-0 left-0 w-full h-full object-cover rounded-t-[2rem]">
+                        </div>
+                        <div class="mx-[5%] my-[2%]">
+                            <h2 class="font-bold text-white">{{ $event['title'] }}</h2>
+                            <p class="font-bold text-[#B4C1C7]">Fecha: {{ $event['event_date'] }}</p>
+                            <a href="{{ route('events.show', $event->id) }}"
+                                class="text-white font-bold mt-[1rem] w-full bg-[#7ECACA] rounded-[2rem] py-2 text-center block">Ver
+                                más</a>
+                        </div>
                     </div>
-                    <div class="mx-[5%] my-[2%]">
-                        <h2 class="font-bold text-white">{{ $event['title'] }}</h2>
-                        <p class="font-bold text-[#B4C1C7]">Fecha: {{ $event['event_date'] }}</p>
-                        <a href="{{ route('events.show', $event->id) }}"
-                            class="text-white font-bold mt-[1rem] w-full bg-[#7ECACA] rounded-[2rem] py-2 text-center block">Ver
-                            más</a>
-                    </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

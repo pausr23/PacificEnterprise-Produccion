@@ -4,16 +4,16 @@
 <div>
     <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
-        <div class="grid grid-cols-2 gap-96">
-            <h1 class="text-2xl font-bold text-white font-main">Edita la información del proveedor</h1>
-            <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('suppliers.index') }}">Atrás</a>
+        <div class="grid grid-cols-2 xxs:grid-cols-1 xxs:gap-1 gap-96">
+            <h1 class="text-2xl font-bold text-white font-main xxs:text-sm xxs:align-center">Edita la información del proveedor</h1>
+            <a class="font-main text-white w-[30%] xxs:w-full secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('suppliers.index') }}">Atrás</a>
         </div>
     </div>
 
     <form action="{{ route('suppliers.update', $supplier->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="pl-20 grid grid-cols-[50%,50%]">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:-ml-16">
 
             <div class="grid">
 
@@ -46,7 +46,7 @@
         </div>
 
         <div class="flex justify-end pr-20 mt-5">
-            <button type="submit" class="font-main text-white w-[10%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mb-10">Actualizar</button>
+            <button type="submit" class="font-main text-white lg:w-[10%] sm:w-[40%] xxs:w-full secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mb-10 xxs:-mr-6 xxs:mb-1">Actualizar</button>
         </div>
     </form>
 </div>

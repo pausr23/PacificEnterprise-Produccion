@@ -24,7 +24,7 @@
         <form action="{{ route('admin.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <div class="pl-20 grid grid-cols-[50%,50%]">
+            <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:-ml-16">
 
                 <div class="grid">
 
@@ -70,7 +70,7 @@
             </div>
 
             <div class="flex justify-end  mt-5">
-                <button type="submit" class="font-main text-white w-[8%] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mb-10">Guardar</button>
+                <button type="submit" class="font-main text-white w-[8%] xxs:w-full xxs:ml-2 secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mb-10">Guardar</button>
             </div>
         </form>
     </div>

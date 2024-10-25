@@ -39,7 +39,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard/principal', [DashboardSummaryController::class, 'index'])->name('dashboard.principal');
 
+    Route::get('/dashboard/searchByMonth', [DashboardSummaryController::class, 'searchByMonth'])->name('dashboard.searchByMonth');
+
     Route::post('/dashboard/principal', [DashboardSummaryController::class, 'showStatistics'])->name('principal.show');
+
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
@@ -95,9 +98,6 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     
 
 });
-
-
-
 
 // Ruta de inicio de sesión
 Route::get('', [UsersController::class, 'index'])->name('admin.login');

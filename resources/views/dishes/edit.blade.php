@@ -2,11 +2,11 @@
 
 @section('content')
 <div>
-    <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+    <img class="w-56 xxs:mx-2 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
-        <div class="grid grid-cols-2 gap-96">
-            <h1 class="text-2xl font-bold text-white font-main">Edita el producto</h1>
-            <a class="font-main  w-[50%] secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
+        <div class="grid grid-cols-2 gap-96 xxs:gap-0 xxs:grid-cols-1 xxs:-ml-1">
+            <h1 class="text-2xl xxs:text-lg xxs:ml-6 font-bold text-white font-main xxs:mb-2">Edita el producto</h1>
+            <a class="font-main w-[50%] xxs:w-full secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 xxs:px-1 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
 
@@ -14,12 +14,12 @@
     <form action="{{ route('dishes.update', $dish->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="pl-20 grid grid-cols-[50%,50%]">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid xxs:grid-cols-1 xxs:gap-y-1 xxs:px-2">
 
-            <!-- Sección 1 -->
+
             <div class="grid">
 
-                <!-- Name -->
+                
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Nombre</label>
                     <input class="secondary-color border border-gray-300  text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="title" value="{{ $dish->title }}" placeholder="Nombre del producto">
@@ -87,8 +87,8 @@
         </div>
 
         <!-- Botón de guardar -->
-        <div class="flex justify-end mt-5 pr-20">
-            <button type="submit" class="font-main text-white w-[10%] secondary-color hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg px-5 py-2.5 text-center mr-60 mt-6 mb-10">Actualizar</button>
+        <div class="flex lg:justify-end justify-center mt-5 pr-20 xxs:px-3 xxs:ml-1">
+            <button type="submit" class="font-main text-white w-full lg:w-[9%] md:w-full sm:w-full max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Actualizar</button>
         </div>
     </form>
 </div>

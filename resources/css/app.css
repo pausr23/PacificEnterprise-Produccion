@@ -11,6 +11,52 @@
     font-style: normal;
 }
 
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-left: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d6eabb;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #F19DB4;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
 select {
     color: white; 
     background-color: #323035; 
@@ -32,4 +78,21 @@ select:focus {
 
 .products-container::-webkit-scrollbar-track {
     background: #323035; 
+}
+
+/* Cuando el checkbox NO está marcado, el menú está oculto */
+#mobile-checkbox:not(:checked) ~ #sidebar-menu {
+    transform: translateX(-100%);
+}
+
+/* Cuando el checkbox está marcado, el menú se muestra */
+#mobile-checkbox:checked ~ #sidebar-menu {
+    transform: translateX(0);
+}
+
+/* Este estilo asegura que el menú esté siempre visible en pantallas grandes */
+@media (min-width: 1024px) {
+    #mobile-checkbox:checked ~ #sidebar-menu {
+        transform: translateX(0);
+    }
 }
