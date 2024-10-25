@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/dashboard/principal', [DashboardSummaryController::class, 'showStatistics'])->name('principal.show');
 
+    Route::get('/factures/{id}', [AdminDishController::class, 'showInvoices'])->name('factures.show');
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
-    
+    Route::resource('dishes', AdminDishController::class);
 
     Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
 
@@ -95,6 +96,11 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
     Route::get('events/show/{id}', [EventController::class, 'showEventDetail'])->name('events.show');
+
+    /* Information */
+    
+    Route::resource('information', AdminInformationController::class);
+    Route::get('information/{id}', [AdminInformationController::class, 'show'])->name('information.show'); 
     
 
 });

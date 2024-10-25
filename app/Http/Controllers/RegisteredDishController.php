@@ -18,7 +18,7 @@ class RegisteredDishController extends Controller
             'registered_dishes.id',
             'registered_dishes.title',
             'registered_dishes.image',
-            'registered_dishes.dish_price',
+            'registered_dishes.sale_price',
             'registered_dishes.description',
             'dishes_categories.id as category_id', // Agregar la ID de la categoría
             'dishes_categories.name as category',
@@ -60,7 +60,7 @@ class RegisteredDishController extends Controller
             'subcategories_id' => $request->subcategories_id,
             'title' => $request->title,
             'description' => $request->description,
-            'dish_price' => $request->dish_price,
+            'sale_price' => $request->sale_price,
             'image' => $file_name,
         ]);
         return "Dish registered sucesfully";
@@ -75,7 +75,7 @@ class RegisteredDishController extends Controller
             'dishes_categories.name as category',
             'registered_dishes.title',
             'registered_dishes.description',
-            'registered_dishes.dish_price',
+            'registered_dishes.sale_price',
             'registered_dishes.image',
             'subcategories.name as subcategory'
         )

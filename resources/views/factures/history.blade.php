@@ -134,7 +134,7 @@ window.onload = function() {
                                 <td class="px-1">{{ $order->note }}</td>
                                 <td class="px-2">{{ $order->total }}</td>
                                 <td class="py-6 px-2 flex justify-center">
-                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="">Ver</a>
+                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="{{ route('factures.show', $order->id) }}">Ver</a>
                                 </td>
                             </tr>
                         @endforeach
