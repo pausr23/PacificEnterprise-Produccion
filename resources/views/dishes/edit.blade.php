@@ -4,9 +4,9 @@
 <div>
     <img class="w-56 xxs:mx-2 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
-        <div class="grid grid-cols-2 gap-96">
+        <div class="grid grid-cols-2 gap-96 xxs:gap-0 xxs:grid-cols-1 xxs:-ml-1">
             <h1 class="text-2xl xxs:text-lg xxs:ml-6 font-bold text-white font-main xxs:mb-2">Edita el producto</h1>
-            <a class="font-main  w-[50%] secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
+            <a class="font-main w-[50%] xxs:w-full secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 xxs:px-1 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
 
@@ -87,7 +87,7 @@
         </div>
 
         <!-- Botón de guardar -->
-        <div class="flex lg:justify-end justify-center mt-5 pr-20">
+        <div class="flex lg:justify-end justify-center mt-5 pr-20 xxs:px-3 xxs:ml-1">
             <button type="submit" class="font-main text-white w-full lg:w-[9%] md:w-full sm:w-full max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Actualizar</button>
         </div>
     </form>

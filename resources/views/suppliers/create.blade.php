@@ -4,7 +4,7 @@
 <div>
     <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
-        <div class="grid grid-cols-2 gap-96 xxs:gap-4">
+        <div class="grid grid-cols-2 xxs:grid-cols-1 gap-96 xxs:gap-4">
             <h1 class="text-2xl lg:ml-0 sm:ml-7 font-bold text-white font-main lg:text-base xxs:text-sm xxs:align-center">Añade un nuevo proveedor</h1>
             <a class="font-main text-white lg:w-[30%] sm:w-[50%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 lg:py-2.5 sm:py-5 xxs:py-1.5 text-center" href="{{ route('suppliers.index') }}">Atrás</a>
         </div>
