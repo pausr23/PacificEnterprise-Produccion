@@ -119,7 +119,7 @@
     </div>
 
     <div class="lg:w-[90%] lg:grid lg:gap-16 xxs:gap-1">
-        <div class="py-10 rounded-lg ml-[-5rem]">
+        <div class="py-10 rounded-lg xxs:ml-[-5rem]">
             <table class="w-full rounded-lg">
                 <thead class="rounded-lg text-white font-main font-bold secondary-color">
                     <tr>
