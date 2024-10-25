@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('payment_method_id')->constrained('payment_methods');
             $table->decimal('total', 8, 2);
             $table->string('note')->nullable();
+            $table->int('is_ready')->default(1);
             $table->timestamps();
         });
     }

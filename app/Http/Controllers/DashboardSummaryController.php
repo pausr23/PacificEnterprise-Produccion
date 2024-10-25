@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 use App\Models\Invoice;
+use App\Models\Event;
+
 
 class DashboardSummaryController extends Controller
 {
@@ -14,63 +16,54 @@ class DashboardSummaryController extends Controller
      */
     public function index(Request $request)
     {
-        $today = Carbon::now();
-        $selectedDate = $today->format('Y-m-d');
+        $today = Carbon::now()->format('Y-m-d');
 
-        $invoices = Invoice::all();
+        $selectedDate = $today;
+        $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
+        $events = $this->getEvents();
+        if ($request->has('date')) {
+            $selectedDate = $request->input('date');
+            $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
+            $totalEarnings = $invoices->sum('total');
+            $invoiceCount = $invoices->count();
+            $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
+                ->latest()
+                ->take(5)
+                ->get();
+        } else {
+            $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
+                ->latest()
+                ->take(5)
+                ->get();
+        }
 
         $earningsLabels = [];
         $earningsValues = array_fill(0, 12, 0);
-
         for ($i = 1; $i <= 12; $i++) {
             $earningsLabels[] = Carbon::create()->month($i)->format('F');
         }
-
         $earningsData = Invoice::selectRaw('MONTH(created_at) as month, SUM(total) as total')
             ->groupBy('month')
             ->get();
-
         foreach ($earningsData as $data) {
             $earningsValues[$data->month - 1] = $data->total;
         }
 
         $ordersLabels = [];
         $ordersValues = array_fill(0, 12, 0);
-
         for ($i = 1; $i <= 12; $i++) {
             $ordersLabels[] = Carbon::create()->month($i)->format('F');
         }
-
         $ordersData = Invoice::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('month')
             ->get();
-
         foreach ($ordersData as $data) {
             $ordersValues[$data->month - 1] = $data->count;
         }
 
-        if ($request->has('date')) {
-            $selectedDate = $request->input('date');
-            $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
-            
-            $totalEarnings = $invoices->sum('total');
-            $invoiceCount = $invoices->count();
-            
-            $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
-                ->latest()
-                ->take(5)
-                ->get();
-
-            $earningsLabels = [];
-            $earningsValues = [];
-            $ordersLabels = [];
-            $ordersValues = [];
-            
-        } else {
-            $recentInvoices = Invoice::latest()->take(5)->get();
-        }
+        $events = $this->getEvents();
 
         return view('dashboard.principal', compact(
             'invoices',
@@ -81,15 +74,36 @@ class DashboardSummaryController extends Controller
             'earningsLabels',
             'earningsValues',
             'ordersLabels',
-            'ordersValues'
+            'ordersValues',
+            'events' 
         ));
     }
+
+    
+
+    public function getEvents()
+    {
+        // Obtener la fecha actual
+        $today = Carbon::today();
+
+        // Realizar la consulta a la base de datos en la tabla 'events'
+        $events = Event::where('event_date', '>=', $today)->get();
+
+        // Formatear las fechas antes de devolver los eventos
+        $events->transform(function ($event) {
+            $event->event_date = Carbon::parse($event->event_date)->format('Y-m-d');
+            return $event;
+        });
+
+        return $events;
+    }
+    
     public function showStatistics(Request $request)
     {
         $request->validate([
             'date' => 'required|date',
         ]);
-
+    
         $selectedDate = $request->input('date');
         $earningsLabels = [];
         $earningsValues = array_fill(0, 12, 0);
