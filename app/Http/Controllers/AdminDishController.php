@@ -30,7 +30,8 @@ class AdminDishController extends Controller
             'registered_dishes.title',
             'registered_dishes.units',
             'registered_dishes.description',
-            'registered_dishes.dish_price'
+            'registered_dishes.purchase_price',
+            'registered_dishes.sale_price'
         )
             ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
             ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id');
@@ -73,7 +74,8 @@ class AdminDishController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'dish_price' => 'required|numeric',
+            'purchase_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
             'description' => 'nullable|string',
             'units' => 'required|integer',
             'dishes_categories_id' => 'required|exists:dishes_categories,id',
@@ -96,7 +98,8 @@ class AdminDishController extends Controller
             'description' => $request->description,
             'units' => $request->units,
             'image' => $file_name,
-            'dish_price' => $request->dish_price,
+            'purchase_price' => $request->purchase_price,
+            'sale_price' => $request->sale_price,
         ]);
 
         return redirect()->route('dishes.index')->with('success', 'Item registrado correctamente.');
@@ -112,7 +115,8 @@ class AdminDishController extends Controller
             'registered_dishes.title as title',
             'registered_dishes.description',
             'registered_dishes.image',
-            'registered_dishes.dish_price',
+            'registered_dishes.purchase_price',
+            'registered_dishes.sale_price',
             'registered_dishes.units',
             'subcategories.name as subcategory'
         )
@@ -122,6 +126,19 @@ class AdminDishController extends Controller
             ->first();
 
         return view('dishes.show', compact('dish'));
+    }
+
+    public function showInvoices(string $id)
+    {
+        $order = DB::table('invoices')
+            ->join('payment_methods', 'invoices.payment_method_id', '=', 'payment_methods.id')
+            ->select('invoices.*', 'payment_methods.name as payment_method_name')
+            ->where('invoices.id', $id)
+            ->first();
+    
+        $orderDetails = DB::table('transactions')->where('id', $order->invoice_number)->get();
+    
+        return view('factures.show', compact('order', 'orderDetails'));
     }
 
     /**
@@ -144,7 +161,8 @@ class AdminDishController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'dish_price' => 'required|numeric',
+            'purchase_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
             'description' => 'nullable|string',
             'units' => 'required|integer',
             'dishes_categories_id' => 'required|exists:dishes_categories,id',
@@ -173,7 +191,8 @@ class AdminDishController extends Controller
             'description' => $request->description,
             'units' => $request->units,
             'image' => $file_name,
-            'dish_price' => $request->dish_price,
+            'purchase_price' => $request->purchase_price,
+            'sale_price' => $request->sale_price,
         ]);
 
         return redirect()->route('dishes.index')->with('success', 'Item actualizado correctamente.');
@@ -217,7 +236,7 @@ class AdminDishController extends Controller
                 $dish = RegisteredDish::find($dishId);
 
                 if ($dish) {
-                    $total += $dish->dish_price * $quantity;
+                    $total += $dish->sale_price * $quantity;
                 }
             }
         }
@@ -240,13 +259,13 @@ class AdminDishController extends Controller
         foreach ($addedItems as $item) {
             $dish = RegisteredDish::find($item['id']);
             if ($dish) {
-                $total += $dish->dish_price * $item['quantity'];
+                $total += $dish->sale_price * $item['quantity'];
 
                 $addedItemsWithDetails[] = [
                     'id' => $item['id'],
                     'title' => $dish->title,
                     'quantity' => $item['quantity'],
-                    'price' => $dish->dish_price
+                    'price' => $dish->sale_price
                 ];
 
                 $dish->units -= $item['quantity'];
@@ -269,7 +288,7 @@ class AdminDishController extends Controller
         DB::table('transactions')->insert([
             'id' => $invoiceNumber,
             'transaction_Date' => now(),
-            'total_amount' => $dish->dish_price * $item['quantity'],
+            'total_amount' => $dish->sale_price * $item['quantity'],
             'payment_method_id' => $paymentMethodId,
             'is_ready' => 1,
             'created_at' => now(),
@@ -287,9 +306,9 @@ class AdminDishController extends Controller
                     'dishes_categories_id' => $dish->dishes_categories_id,
                     'registered_dishes_id' => $item['id'],
                     'payment_method_id' => $paymentMethodId,
-                    'registered_dishes_price' => $dish->dish_price,
+                    'registered_sale_price' => $dish->sale_price,
                     'quantity' => $item['quantity'],
-                    'total' => $dish->dish_price * $item['quantity'],
+                    'total' => $dish->sale_price * $item['quantity'],
                     'note' => $note,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -407,8 +426,8 @@ class AdminDishController extends Controller
             'subcategories.name as subcategory',
             'registered_dishes.title',
             'registered_dishes.units',
-            'registered_dishes.description',
-            'registered_dishes.dish_price'
+            'registered_dishes.purchase_price',
+            'registered_dishes.sale_price'
         )
             ->join('dishes_categories', 'registered_dishes.dishes_categories_id', '=', 'dishes_categories.id')
             ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id');

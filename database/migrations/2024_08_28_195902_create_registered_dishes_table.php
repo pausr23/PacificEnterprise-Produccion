@@ -17,8 +17,10 @@ return new class extends Migration
             $table->foreignId('subcategories_id')->constrained();
             $table->string('title');
             $table->string('description');
+            $table->decimal('purchase_price');
+            $table->decimal('sale_price');
+            $table->integer('units')->default(0); 
             $table->string('image');
-            $table->decimal('dish_price');
             $table->timestamps();
         });
     }

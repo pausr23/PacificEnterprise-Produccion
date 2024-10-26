@@ -311,7 +311,7 @@
                             <a href="{{ route('events.show', $event->id) }}" class="block">
                                 <div class="shadow-md rounded-[2rem] overflow-hidden relative">
                                     <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}"
-                                        class="w-full h-[25vw] object-contain">
+                                        class="w-full h-[25vw] object-fit">
                                     <div
                                         class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent">
                                         <h2 class="text-white text-3xl font-bold mb-2">{{ $event->title }}</h2>

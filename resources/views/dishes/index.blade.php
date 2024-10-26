@@ -181,12 +181,9 @@
                                 <td class="px-2 xxs:text-[0.5rem]"> {{ $dish->category }}</td>
                                 <td class="px-2 xxs:text-[0.5rem]">{{ $dish->subcategory }}</td>
                                 <td class="py-6 xxs:text-[0.5rem]">
-                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2  sm:mb-4 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100"
-                                        href="">Ver</a>
-                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 py-2 me-2  hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-100"
-                                        href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
-                                    <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST"
-                                        style="display: inline;">
+                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2  sm:mb-4 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="{{ route('dishes.show', $dish->id) }}">Ver</a>
+                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 py-2 me-2  hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-100" href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
+                                    <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button

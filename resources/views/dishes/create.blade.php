@@ -54,7 +54,12 @@
 
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Precio</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="dish_price" placeholder="Precio del producto">
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="purchase_price" placeholder="Precio de compra del producto">
+                </div>
+
+                <div class="grid mb-2">
+                    <label class="block mb-2 font-medium text-white font-main">Precio</label>
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="sale_price" placeholder="Precio de venta del producto">
                 </div>
 
                 <div class="grid grid-cols-1 mb-2">
