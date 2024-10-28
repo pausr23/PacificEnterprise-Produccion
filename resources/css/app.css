@@ -50,6 +50,53 @@
     border-radius: 50%;
 }
 
+
+
+/* Altura por defecto para dispositivos md hacia abajo */
+#earningsChartContainer, #ordersChartContainer {
+    height: 300px; /* Altura para dispositivos md y menores */
+}
+
+/* Altura para dispositivos lg y superiores */
+@media (min-width: 1024px) {
+    #earningsChartContainer, #ordersChartContainer {
+        height: 250px; /* Ajusta esta altura según lo necesites */
+    }
+}
+
+/* Contenedor general para los gráficos */
+.chart-container {
+    width: 100%;
+    position: relative;
+}
+
+/* Ajuste de altura para pantallas pequeñas */
+@media (max-width: 600px) {
+    .chart-container {
+        height: 300px; /* Altura para dispositivos móviles */
+    }
+}
+
+/* Ajuste de altura para dispositivos lg y superiores dentro del contenedor general */
+@media (min-width: 1024px) {
+    .chart-container {
+        height: 250px; /* Mantén esta altura similar a los divs de etiquetas */
+    }
+}
+
+
+.swiper-button-white {
+    color: rgb(215, 215, 215);
+}
+
+.swiper-pagination-white .swiper-pagination-bullet {
+    background: rgb(215, 215, 215);
+}
+
+.swiper-pagination-white .swiper-pagination-bullet-active {
+    background: gray; 
+}
+
 input:checked + .slider {
     background-color: #F19DB4;
 }

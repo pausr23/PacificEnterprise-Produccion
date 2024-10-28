@@ -85,17 +85,7 @@
             <div class="w-1/2 h-full bg-black opacity-50"></div>
         </div>
 
-        <script>
-            function toggleMenu() {
-                const mobileMenu = document.getElementById('mobile-sidebar-menu');
-
-                if (mobileMenu.style.transform === 'translateX(0%)') {
-                    mobileMenu.style.transform = 'translateX(-100%)';
-                } else {
-                    mobileMenu.style.transform = 'translateX(0%)';
-                }
-            }
-        </script>
+        <script src="{{ asset('js/toggleMenu.js') }}"></script>
 
     </div>
 

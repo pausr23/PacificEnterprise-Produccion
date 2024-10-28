@@ -12,5 +12,8 @@
     </head>
     <body class="mx-auto mt-10 bg-color">
         @yield('content')
+        @include('components.mobile-sidebar')
+
+        @vite('resources/js/app.js')
     </body>
 </html>
