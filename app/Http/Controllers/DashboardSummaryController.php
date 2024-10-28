@@ -3,67 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\Event;
 
-
 class DashboardSummaryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $today = Carbon::now()->format('Y-m-d');
-
-        $selectedDate = $today;
-        $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
+        $selectedDate = $this->getSelectedDate($request);
+        $invoices = $this->getInvoicesByDate($selectedDate);
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
-        $events = $this->getEvents();
+        $recentInvoices = $this->getRecentInvoices($selectedDate);
 
-
-        $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
-            ->latest()
-            ->take(5)
-            ->get();
-
-        $earningsLabels = [];
-        $earningsValues = array_fill(0, 12, 0);
-        for ($i = 1; $i <= 12; $i++) {
-            $earningsLabels[] = Carbon::create()->month($i)->format('F');
-        }
-        $earningsData = Invoice::selectRaw('MONTH(created_at) as month, SUM(total) as total')
-            ->groupBy('month')
-            ->get();
-        foreach ($earningsData as $data) {
-            $earningsValues[$data->month - 1] = $data->total;
-        }
-
-        $ordersLabels = [];
-        $ordersValues = array_fill(0, 12, 0);
-        for ($i = 1; $i <= 12; $i++) {
-            $ordersLabels[] = Carbon::create()->month($i)->format('F');
-        }
-        $ordersData = Invoice::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
-            ->groupBy('month')
-            ->get();
-        foreach ($ordersData as $data) {
-            $ordersValues[$data->month - 1] = $data->count;
-        }
-
-        if ($request->has('date')) {
-            $selectedDate = $request->input('date');
-            $invoices = Invoice::whereDate('created_at', $selectedDate)->get();
-            $totalEarnings = $invoices->sum('total');
-            $invoiceCount = $invoices->count();
-            $recentInvoices = Invoice::whereDate('created_at', $selectedDate)
-                ->latest()
-                ->take(5)
-                ->get();
-        }
+        $earningsLabels = $this->getMonthlyLabels();
+        $earningsValues = $this->getMonthlyEarnings();
+        $ordersLabels = $this->getMonthlyLabels();
+        $ordersValues = $this->getMonthlyOrders();
 
         $events = $this->getEvents();
 
@@ -77,44 +34,35 @@ class DashboardSummaryController extends Controller
             'earningsValues',
             'ordersLabels',
             'ordersValues',
-            'events' 
+            'events'
         ));
     }
 
-    
-
-    public function getEvents()
+    protected function getSelectedDate(Request $request): string
     {
-        // Obtener la fecha actual
-        $today = Carbon::today();
-
-        // Realizar la consulta a la base de datos en la tabla 'events'
-        $events = Event::where('event_date', '>=', $today)->get();
-
-        // Formatear las fechas antes de devolver los eventos
-        $events->transform(function ($event) {
-            $event->event_date = Carbon::parse($event->event_date)->format('Y-m-d');
-            return $event;
-        });
-
-        return $events;
+        return $request->has('date') ? $request->input('date') : Carbon::now()->format('Y-m-d');
     }
-    
-    public function showStatistics(Request $request)
-    {
-        $events = $this->getEvents();
-        $request->validate([
-            'date' => 'required|date',
-        ]);
-    
-        $selectedDate = $request->input('date');
-        $earningsLabels = [];
-        $earningsValues = array_fill(0, 12, 0);
-        
-        for ($i = 1; $i <= 12; $i++) {
-            $earningsLabels[] = Carbon::create()->month($i)->format('F');
-        }
 
+    protected function getInvoicesByDate(string $date)
+    {
+        return Invoice::whereDate('created_at', $date)->get();
+    }
+
+    protected function getRecentInvoices(string $date)
+    {
+        return Invoice::whereDate('created_at', $date)->latest()->take(5)->get();
+    }
+
+    protected function getMonthlyLabels(): array
+    {
+        return array_map(function ($month) {
+            return Carbon::create()->month($month)->format('F');
+        }, range(1, 12));
+    }
+
+    protected function getMonthlyEarnings(): array
+    {
+        $earningsValues = array_fill(0, 12, 0);
         $earningsData = Invoice::selectRaw('MONTH(created_at) as month, SUM(total) as total')
             ->groupBy('month')
             ->get();
@@ -123,13 +71,12 @@ class DashboardSummaryController extends Controller
             $earningsValues[$data->month - 1] = $data->total;
         }
 
-        $ordersLabels = [];
+        return $earningsValues;
+    }
+
+    protected function getMonthlyOrders(): array
+    {
         $ordersValues = array_fill(0, 12, 0);
-
-        for ($i = 1; $i <= 12; $i++) {
-            $ordersLabels[] = Carbon::create()->month($i)->format('F');
-        }
-
         $ordersData = Invoice::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('month')
             ->get();
@@ -138,12 +85,29 @@ class DashboardSummaryController extends Controller
             $ordersValues[$data->month - 1] = $data->count;
         }
 
-        $invoices = Invoice::whereDate('created_at', Carbon::parse($selectedDate))->get();
-        $recentInvoices = Invoice::whereDate('created_at', Carbon::parse($selectedDate))
-            ->latest()
-            ->take(5)
-            ->get();
+        return $ordersValues;
+    }
 
+    public function getEvents()
+    {
+        $today = Carbon::today();
+        $events = Event::where('event_date', '>=', $today)->get();
+
+        return $events->transform(function ($event) {
+            $event->event_date = Carbon::parse($event->event_date)->format('Y-m-d');
+            return $event;
+        });
+    }
+    
+    public function showStatistics(Request $request)
+    {
+        $request->validate(['date' => 'required|date']);
+        $selectedDate = $request->input('date');
+        
+        $events = $this->getEvents();
+        $invoices = $this->getInvoicesByDate($selectedDate);
+        $recentInvoices = $this->getRecentInvoices($selectedDate);
+        
         $totalEarnings = $invoices->sum('total');
         $invoiceCount = $invoices->count();
 
@@ -161,69 +125,10 @@ class DashboardSummaryController extends Controller
             ]);
         }
 
-        return view('dashboard.principal', [
-            'invoices' => $invoices,
-            'recentInvoices' => $recentInvoices,
-            'totalEarnings' => $totalEarnings,
-            'invoiceCount' => $invoiceCount,
-            'selectedDate' => null,
-            'earningsLabels' => $earningsLabels,
-            'earningsValues' => $earningsValues,
-            'ordersLabels' => $ordersLabels,
-            'events'=> $events, 
-            'ordersValues' => $ordersValues,
-        ]);
-    }
-
-    public function searchByMonth(Request $request)
-    {
-        $request->validate([
-            'month' => 'required|date_format:Y-m',
-        ]);
-
-        $events = $this->getEvents();
-
-        $selectedMonth = $request->input('month');
-        $startOfMonth = Carbon::parse($selectedMonth)->startOfMonth();
-        $endOfMonth = Carbon::parse($selectedMonth)->endOfMonth();
-
-        $invoices = Invoice::whereBetween('created_at', [$startOfMonth, $endOfMonth])->get();
-        $totalEarnings = $invoices->sum('total');
-        $invoiceCount = $invoices->count();
-
-        $recentInvoices = Invoice::whereBetween('created_at', [$startOfMonth, $endOfMonth])
-            ->latest()
-            ->take(5)
-            ->get();
-
-        $earningsLabels = [];
-        $earningsValues = array_fill(0, 12, 0);
-
-        $ordersLabels = [];
-        $ordersValues = array_fill(0, 12, 0);
-
-        for ($i = 1; $i <= 12; $i++) {
-            $earningsLabels[] = Carbon::create()->month($i)->format('F');
-            $ordersLabels[] = Carbon::create()->month($i)->format('F');
-        }
-
-        $earningsData = Invoice::selectRaw('MONTH(created_at) as month, SUM(total) as total')
-            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-            ->groupBy('month')
-            ->get();
-
-        foreach ($earningsData as $data) {
-            $earningsValues[$data->month - 1] = $data->total;
-        }
-
-        $ordersData = Invoice::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
-            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-            ->groupBy('month')
-            ->get();
-
-        foreach ($ordersData as $data) {
-            $ordersValues[$data->month - 1] = $data->count;
-        }
+        $earningsLabels = $this->getMonthlyLabels();
+        $earningsValues = $this->getMonthlyEarnings();
+        $ordersLabels = $this->getMonthlyLabels();
+        $ordersValues = $this->getMonthlyOrders();
 
         return view('dashboard.principal', [
             'invoices' => $invoices,
@@ -237,5 +142,73 @@ class DashboardSummaryController extends Controller
             'ordersValues' => $ordersValues,
             'events' => $events,
         ]);
+    }
+
+    public function searchByMonth(Request $request)
+    {
+        $request->validate(['month' => 'required|date_format:Y-m']);
+
+        $events = $this->getEvents();
+        $selectedMonth = $request->input('month');
+        $startOfMonth = Carbon::parse($selectedMonth)->startOfMonth();
+        $endOfMonth = Carbon::parse($selectedMonth)->endOfMonth();
+
+        $invoices = Invoice::whereBetween('created_at', [$startOfMonth, $endOfMonth])->get();
+        $totalEarnings = $invoices->sum('total');
+        $invoiceCount = $invoices->count();
+        $recentInvoices = $this->getRecentInvoicesByRange($startOfMonth, $endOfMonth);
+
+        $earningsLabels = $this->getMonthlyLabels();
+        $earningsValues = $this->getMonthlyEarningsByRange($startOfMonth, $endOfMonth);
+        $ordersLabels = $this->getMonthlyLabels();
+        $ordersValues = $this->getMonthlyOrdersByRange($startOfMonth, $endOfMonth);
+
+        return view('dashboard.principal', [
+            'invoices' => $invoices,
+            'recentInvoices' => $recentInvoices,
+            'totalEarnings' => $totalEarnings,
+            'invoiceCount' => $invoiceCount,
+            'selectedDate' => null,
+            'earningsLabels' => $earningsLabels,
+            'earningsValues' => $earningsValues,
+            'ordersLabels' => $ordersLabels,
+            'ordersValues' => $ordersValues,
+            'events' => $events,
+        ]);
+    }
+
+    protected function getRecentInvoicesByRange($startDate, $endDate)
+    {
+        return Invoice::whereBetween('created_at', [$startDate, $endDate])->latest()->take(5)->get();
+    }
+
+    protected function getMonthlyEarningsByRange($startDate, $endDate): array
+    {
+        $earningsValues = array_fill(0, 12, 0);
+        $earningsData = Invoice::selectRaw('MONTH(created_at) as month, SUM(total) as total')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('month')
+            ->get();
+
+        foreach ($earningsData as $data) {
+            $earningsValues[$data->month - 1] = $data->total;
+        }
+
+        return $earningsValues;
+    }
+
+    protected function getMonthlyOrdersByRange($startDate, $endDate): array
+    {
+        $ordersValues = array_fill(0, 12, 0);
+        $ordersData = Invoice::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('month')
+            ->get();
+
+        foreach ($ordersData as $data) {
+            $ordersValues[$data->month - 1] = $data->count;
+        }
+
+        return $ordersValues;
     }
 }

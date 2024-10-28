@@ -3,17 +3,16 @@
 @section('content')
 
 <head>
-    <<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </head>
 
+<div class="grid lg:grid-cols-[20%,80%] md:pl-6 pl-10">
 
+    <div class="md:mr-5">
 
-<div class="grid grid-cols-[20%,80%] md:pl-6">
-
-    <div class="mr-5">
-
-        <img class="lg:w-60 sm:w-32 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
+    <div class="md:mr-5 hidden lg:block">
+        <img class="lg:w-60 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
             alt="Pacific-Enterprise">
 
         <div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
@@ -46,119 +45,99 @@
                 </div>
             </a>
         </div>
+    </div>
 
-
-        <div id="mobile-sidebar-menu"
-            class="absolute top-0 z-10 left-0 w-full h-screen bg-[#16161A] transform translate-x-full transition-transform duration-300 lg:hidden">
-            <div class="pl-2 pt-6 text-white font-light text-sm font-main">
-                <a class="py-3 mb-6 pl-2 secondary-color transition-colors duration-300 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('dashboard.principal') }}">Panel Principal</a>
-                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('factures.ordering') }}">Punto de Venta</a>
-                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('factures.order') }}">Órdenes</a>
-                <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]"
-                    href="{{ route('factures.history') }}">Historial de Ventas</a>
-
-                @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dishes.index') }}">Productos</a>
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dishes.inventory') }}">Inventario</a>
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('suppliers.index') }}">Proveedores</a>
-                @endif
-
-                <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
-                    <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10"
-                        src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                    <div class="lg:ml-2">
-                        <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
-                        <p class="text-sm">@ {{ auth()->user()->username }}</p>
-                    </div>
-                </a>
-            </div>
+        <div class="md:mr-5 lg:hidden  py-4 z-40 h-8 cursor-pointer flex items-center justify-start" 
+            onclick="toggleMenu()">
+            <img class="w-32" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
         </div>
 
+        <div id="mobile-sidebar-menu"
+            class="absolute top-0 left-0 w-full h-screen  transform -translate-x-full transition-transform duration-300 lg:hidden z-10 flex">
 
-        <label
-            class="xxs:py-4 xxs:left-6 xxs:z-40 xxs:h-8 xxs:cursor-pointer lg:hidden xxs:flex md:items-center md:justify-center lg:none"
-            for="mobile-checkbox">
-            <input class="hidden" type="checkbox" id="mobile-checkbox" onClick="toggleMenu(this)" />
-            <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-6 xxs:w-6 lg:h-0 lg:w-0 md:h-8 md:w-8 ml-5 text-white "
-                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </label>
+            <div class="w-1/2 h-full bg-[#16161A]">
+                <div class="mt-10 pl-2 flex items-center justify-start py-4 z-40 h-8 cursor-pointer" 
+                    onclick="toggleMenu()">
+                    <img class="w-32 " src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
+                </div>
+                <div class="pl-2 pt-6 text-white font-light text-sm font-main">
+                    <a class="py-3 mb-6 pl-2 secondary-color transition-colors duration-300 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                        href="{{ route('dashboard.principal') }}">Panel Principal</a>
+                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                        href="{{ route('factures.ordering') }}">Punto de Venta</a>
+                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                        href="{{ route('factures.order') }}">Órdenes</a>
+                    <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]"
+                        href="{{ route('factures.history') }}">Historial de Ventas</a>
 
+                    @if(Auth::check() && Auth::user()->job_titles_id == 1)
+                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                        href="{{ route('dishes.index') }}">Productos</a>
+                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                        href="{{ route('dishes.inventory') }}">Inventario</a>
+                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                        href="{{ route('suppliers.index') }}">Proveedores</a>
+                    @endif
 
-        <div id="content" class="lg:ml-6">
+                    <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
+                        <img class="lg:w-16 lg:h-16 xxs:w-16 sm:w-10 sm:h-10"
+                            src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
+                        <div class="lg:ml-2">
+                            <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
+                            <p class="text-sm">@ {{ auth()->user()->username }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
+            <div class="w-1/2 h-full bg-black opacity-50"></div>
         </div>
 
         <script>
-            function toggleMenu(checkbox) {
+            function toggleMenu() {
                 const mobileMenu = document.getElementById('mobile-sidebar-menu');
-                const content = document.getElementById('content');
-                const isChecked = checkbox.checked;
 
-
-                if (isChecked) {
-                    mobileMenu.style.transform = 'translateX(0)';
-                    mobileMenu.style.display = 'block';
+                if (mobileMenu.style.transform === 'translateX(0%)') {
+                    mobileMenu.style.transform = 'translateX(-100%)';
                 } else {
-                    mobileMenu.style.transform = 'translateX(100%)';
-                    mobileMenu.style.display = 'none';
+                    mobileMenu.style.transform = 'translateX(0%)';
                 }
-
-
-                content.style.display = isChecked ? 'none' : 'block';
-
-
-                const hamburgerIcon = document.querySelector('label[for="mobile-checkbox"]');
-                hamburgerIcon.style.display = isChecked ? 'none' : 'flex';
             }
-
-            window.onload = function () {
-                const checkbox = document.getElementById('mobile-checkbox');
-                checkbox.checked = false;
-                toggleMenu(checkbox);
-            };
         </script>
 
     </div>
 
     <div>
-        <div class="grid grid-cols-2">
+        <div class="md:grid md:grid-cols-2">
             <form class="my-6" action="{{ route('principal.show') }}" method="POST">
                 @csrf
 
-                <label class="font-main text-white mr-4 lg:text-lg md:text-md " for="date">Selecciona una fecha:</label>
-                <input class="rounded-lg mr-4 px-3 mt-2 py-2 secondary-color text-white" type="date" name="date"
+                <label class="font-main xxs:text-sm text-white mr-4 lg:text-lg md:text-md " for="date">Selecciona una fecha:</label>
+                <input class="rounded-lg xxs:px-2 xxs:py-1 mr-4 px-3 mt-2 py-2 secondary-color text-white" type="date" name="date"
                     value="{{ old('date', $selectedDate) }}" required>
-                <button class="secondary-color rounded-lg mt-2 text-white px-3 py-2 font-semibold" type="submit">Buscar
+                <button class="secondary-color xxs:px-2 sm:text-sm rounded-lg mt-2 text-white px-3 py-2 font-semibold" type="submit">Buscar
                     por Día</button>
             </form>
 
             <div class="my-6 flex items-center">
                 <label class="switch" for="toggleSwitch">
                     <input type="checkbox" id="toggleSwitch">
-                    <span class="slider round w-14 ml-3"></span>
+                    <span class="slider round w-14 md:ml-3"></span>
                 </label>
-                <span class="font-main text-white ml-9 text-lg xxs:text-xs">Mostrar Gráficos</span>
+                <span class="font-main text-white md:ml-9 text-lg xxs:text-sm">Mostrar Gráficos</span>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 xxs:mr-7">
-            <div id="earningsView" class="secondary-color rounded-md p-8 w-[92%] ">
+        <div class="grid md:grid-cols-2 gap-4 xxs:mr-7">
+            <div id="earningsView" class="secondary-color mb-4 md:mb-0 rounded-md p-8 w-[92%] ">
                 <img id="earningsImage" class="w-12 rounded-full bg-gray-300 p-2 mb-12 "
                     src="https://img.icons8.com/isometric-line/50/stack-of-money.png" alt="Ganancias">
                 <p id="earningsLabel" class="text-white font-main text-xs font-light mb-2">Ganancias del día</p>
-                <p id="earningsTotal" class="text-white font-main lg:text-4xl md:text-3xl  ">
+                <p id="earningsTotal" class="text-white font-main text-3xl  ">
                     ₡{{ number_format($totalEarnings) }}</p>
             </div>
 
-            <div id="earningsChartContainer" style="display: none;">
+            <div class="mb-4 md:mb-0" id="earningsChartContainer" style="display: none;">
                 <canvas id="earningsChart"></canvas>
             </div>
 
@@ -266,7 +245,7 @@
                 }
             </script>
 
-            <div class="secondary-color rounded-md w-[92%] p-8" id="ordersView">
+            <div class="secondary-color rounded-md mb-4 md:mb-0 w-[92%] p-8" id="ordersView">
                 <img id="ordersImage" class="w-12 rounded-full bg-gray-300 p-2 mb-12"
                     src="https://img.icons8.com/ios/50/1A1A1A/order-completed--v2.png" alt="Pedidos">
                 <p id="ordersLabel" class="text-white font-main text-xs font-light mb-2">Cantidad de pedidos</p>
@@ -278,16 +257,16 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-[30%,65%] xxs:grid-cols-[65%,50%] gap-4 mt-10 xxs:mr-20">
+        <div class="grid lg:grid-cols-[30%,65%] mt-10 xxs:mr-16">
 
-            <div class="border grid text-white border-gray-300 rounded-md lg:p-4 xxs:p-1">
-                <div class="grid lg:grid-cols-2 xxs:grid-cols-1">
-                    <h1 class="font-main lg:text-lg xxs:text-sm">Pedidos de hoy</h1>
-                    <a class="underline opacity-60 content-center justify-self-end text-sm"
-                        href="{{ route('factures.history') }}">Ver historial</a>
-                </div>
+            <div class="border grid lg:mr-8 text-white lg:mb-4 mb-8 border-gray-300 rounded-md lg:p-4 xxs:p-1">
+            <div class="lg:flex  lg:items-start lg:justify-between xxs:grid xxs:grid-cols-1">
+                <h1 class="font-main lg:text-lg xxs:text-sm">Pedidos de hoy</h1>
+                <a class="underline opacity-60 lg:justify-self-end lg:text-sm xxs:text-xs"
+                    href="{{ route('factures.history') }}">Ver historial</a>
+            </div>
                 @foreach($recentInvoices as $invoice)
-                    <div class="flex items-center mt-2">
+                    <div class="flex items-center mb-4 md:mb-0 mt-2">
                         <img class="secondary-color rounded-md ml-2 lg:w-10 xxs:w-8 p-1"
                             src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/bank-card-back-side.png"
                             alt="bank-card-back-side" alt="card">
@@ -299,23 +278,22 @@
                 @endforeach
 
                 @if($recentInvoices->isEmpty())
-                    <p class="mt-4">No hay pedidos hoy.</p>
+                    <p class="font-semibold">No hay pedidos hoy.</p>
                 @endif
 
             </div>
 
-            <div class="swiper-container" style="overflow: hidden; position: relative;">
+            <div class="swiper-container " style="overflow: hidden; position: relative;">
                 <div class="swiper-wrapper">
                     @foreach($events as $event)
                         <div class="swiper-slide">
                             <a href="{{ route('events.show', $event->id) }}" class="block">
-                                <div class="shadow-md rounded-[2rem] overflow-hidden relative">
+                                <div class="shadow-md rounded-[2rem] overflow-hidden relative mb-6 md:mb-0">
                                     <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}"
-                                        class="w-full h-[25vw] object-fit">
-                                    <div
-                                        class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent">
-                                        <h2 class="text-white text-3xl font-bold mb-2">{{ $event->title }}</h2>
-                                        <p class="text-white mb-4">Fecha: {{ $event->event_date }}</p>
+                                        class="w-full md:h-[25vw] object-cover">
+                                    <div class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent">
+                                        <h2 class="text-white md:text-3xl text-2xl font-bold mb-2">{{ $event->title }}</h2>
+                                        <p class="text-white md:mb-4">Fecha: <span class="ml-2">{{ $event->event_date }}</span></p>
                                         <p class="text-white">{{ $event->description }}</p>
                                     </div>
                                 </div>
@@ -323,12 +301,10 @@
                         </div>
                     @endforeach
                 </div>
-                <!-- Agregar botones de navegación fuera del contenedor de imágenes -->
                 <button class="swiper-button-next swiper-button-white"
                     style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; z-index: 10; cursor: pointer;"></button>
                 <button class="swiper-button-prev swiper-button-white"
                     style="position: absolute; top: 50%; transform: translateY(-50%); left: 10px; z-index: 10; cursor: pointer;"></button>
-                <!-- Agregar paginación -->
                 <div class="swiper-pagination swiper-pagination-white"></div>
             </div>
             @endsection
@@ -347,10 +323,10 @@
                             el: '.swiper-pagination',
                             clickable: true,
                         },
-                        loop: true,  // Agregar loop para un carrusel continuo
+                        loop: true,  
                         autoplay: {
-                            delay: 2000,  // 2000 milisegundos = 2 segundos
-                            disableOnInteraction: false,  // Continuar el autoplay incluso después de la interacción del usuario
+                            delay: 2000, 
+                            disableOnInteraction: false, 
                         },
                     });
                 });
