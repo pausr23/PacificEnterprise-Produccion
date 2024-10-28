@@ -37,13 +37,13 @@
         </div>
     </div>
 
-    <div class="container w-full ">
+    <div class="container w-full xxs:mt-8 ">
         <div class="w-[78vw] mb-4">
-            <a class=" mb-4 font-bold flex items-center justify-center h-12 w-48 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
+            <a class=" mb-4 xxs:mb-8 lg:ml-0 md:ml-[-1rem] xxs:ml-4 font-bold flex items-center justify-center h-12 w-48 xxs:w-60 secondary-color xxs:text-xs text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
                 href="{{ route('events.create') }}">
                 Agregar un evento
             </a>
-            <div class="grid grid-cols-4 gap-4 w-full">
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 xxs:grid-cols-1 lg:ml-0 md:ml-[-1rem] xxs:ml-[-2rem] xxs:gap-6 gap-4 w-full">
                 @foreach($events as $event)
                     <div class="border w-full min-h-[18rem] bg-[#2D2D2D] border-none rounded-[2rem]">
                         <div class="flex h-40 w-full overflow-hidden relative">
