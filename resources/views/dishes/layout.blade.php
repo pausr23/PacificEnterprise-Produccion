@@ -7,10 +7,18 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 
         @vite('resources/css/app.css')
+        @yield('styles')
     </head>
     <body class="mx-auto mt-10 bg-color">
         @yield('content')
+        @include('components.mobile-sidebar')
+
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+        @vite('resources/js/app.js')
+
     </body>
 </html>

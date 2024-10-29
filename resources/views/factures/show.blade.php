@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="flex items-start ml-20 mb-8">
-        <img class="w-80 mr-4" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+        <img class="w-80 xxs:w-60 mr-4" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
         @if(session('success'))
             <div class="mt-6 alert alert-success bg-green-600 text-white p-3 rounded-lg">
@@ -12,9 +12,9 @@
         @endif
 </div>
 
-<a href="{{ route('factures.history') }}" class="font-main ml-32 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center">Regresar</a>
+<a href="{{ route('factures.history') }}" class="font-main ml-32 xxs:ml-40 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center">Regresar</a>
 
-<div class="grid container py-8 rounded-xl secondary-color mx-auto w-[30%] text-center text-white mb-5">
+<div class="grid container py-8 rounded-xl secondary-color mx-auto w-[30%] xxs:w-[90%] text-center text-white mb-5 md:mt-6 xxs:mt-12">
     <div class="mt-4 text-white">
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Número de órden:</strong> {{ $order->invoice_number }}</p>
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Método de pago:</strong> {{ $order->payment_method_name }}</p>

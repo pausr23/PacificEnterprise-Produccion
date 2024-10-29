@@ -85,17 +85,7 @@
             <div class="w-1/2 h-full bg-black opacity-50"></div>
         </div>
 
-        <script>
-            function toggleMenu() {
-                const mobileMenu = document.getElementById('mobile-sidebar-menu');
-
-                if (mobileMenu.style.transform === 'translateX(0%)') {
-                    mobileMenu.style.transform = 'translateX(-100%)';
-                } else {
-                    mobileMenu.style.transform = 'translateX(0%)';
-                }
-            }
-        </script>
+        <script src="{{ asset('js/toggleMenu.js') }}"></script>
 
     </div>
 
@@ -115,7 +105,7 @@
             </form>
 
             <div class="content-end xxs:content-center">
-                <a class="font-bold flex items-center justify-center h-12 lg:w-48 sm:w-40 xxs:w-60 lg:text-base sm:text-xs  secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                <a class="font-bold flex items-center justify-center h-12 lg:w-48 sm:w-40 xxs:w-60 lg:text-base sm:text-xs xxs:text-xs secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
                     href="{{ route('suppliers.create') }}">
                     Agregar un proveedor
                 </a>
