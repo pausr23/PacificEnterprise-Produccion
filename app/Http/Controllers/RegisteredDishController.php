@@ -20,9 +20,9 @@ class RegisteredDishController extends Controller
             'registered_dishes.image',
             'registered_dishes.sale_price',
             'registered_dishes.description',
-            'dishes_categories.id as category_id', // Agregar la ID de la categoría
+            'dishes_categories.id as category_id',
             'dishes_categories.name as category',
-            'subcategories.id as subcategory_id', // Agregar la ID de la subcategoría
+            'subcategories.id as subcategory_id',
             'subcategories.name as subcategory'
 
         )
@@ -127,15 +127,12 @@ class RegisteredDishController extends Controller
         $zip = new ZipArchive;
         $zipFileName = 'images.zip';
 
-        // Crear el archivo ZIP en el almacenamiento temporal
         if ($zip->open(public_path($zipFileName), ZipArchive::CREATE) === TRUE) {
             foreach ($dishes as $dish) {
                 if ($dish->image) {
-                    $imagePath = 'public/images/' . $dish->image; // Ajustar la ruta según sea necesario
+                    $imagePath = 'public/images/' . $dish->image;
 
-                    // Verificar si la imagen existe en el sistema de archivos
                     if (Storage::exists($imagePath)) {
-                        // Añadir el archivo al ZIP
                         $zip->addFile(Storage::path($imagePath), $dish->image);
                     } else {
                         return response()->json(['error' => 'Image not found: ' . $dish->image], 404);
@@ -143,10 +140,8 @@ class RegisteredDishController extends Controller
                 }
             }
 
-            // Cerrar el archivo ZIP
             $zip->close();
 
-            // Retornar el archivo ZIP como una respuesta de descarga
             return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
         } else {
             return response()->json(['error' => 'Failed to create ZIP file'], 500);

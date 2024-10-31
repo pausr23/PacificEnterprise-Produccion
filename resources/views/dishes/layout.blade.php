@@ -13,8 +13,8 @@
         @yield('styles')
     </head>
     <body class="mx-auto mt-10 bg-color">
-        @yield('content')
         @include('components.mobile-sidebar')
+        @yield('content')
 
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
