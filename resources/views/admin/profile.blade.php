@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('content')
-    <img class="w-80 ml-10 mb-6 md:mb-10" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+    <img class="w-80 ml-10 mb-6 md:mb-10 mt-10" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
     <div class="grid xxs:m-10 m-20 rounded-xl secondary-color lg:w-[60%] w-[80%] mx-auto">
         <div class="grid  lg:grid-cols-[20%,80%] p-8">

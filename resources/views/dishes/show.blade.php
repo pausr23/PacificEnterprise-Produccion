@@ -16,7 +16,7 @@
 
 <div class="grid container py-8 rounded-xl secondary-color mx-auto w-[50%] xxs:w-[90%] text-center text-white mb-5 md:mt-6 xxs:mt-12">
     <h1 class="text-2xl mb-6 font-bold">{{ $dish->title }}</h1>
-    <img class="w-72 mx-auto rounded-lg	" src="{{ asset('storage/images/' . $dish->image) }}" alt="{{ $dish->title }}" border="0">
+    <img class="w-72 mx-auto rounded-lg" src="{{ $dish->image }}" alt="{{ $dish->title }}" border="0">
     <div class="mt-4 text-white">
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Descripción:</strong> {{ $dish->description }}</p>
         <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4"><strong>Precio de compra:</strong> ${{ number_format($dish->purchase_price, 2) }}</p>

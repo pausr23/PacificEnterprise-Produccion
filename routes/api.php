@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/dishes', [RegisteredDishController::class, 'store']);
 Route::get('/dishes/all', [RegisteredDishController::class, 'index']);
 Route::get('/dishes/test', [RegisteredDishController::class, 'test']);
 Route::get('/dishes/dish/{id}', [RegisteredDishController::class, 'show']);

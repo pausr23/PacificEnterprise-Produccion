@@ -11,7 +11,7 @@
         @vite('resources/css/app.css')
         @yield('styles')
     </head>
-    <body class="mx-auto mt-10 bg-color">
+    <body class="mx-auto bg-color">
         @yield('content')
         @vite('resources/js/app.js')
     </body>

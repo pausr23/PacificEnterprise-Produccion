@@ -114,7 +114,7 @@
                         <div class="swiper-slide" style="width: auto; flex: 0 0 auto;">
                             <a href="{{ route('events.show', $event->id) }}" class="block">
                                 <div class="shadow-md rounded-[2rem] overflow-hidden relative mb-6 md:mb-0">
-                                    <img src="{{ asset('storage/images/' . $event->image_path) }}" alt="{{ $event->title }}" class="w-full lg:h-[20vw] object-cover">
+                                    <img src="{{ $event->image_path }}" alt="{{ $event->title }}" class="w-full lg:h-[20vw] object-cover">
                                     <div class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent">
                                         <h2 class="text-white md:text-3xl text-2xl font-bold mb-2">{{ $event->title }}</h2>
                                         <p class="text-white md:mb-4">Fecha: <span class="ml-2">{{ $event->event_date }}</span></p>
