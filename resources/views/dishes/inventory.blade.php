@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="grid lg:grid-cols-[20%,80%]">
+<div class="grid lg:grid-cols-[20%,80%] lg:pl-6">
 
     <div class="mr-5">
 
