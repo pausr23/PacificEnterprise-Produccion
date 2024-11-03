@@ -10,6 +10,16 @@
         </div>
     </div>
 
+    @if ($errors->any())
+        <div class="bg-gray-200 border-l-4 border-red-500 text-red-700 p-4 mb-4 m-5" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('dishes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:gap-y-1 xxs:px-2">
@@ -44,7 +54,7 @@
 
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Unidades</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" placeholder="Unidades disponibles">
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" placeholder="Unidades disponibles" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
                 </div>
             
             </div>
@@ -53,13 +63,14 @@
             <div>
 
                 <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Precio</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="purchase_price" placeholder="Precio de compra del producto">
+                    <label class="block mb-2 font-medium text-white font-main">Precio de compra</label>
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="purchase_price" placeholder="Precio de compra del producto" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
                 </div>
 
                 <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Precio</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="sale_price" placeholder="Precio de venta del producto">
+                    <label class="block mb-2 font-medium text-white font-main">Precio de venta</label>
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="sale_price" placeholder="Precio de venta del producto" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
+        
                 </div>
 
                 <div class="grid grid-cols-1 mb-2">
@@ -83,6 +94,7 @@
         </div>
     </form>
 </div>
+
 
 <script>
     const subcategoriesData = @json($subcategories);

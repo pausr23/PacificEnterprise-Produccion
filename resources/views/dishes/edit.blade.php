@@ -10,6 +10,16 @@
         </div>
     </div>
 
+    @if ($errors->any())
+        <div class="bg-gray-200 border-l-4 border-red-500 text-red-700 p-4 mb-4 m-5" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Formulario -->
     <form action="{{ route('dishes.update', $dish->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -51,7 +61,7 @@
                 <!-- Unidades -->
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Unidades</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" value="{{ $dish->units }}" placeholder="Unidades disponibles">
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" value="{{ $dish->units }}" placeholder="Unidades disponibles" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
                 </div>
             
             </div>
@@ -61,13 +71,13 @@
 
                 <!-- Precio -->
                 <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Precio</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="purchase_price" value="{{ $dish->purchase_price }}" placeholder="Precio de compra del producto">
+                    <label class="block mb-2 font-medium text-white font-main">Precio de comrpa</label>
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="purchase_price" value="{{ $dish->purchase_price }}" placeholder="Precio de compra del producto" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
                 </div>
 
                 <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Precio</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="sale_price" value="{{ $dish->sale_price }}" placeholder="Precio de venta del producto">
+                    <label class="block mb-2 font-medium text-white font-main">Precio de venta</label>
+                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="sale_price" value="{{ $dish->sale_price }}" placeholder="Precio de venta del producto" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
                 </div>
 
                 <!-- Description -->
