@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="grid grid-cols-[20%,80%] md:pl-6">
+<div class="grid lg:grid-cols-[20%,80%] pl-6">
 
     <div class="mr-5">
 
@@ -43,69 +43,10 @@
         </div>
     </div>
 
-
-        <div class="md:mr-5 lg:hidden  py-4 z-40 h-8 cursor-pointer flex items-center justify-start" 
-            onclick="toggleMenu()">
-            <img class="w-32" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-        </div>
-
-        <div id="mobile-sidebar-menu"
-            class="absolute top-0 left-0 w-full h-screen transform -translate-x-full transition-transform duration-300 lg:hidden z-10 flex">
-
-            <div class="w-1/2 h-full bg-[#16161A]">
-                <div class="mt-10 pl-2 flex items-center justify-start py-4 z-40 h-8 cursor-pointer" 
-                    onclick="toggleMenu()">
-                    <img class="w-32 " src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-                </div>
-                <div class="pl-2 pt-6 text-white font-light text-sm font-main">
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dashboard.principal') }}">Panel Principal</a>
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('factures.ordering') }}">Punto de Venta</a>
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('factures.order') }}">Órdenes</a>
-                    <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]"
-                        href="{{ route('factures.history') }}">Historial de Ventas</a>
-
-                    @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                        <a class="py-3 mb-6 pl-2 secondary-color transition-colors duration-300 hover:bg-[#323035] focus:bg-[#323035]  block rounded-lg"
-                        href="{{ route('dishes.index') }}">Productos</a>
-                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dishes.inventory') }}">Inventario</a>
-                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('suppliers.index') }}">Proveedores</a>
-                    @endif
-
-                    <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
-                        <img class="lg:w-16 lg:h-16 xxs:w-16 sm:w-10 sm:h-10"
-                            src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                        <div class="lg:ml-2">
-                            <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
-                            <p class="text-sm">@ {{ auth()->user()->username }}</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="w-1/2 h-full bg-black opacity-50"></div>
-        </div>
-
-        <script>
-            function toggleMenu() {
-                const mobileMenu = document.getElementById('mobile-sidebar-menu');
-
-                if (mobileMenu.style.transform === 'translateX(0%)') {
-                    mobileMenu.style.transform = 'translateX(-100%)';
-                } else {
-                    mobileMenu.style.transform = 'translateX(0%)';
-                }
-            }
-        </script>
-
     </div>
 
     <div>
-        <div class="grid grid-cols-[70%,30%] xxs:grid-cols-1">
+        <div class="grid grid-cols-[70%,30%] mt-8 lg:mt-0 xxs:grid-cols-1">
             <form method="GET" action="{{ route('dishes.index') }}" class="grid grid-cols-3 ">
                 <div class="grid">
                     <label class="text-white font-main pb-2 font-bold" for="dish">Nombre:</label>
@@ -133,7 +74,7 @@
             </form>
 
             <div class="content-end">
-                <a class="font-bold flex items-center justify-center h-12 mt-4 lg:w-48 sm:w-32 xxs:w-72 lg:text-base sm:text-sm xxs:text-xs secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                <a class="font-bold flex items-center justify-center h-12 ml-[8%] mt-4 lg:w-48 sm:w-32 xxs:w-72 lg:text-base sm:text-sm xxs:text-xs secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
                     href="{{ route('dishes.create') }}">
                     Agregar un Item
                 </a>
@@ -141,10 +82,10 @@
         </div>
 
 
-        <div class="w-[90%] grid gap-16">
-            <div class="py-10 rounded-lg xxs:ml-[-3rem]">
+        <div class="w-[90%] ml-8 lg:ml-0 xxs:ml-[3%] grid gap-16">
+            <div class="py-10 rounded-lg">
                 <table class="w-full rounded-lg ">
-                    <thead class="rounded-lg text-white font-mainfont-bold secondary-color">
+                    <thead class="rounded-lg  text-white font-mainfont-bold secondary-color">
                         <tr>
                             <th scope="col"
                                 class="rounded-l-lg px-1 py-3 xxs:py-0.5 sm:px-12 lg:text-base xxs:text-[0.5rem]">Nombre
@@ -164,13 +105,13 @@
                                 <td class="px-2 xxs:text-[0.5rem]"> {{ $dish->category }}</td>
                                 <td class="px-2 xxs:text-[0.5rem]">{{ $dish->subcategory }}</td>
                                 <td class="py-6 xxs:text-[0.5rem]">
-                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2  sm:mb-4 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="{{ route('dishes.show', $dish->id) }}">Ver</a>
-                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 py-2 me-2  hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-100" href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
+                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 xxs:px-2 py-2 me-2  sm:mb-4 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="{{ route('dishes.show', $dish->id) }}">Ver</a>
+                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 xxs:px-2  py-2 me-2 hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-100" href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
                                     <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button
-                                            class="bg-rose-300 rounded-lg text-black font-semibold px-4 py-2 lg:mt-0 sm:mt-4 xxs:mt-4 me-2 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-100"
+                                            class="bg-rose-300 rounded-lg text-black font-semibold px-4 xxs:px-2  py-2 lg:mt-0 sm:mt-4 xxs:mt-4 me-2 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-100"
                                             type="submit">Eliminar</button>
                                     </form>
                                 </td>

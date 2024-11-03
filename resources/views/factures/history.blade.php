@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="grid grid-cols-[20%,80%] md:pl-6">
+<div class="grid lg:grid-cols-[20%,80%] pl-6">
 
     <div class="mr-5">
 
@@ -41,72 +41,13 @@
         </div>
         </div>
 
-
-        <div class="md:mr-5 lg:hidden  py-4 z-40 h-8 cursor-pointer flex items-center justify-start" 
-            onclick="toggleMenu()">
-            <img class="w-32" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-        </div>
-
-        <div id="mobile-sidebar-menu"
-            class="absolute top-0 left-0 w-full h-screen  transform -translate-x-full transition-transform duration-300 lg:hidden z-10 flex">
-
-            <div class="w-1/2 h-full bg-[#16161A]">
-                <div class="mt-10 pl-2 flex items-center justify-start py-4 z-40 h-8 cursor-pointer" 
-                    onclick="toggleMenu()">
-                    <img class="w-32 " src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-                </div>
-                <div class="pl-2 pt-6 text-white font-light text-sm font-main">
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dashboard.principal') }}">Panel Principal</a>
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('factures.ordering') }}">Punto de Venta</a>
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('factures.order') }}">Órdenes</a>
-                    <a class="py-3 mb-6 pl-2 secondary-color transition-colors duration-300 hover:bg-[#323035] focus:bg-[#323035]  block rounded-lg"
-                        href="{{ route('factures.history') }}">Historial de Ventas</a>
-
-                    @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dishes.index') }}">Productos</a>
-                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dishes.inventory') }}">Inventario</a>
-                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('suppliers.index') }}">Proveedores</a>
-                    @endif
-
-                    <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
-                        <img class="lg:w-16 lg:h-16 xxs:w-16 sm:w-10 sm:h-10"
-                            src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                        <div class="lg:ml-2">
-                            <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
-                            <p class="text-sm">@ {{ auth()->user()->username }}</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="w-1/2 h-full bg-black opacity-50"></div>
-        </div>
-
-        <script>
-            function toggleMenu() {
-                const mobileMenu = document.getElementById('mobile-sidebar-menu');
-
-                if (mobileMenu.style.transform === 'translateX(0%)') {
-                    mobileMenu.style.transform = 'translateX(-100%)';
-                } else {
-                    mobileMenu.style.transform = 'translateX(0%)';
-                }
-            }
-        </script>
-
     </div>
 
     <div class="md:w-full xxs:w-[94%]">
-        <div class="grid grid-cols-1 md:grid-cols-[70%,20%] mb-6">
+        <div class="grid lg:grid-cols-1 md:grid-cols-[70%,20%]  mb-6">
             <form method="GET" action="{{ route('factures.history') }}">
                 <div class="grid">
-                    <label class="text-white font-main pb-2 font-bold" for="payment_method">Método de Pago:</label>
+                    <label class="mt-8 text-white font-main pb-2 font-bold" for="payment_method">Método de Pago:</label>
                     <select class="secondary-color rounded h-8 text-center w-full md:w-40 text-white"
                         id="payment_method" name="payment_method" onchange="this.form.submit()">
                         <option value="0">Todo</option>
@@ -118,8 +59,8 @@
             </form>
         </div>
 
-        <div class="w-full md:w-[90%] grid gap-4 md:gap-16 ">
-            <div class="py-6 rounded-lg overflow-x-auto xxs:ml-[-3rem]">
+        <div class="w-full md:w-[90%] grid gap-4 md:gap-16 lg:ml-0 md:ml-[4%]">
+            <div class="py-6 rounded-lg overflow-x-auto xxs:ml-1">
                 <table class="min-w-full rounded-lg">
                     <thead class="rounded-lg text-white font-main font-bold secondary-color">
                         <tr>

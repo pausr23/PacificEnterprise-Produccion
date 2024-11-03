@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="grid grid-cols-[20%,80%] md:pl-6">
+<div class="grid lg:grid-cols-[20%,80%] md:pl-6 pl-12">
 
     <div class="mr-5">
 
@@ -40,72 +40,13 @@
                 href="{{ route('events.index') }}">Eventos</a>
         </div>
         </div>
-
-
-        <div class="md:mr-5 lg:hidden  py-4 z-40 h-8 cursor-pointer flex items-center justify-start" 
-            onclick="toggleMenu()">
-            <img class="w-32" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-        </div>
-
-        <div id="mobile-sidebar-menu"
-            class="absolute top-0 left-0 w-full h-screen  transform -translate-x-full transition-transform duration-300 lg:hidden z-10 flex">
-
-            <div class="w-1/2 h-full bg-[#16161A]">
-                <div class="mt-10 pl-2 flex items-center justify-start py-4 z-40 h-8 cursor-pointer" 
-                    onclick="toggleMenu()">
-                    <img class="w-32 " src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-                </div>
-                <div class="pl-2 pt-6 text-white font-light text-sm font-main">
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dashboard.principal') }}">Panel Principal</a>
-                    <a class="py-3 mb-6 pl-2 secondary-color transition-colors duration-300 hover:bg-[#323035] focus:bg-[#323035]  block rounded-lg"
-                        href="{{ route('factures.ordering') }}">Punto de Venta</a>
-                    <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('factures.order') }}">Órdenes</a>
-                    <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]"
-                        href="{{ route('factures.history') }}">Historial de Ventas</a>
-
-                    @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                        <a class="py-3 mb-6 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]"
-                        href="{{ route('dishes.index') }}">Productos</a>
-                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('dishes.inventory') }}">Inventario</a>
-                        <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                        href="{{ route('suppliers.index') }}">Proveedores</a>
-                    @endif
-
-                    <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0">
-                        <img class="lg:w-16 lg:h-16 xxs:w-16 sm:w-10 sm:h-10"
-                            src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                        <div class="lg:ml-2">
-                            <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
-                            <p class="text-sm">@ {{ auth()->user()->username }}</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="w-1/2 h-full bg-black opacity-50"></div>
-        </div>
-
-        <script>
-            function toggleMenu() {
-                const mobileMenu = document.getElementById('mobile-sidebar-menu');
-
-                if (mobileMenu.style.transform === 'translateX(0%)') {
-                    mobileMenu.style.transform = 'translateX(-100%)';
-                } else {
-                    mobileMenu.style.transform = 'translateX(0%)';
-                }
-            }
-        </script>
     </div>
 
-    <div class="grid lg:grid-cols-[65%,30%] xxs:grid-cols-1">
+    <div class="grid lg:grid-cols-[65%,30%] lg:ml-0 md:ml-[3%] xxs:grid-cols-1">
 
         <div>
             <div class="grid">
-                <input class="pl-4 secondary-color rounded text-xs font-light h-8 text-left text-white w-[95%]"
+                <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-xs font-light h-8 text-left text-white lg:w-[95%] md:w-[94%] xxs:w-[87%]"
                     id="dish" type="text" name="dish" placeholder="Nombre de item" oninput="filterDishes()" />
             </div>
 
@@ -329,7 +270,7 @@
                     <div class="grid grid-cols-1 mb-2">
                         <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
                         <textarea
-                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-1.5 text-white lg:w-78 md:w-40 sm:w-78 xxs:w-full mx-auto"
+                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-2 text-white lg:w-80 md:w-[80%] xxs:w-[86%] mx-auto"
                             name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                     </div>
 

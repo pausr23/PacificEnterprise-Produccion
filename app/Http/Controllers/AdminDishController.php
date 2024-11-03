@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\DishesCategory;
 use App\Models\RegisteredDish;
 use App\Models\Subcategory;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AdminDishController extends Controller
 {
@@ -70,7 +71,7 @@ class AdminDishController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -83,24 +84,51 @@ class AdminDishController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $file_name = 'default.jpg';
+        $imageUrl = 'default.jpg';
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $file_name = 'dish_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/images', $file_name);
+
+            if ($file->isValid()) {
+                try {
+                    $uploadResult = Cloudinary::upload($file->getPathname(), [
+                        'folder' => 'dishes'
+                    ]);
+                    
+                    logger('Imagen cargada: ', [
+                        'url' => $uploadResult->getSecurePath(),
+                        'public_id' => $uploadResult->getPublicId(),
+                    ]);
+                    
+                    $imageUrl = $uploadResult->getSecurePath();
+                } catch (\Exception $e) {
+                    return redirect()->back()->withInput()->withErrors([
+                        'image' => 'Error al subir la imagen a Cloudinary: ' . $e->getMessage()
+                    ]);
+                }
+            } else {
+                return redirect()->back()->withInput()->withErrors([
+                    'image' => 'El archivo de imagen no es válido.'
+                ]);
+            }
         }
 
-        RegisteredDish::create([
-            'dishes_categories_id' => $request->dishes_categories_id,
-            'subcategories_id' => $request->subcategories_id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'units' => $request->units,
-            'image' => $file_name,
-            'purchase_price' => $request->purchase_price,
-            'sale_price' => $request->sale_price,
-        ]);
+        try {
+            RegisteredDish::create([
+                'dishes_categories_id' => $request->dishes_categories_id,
+                'subcategories_id' => $request->subcategories_id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'units' => $request->units,
+                'image' => $imageUrl,
+                'purchase_price' => $request->purchase_price,
+                'sale_price' => $request->sale_price,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'general' => 'Error al registrar el platillo: ' . $e->getMessage()
+            ]);
+        }
 
         return redirect()->route('dishes.index')->with('success', 'Item registrado correctamente.');
     }
@@ -149,7 +177,8 @@ class AdminDishController extends Controller
         $dish = RegisteredDish::find($id);
         $categories = DishesCategory::all();
         $subcategories = Subcategory::all();
-        $currentImage = asset('storage/images/' . $dish->image);
+        
+        $currentImage = $dish->image;
 
         return view('dishes.edit', compact('dish', 'categories', 'subcategories', 'currentImage'));
     }
@@ -171,17 +200,24 @@ class AdminDishController extends Controller
         ]);
 
         $dish = RegisteredDish::find($id);
-        $file_name = $dish->image;
+        $imagePath = $dish->image;
 
         if ($request->hasFile('image')) {
-
-            if (File::exists(public_path('storage/images/' . $file_name)) && $file_name != 'default.jpg') {
-                File::delete(public_path('storage/images/' . $file_name));
+            if ($imagePath) {
+                $publicId = str_replace('https://res.cloudinary.com/your-cloud-name/image/upload/', '', $imagePath);
+                $publicId = str_replace('.jpg', '', $publicId);
+                Cloudinary::destroy($publicId);
             }
 
-            $file = $request->file('image');
-            $file_name = 'dish_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/images', $file_name);
+            $image = $request->file('image');
+            try {
+                $uploadResult = Cloudinary::upload($image->getPathname(), [
+                    'folder' => 'dishes'
+                ]);
+                $imagePath = $uploadResult->getSecurePath();
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors(['image' => 'Error al subir la imagen: ' . $e->getMessage()]);
+            }
         }
 
         $dish->update([
@@ -190,13 +226,14 @@ class AdminDishController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'units' => $request->units,
-            'image' => $file_name,
+            'image' => $imagePath,
             'purchase_price' => $request->purchase_price,
             'sale_price' => $request->sale_price,
         ]);
 
         return redirect()->route('dishes.index')->with('success', 'Item actualizado correctamente.');
     }
+
 
     public function order(Request $request)
     {
@@ -298,8 +335,6 @@ class AdminDishController extends Controller
         foreach ($addedItems as $item) {
             $dish = RegisteredDish::find($item['id']);
 
-
-
             if ($dish) {
                 DB::table('details_transaction_rest')->insert([
                     'invoice_number' => $invoiceNumber,
@@ -313,11 +348,8 @@ class AdminDishController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-
-
             }
         }
-
 
         $pdf = new Dompdf();
         $pdf->loadHtml(view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total'))->render());
@@ -449,10 +481,4 @@ class AdminDishController extends Controller
         return view('dishes.inventory', compact('dishes', 'total', 'categories', 'subcategories'));
     }
 
-
-
-
-
-
 }
-

@@ -3,9 +3,8 @@
 @section('content')
 
     <div class="grid grid-cols-1 md:grid-cols-[20%,60%] gap-16">
-        <img class="w-80 mx-auto mb-10 xxs:mb-3" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
-        <div class="content-end mb-14">
-            <a class="ml-10 font-bold flex items-center justify-center py-2 w-24 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('admin.profile') }}">Atrás</a>
+        <div class="content-end md:mb-14 my-8 lg:mt-0">
+            <a class="ml-10 font-bold flex items-center justify-center w-[30%] py-2 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100 xxs:ml-[4%]" href="{{ route('admin.profile') }}">Atrás</a>
         </div>
     </div>
 
@@ -56,7 +55,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->title }}</td>
                             <td class="py-6">
-                                <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 xxs:px-0.5 xxs:text-xs py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-200" href="{{ route('admin.show', ['id' => $user->id]) }}">Ver más</a>
+                                <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4  xxs:text-xs py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-200" href="{{ route('admin.show', ['id' => $user->id]) }}">Ver más</a>
                             </td>
                         </tr>
                         @endforeach

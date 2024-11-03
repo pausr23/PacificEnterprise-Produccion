@@ -11,6 +11,8 @@
         @vite('resources/css/app.css')
     </head>
     <body class="mx-auto mt-10 bg-color">
+        @include('components.mobile-sidebar')
         @yield('content')
+        @vite('resources/js/app.js')
     </body>
 </html>
