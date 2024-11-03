@@ -27,7 +27,7 @@
                     href="{{ route('dishes.inventory') }}">Inventario</a>
                 <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                     href="{{ route('suppliers.index') }}">Proveedores</a>
-                <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                     href="{{ route('events.index') }}">Eventos</a>
             @endif
 

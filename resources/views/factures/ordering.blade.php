@@ -27,6 +27,8 @@
                 <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                     href="{{ route('suppliers.index') }}">Proveedores</a>
             @endif
+            <a class="py-3 mb-6 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                href="{{ route('events.index') }}">Eventos</a>
 
             <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0 ">
                 <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10"
@@ -36,8 +38,7 @@
                     <p class="text-sm">@ {{ auth()->user()->username }}</p>
                 </div>
             </a>
-            <a class="py-3 mb-6 pl-4 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                href="{{ route('events.index') }}">Eventos</a>
+            
         </div>
         </div>
     </div>
