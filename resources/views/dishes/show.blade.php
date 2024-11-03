@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="flex items-start ml-20 mb-8">
-        <img class="w-80 xxs:w-60  mr-4" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+       
 
         @if(session('success'))
             <div class="mt-6 alert alert-success bg-green-600 text-white p-3 rounded-lg">
@@ -12,7 +12,7 @@
         @endif
 </div>
 
-<a href="{{ route('dishes.index') }}" class="font-main ml-32 xxs:ml-40 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center">Regresar</a>
+<a href="{{ route('dishes.index') }}" class="font-main ml-32 xxs:ml-[36%] text-white lg:w-[30%] md:w-[60%] xxs:w-[90%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center">Regresar</a>
 
 <div class="grid container py-8 rounded-xl secondary-color mx-auto w-[50%] xxs:w-[90%] text-center text-white mb-5 md:mt-6 xxs:mt-12">
     <h1 class="text-2xl mb-6 font-bold">{{ $dish->title }}</h1>

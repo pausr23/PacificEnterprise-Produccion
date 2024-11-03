@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="flex items-start ml-20 mb-8">
-        <img class="w-80 xxs:w-60 mr-4" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+     
 
         @if(session('success'))
             <div class="mt-6 alert alert-success bg-green-600 text-white p-3 rounded-lg">
@@ -12,7 +12,8 @@
         @endif
     </div>
 
-    <a class="font-main ml-32 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 xxs:mb-4 xxs:ml-0 text-center" href="{{ route('admin.users') }}">Atrás</a>
+    <a class="ml-10 font-bold flex items-center justify-center w-[30%] py-2 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100 xxs:ml-[4%]" href="{{ route('admin.profile') }}">Atrás</a>
+
 
     <div class="grid container py-8 rounded-xl secondary-color mx-auto lg:w-[30%] md:w-[46%] xxs:w-80 xxs:mr-1.5rem xxs:my-6 text-justify text-white">
     <img class="rounded-full mx-auto bg-white" src="https://img.icons8.com/?size=100&id=HNn3lC0m5uKR&format=png&color=000000" alt="">

@@ -42,11 +42,11 @@
         </div>
     </div>
 
-    <div class="grid lg:grid-cols-[65%,30%] xxs:grid-cols-1">
+    <div class="grid lg:grid-cols-[65%,30%] lg:ml-0 md:ml-[3%] xxs:grid-cols-1">
 
         <div>
             <div class="grid">
-                <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-xs font-light h-8 text-left text-white w-[95%]"
+                <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-xs font-light h-8 text-left text-white lg:w-[95%] md:w-[94%] xxs:w-[87%]"
                     id="dish" type="text" name="dish" placeholder="Nombre de item" oninput="filterDishes()" />
             </div>
 
@@ -270,7 +270,7 @@
                     <div class="grid grid-cols-1 mb-2">
                         <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
                         <textarea
-                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-1.5 text-white lg:w-78 md:w-40 sm:w-78 xxs:w-full mx-auto"
+                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-2 text-white lg:w-80 md:w-[80%] xxs:w-[86%] mx-auto"
                             name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                     </div>
 

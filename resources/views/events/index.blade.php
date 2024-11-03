@@ -39,7 +39,7 @@
 
     <div class="container w-full xxs:mt-8 ">
         <div class="w-[78vw] mb-4">
-            <a class="my-6 xxs:mb-8 lg:ml-0  xxs:ml-4 font-bold flex items-center justify-center h-12 w-48 xxs:w-60 secondary-color xxs:text-xs text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
+            <a class="my-6 xxs:mb-8 lg:ml-0 xxs:ml-[-3%] font-bold flex items-center justify-center h-12 w-48 xxs:w-60 secondary-color xxs:text-xs text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
                 href="{{ route('events.create') }}">
                 Agregar un evento
             </a>

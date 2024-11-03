@@ -45,7 +45,7 @@
     </div>
 
     <div class=" scrollbar-hide scrollbarw-full overflow-x-scroll max-h-[80%] ">
-        <div class="flex overflow-x-scroll xl:overflow-visible gap-[1rem] w-full h-full p-4 scrollbar-hide:smt-20  ">
+        <div class="flex overflow-x-scroll xl:overflow-visible gap-[1rem] w-full h-full p-4 scrollbar-hide:smt-20 lg:mt-0 md:mt-[1%] lg:ml-0 md:ml-[1%] xxs:mt-[1%]">
             @foreach($transactions as $transactionId => $transaction)
                     <div
                         class="flex flex-col flex-shrink-0 w-[calc(30%-0.2rem)] xxs:w-64 h-full  rounded-lg bg-[#2d2d2D] text-white p-4  ">

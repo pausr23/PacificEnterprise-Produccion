@@ -74,7 +74,7 @@
             </form>
 
             <div class="content-end">
-                <a class="font-bold flex items-center justify-center h-12 mt-4 lg:w-48 sm:w-32 xxs:w-72 lg:text-base sm:text-sm xxs:text-xs secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                <a class="font-bold flex items-center justify-center h-12 ml-[8%] mt-4 lg:w-48 sm:w-32 xxs:w-72 lg:text-base sm:text-sm xxs:text-xs secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100"
                     href="{{ route('dishes.create') }}">
                     Agregar un Item
                 </a>
@@ -82,7 +82,7 @@
         </div>
 
 
-        <div class="w-[90%] ml-8 lg:ml-0 grid gap-16">
+        <div class="w-[90%] ml-8 lg:ml-0 xxs:ml-[3%] grid gap-16">
             <div class="py-10 rounded-lg">
                 <table class="w-full rounded-lg ">
                     <thead class="rounded-lg  text-white font-mainfont-bold secondary-color">
@@ -105,13 +105,13 @@
                                 <td class="px-2 xxs:text-[0.5rem]"> {{ $dish->category }}</td>
                                 <td class="px-2 xxs:text-[0.5rem]">{{ $dish->subcategory }}</td>
                                 <td class="py-6 xxs:text-[0.5rem]">
-                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2  sm:mb-4 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="{{ route('dishes.show', $dish->id) }}">Ver</a>
-                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 py-2 me-2  hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-100" href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
+                                    <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 xxs:px-2 py-2 me-2  sm:mb-4 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="{{ route('dishes.show', $dish->id) }}">Ver</a>
+                                    <a class="bg-lime-200 rounded-lg text-black font-semibold px-4 xxs:px-2  py-2 me-2 hover:bg-lime-500 focus:ring-4 focus:outline-none focus:ring-lime-100" href="{{ route('dishes.edit', $dish->id) }}">Editar</a>
                                     <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button
-                                            class="bg-rose-300 rounded-lg text-black font-semibold px-4 py-2 lg:mt-0 sm:mt-4 xxs:mt-4 me-2 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-100"
+                                            class="bg-rose-300 rounded-lg text-black font-semibold px-4 xxs:px-2  py-2 lg:mt-0 sm:mt-4 xxs:mt-4 me-2 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-100"
                                             type="submit">Eliminar</button>
                                     </form>
                                 </td>

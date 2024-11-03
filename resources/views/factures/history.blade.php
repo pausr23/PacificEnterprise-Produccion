@@ -44,7 +44,7 @@
     </div>
 
     <div class="md:w-full xxs:w-[94%]">
-        <div class="grid grid-cols-1 md:grid-cols-[70%,20%] mb-6">
+        <div class="grid lg:grid-cols-1 md:grid-cols-[70%,20%]  mb-6">
             <form method="GET" action="{{ route('factures.history') }}">
                 <div class="grid">
                     <label class="mt-8 text-white font-main pb-2 font-bold" for="payment_method">Método de Pago:</label>
@@ -59,7 +59,7 @@
             </form>
         </div>
 
-        <div class="w-full md:w-[90%]  grid gap-4 md:gap-16 ">
+        <div class="w-full md:w-[90%] grid gap-4 md:gap-16 lg:ml-0 md:ml-[4%]">
             <div class="py-6 rounded-lg overflow-x-auto xxs:ml-1">
                 <table class="min-w-full rounded-lg">
                     <thead class="rounded-lg text-white font-main font-bold secondary-color">

@@ -51,10 +51,10 @@
             <form method="GET" action="{{ route('dishes.inventory') }}" class="grid grid-cols-3 lg:gap-0 sm:gap-4">
 
                 <div class="grid">
-                    <label class="md:my-8 xxs:my-5 my-0 md:text-lg text-white lg:text-base sm:text-xs font-main lg:pb-2 font-bold" for="category">Filtrar
+                    <label class="xxs:mt-8 my-0 md:text-lg text-white lg:mt-0 md:mt-[18%] lg:ml-0 md:ml-[11%] lg:text-base sm:text-xs font-main lg:pb-2 font-bold" for="category">Filtrar
                         por:</label>
                     <select
-                        class="bg-rose-300 rounded m h-8 text-center lg:w-40 sm:w-32 text-white lg:text-base sm:text-xs"
+                        class="bg-rose-300 rounded h-8 text-center lg:w-40 sm:w-20 xxs:mt-2 text-white lg:text-base sm:text-xs lg:ml-0 md:ml-[11%] "
                         id="category" name="category">
                         <option class="lg:text-base sm:text-xs" value="0">Todo</option>
                         @foreach ($categories as $category)
@@ -66,7 +66,8 @@
 
                 <div class="grid lg:ml-0 xxs:ml-12 content-end">
                     <button type="submit"
-                        class="lg:text-base md:text-base xxs:text-md font-bold flex items-center justify-center font-main text-black bg-white lg:h-10 sm:h-8 lg:w-28 md:w-20 xxs:w-20 lg:px-0 xxs:px-2 lg:ml-10 lg:rounded-xl xxs:rounded-md text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
+                    class="font-bold flex items-center justify-center font-main text-black bg-white h-10 xxs:text-xs xxs:h-10 lg:w-28 md:w-20 xxs:w-20 xxs:p-2 ml-5 mr-5 rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
+
                 </div>
             </form>
         </div>
