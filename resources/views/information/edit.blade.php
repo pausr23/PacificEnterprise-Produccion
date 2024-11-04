@@ -3,17 +3,17 @@
 @section('content')
 <div>
     <img class="w-56 m-12 xxs:w-60 xxs:ml-1" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
-    <div class="flex justify-center items-center mb-10">
+    <div class="flex justify-center items-center mb-10 lg:-mr-0 sm:-mr-16">
         <div class="grid grid-cols-2 xxs:grid-cols-1 lg:gap-96 sm:gap-10">
-            <h1 class="lg:text-2xl md:text-xl xxs:text-xl font-bold text-white font-main lg:ml-0">Edita la información de la página</h1>
-            <a class="font-main text-white lg:w-[30%] md:w-[50%] lg:h-auto md:h-auto secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('information.index') }}">Atrás</a>
+            <h1 class="text-2xl xxs:text-xl font-bold text-white font-main lg:ml-0">Edita la información de la página</h1>
+            <a class="font-main w-[50%] xxs:w-full secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 xxs:px-1 py-2.5 text-center" href="{{ route('information.index') }}">Atrás</a>
         </div>
     </div>
 
     <form action="{{ route('information.update', $information->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:-ml-20 xxs:justify-items-center">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 md:-ml-0 sm:-ml-6 xxs:-ml-20 xxs:justify-items-center">
 
             <div class="grid">
                 <div class="grid mb-2">
