@@ -6,8 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\RegisteredDish;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\RegisteredDish;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 class RegisteredDishController extends Controller
 {
+
     public function index()
     {
         $dishes = RegisteredDish::select(
@@ -25,20 +32,13 @@ class RegisteredDishController extends Controller
         ->join('subcategories', 'registered_dishes.subcategories_id', '=', 'subcategories.id')
         ->get();
 
-        // Agregar un dd para verificar los datos recuperados
         if ($dishes->isEmpty()) {
             return response()->json(['message' => 'No dishes found'], 404);
         }
 
-        // Mapear para obtener las URLs de Cloudinary
-        $dishes->transform(function ($dish) {
-            $dish->image = Cloudinary::getUrl($dish->image); // Obtener la URL de la imagen
-            return $dish;
-        });
-
         return response()->json($dishes);
     }
-
+    
     public function show(string $id)
     {
         $dish = RegisteredDish::select(
@@ -58,25 +58,6 @@ class RegisteredDishController extends Controller
             return response()->json(['message' => 'Dish not found'], 404);
         }
 
-        // Genera la URL de Cloudinary para la imagen
-        $dish->image = Cloudinary::getUrl($dish->image);
-
         return response()->json($dish);
-    }
-
-    public function getImages()
-    {
-        $dishes = RegisteredDish::all();
-
-        if ($dishes->isEmpty()) {
-            return response()->json(['error' => 'No images found'], 404);
-        }
-
-        // Solo devuelves las URLs de Cloudinary
-        $images = $dishes->map(function ($dish) {
-            return Cloudinary::getUrl($dish->image);
-        });
-
-        return response()->json($images);
     }
 }

@@ -35,7 +35,6 @@
                     <input class="secondary-color border border-gray-300  text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="title" value="{{ $dish->title }}" placeholder="Nombre del producto">
                 </div>
 
-                <!-- Categories -->
                 <div class="mt-2 mb-2">
                     <div>
                         <label for="dishes_categories_id" class="block mb-2 font-medium text-white font-main">Categoría:</label>
@@ -48,7 +47,6 @@
                     </div>
                 </div>
 
-                <!-- Subcategories -->
                 <div class="mt-2 mb-2">
                     <div>
                         <label for="subcategories_id" class="block mb-2 font-medium text-white font-main">Subcategoría:</label>
@@ -58,7 +56,6 @@
                     </div>
                 </div>
 
-                <!-- Unidades -->
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Unidades</label>
                     <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" value="{{ $dish->units }}" placeholder="Unidades disponibles" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
