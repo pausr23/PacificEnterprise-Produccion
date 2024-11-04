@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -32,11 +30,11 @@ class UsersController extends Controller
     ]);
 
     if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-        // Redirigir según el job_titles_id
+
         if (Auth::user()->job_titles_id == 1) {
-            return redirect()->route('dishes.index');
+            return redirect()->route('dashboard.principal');
         } elseif (Auth::user()->job_titles_id == 2) {
-            return redirect()->route('factures.ordering');
+            return redirect()->route('dashboard.principal');
         }
     }
 
@@ -76,11 +74,6 @@ class UsersController extends Controller
         return view('admin.users', compact('users', 'titles'));
     }
 
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request)
     {
         $selectedJobTitleId = $request->input('job_titles_id');
@@ -90,9 +83,6 @@ class UsersController extends Controller
         return view('admin.create', compact('titles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -115,9 +105,6 @@ class UsersController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $user = User::with('jobTitle')->findOrFail($id);
@@ -125,9 +112,6 @@ class UsersController extends Controller
         return view('admin.seeUser', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $user = User::find($id);
@@ -136,9 +120,6 @@ class UsersController extends Controller
         return view('admin.edit', compact('user', 'titles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
 
@@ -166,9 +147,6 @@ class UsersController extends Controller
         return redirect()->route('admin.show', $user->id)->with('success', 'Usuario actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $user = User::find($id);
