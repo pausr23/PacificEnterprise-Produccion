@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="flex items-start ml-20 xxs:ml-0 mb-8">
-        <img class="w-80 ml-10 mb-10 xxs:w-60 xxs:ml-1 xxs:-mb-4" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+      
 
         @if(session('success'))
             <div class="mt-6 alert alert-success bg-green-600 text-white p-3 rounded-lg">
@@ -12,9 +12,9 @@
         @endif
     </div>
 
-    <a class="font-main ml-32 xxs:ml-6 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('information.index') }}">Atrás</a>
+    <a class="font-main ml-16 xxs:ml-6 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('information.index') }}">Atrás</a>
 
-    <div class="grid container py-8 rounded-xl secondary-color mx-auto lg:w-[30%] sm:w-[50%] xxs:w-[90%] text-justify text-white xxs:mt-3 sm:mt-3">
+    <div class="grid container py-8 rounded-xl secondary-color mx-auto lg:w-[30%] sm:w-[50%] xxs:w-[90%] text-justify text-white mt-5  xxs:my-6 ">
         <div class="ml-16 mt-8">
             <h1 class="text-2xl mb-6 font-bold">Detalles de la página</h1>
             <p class="text-lg mb-3 border-b border-gray-500 pb-2 w-3/4"><strong>Nombre:</strong> <span class="pl-2">{{ $information->name }}</span></p>

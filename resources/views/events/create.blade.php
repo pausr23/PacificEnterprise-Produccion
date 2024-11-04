@@ -1,16 +1,16 @@
 @extends('dishes.layout')
 @section('content')
 <div>
-    <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
 
     <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="pl-20 grid grid-cols-[50%,50%]">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:justify-items-center xxs:pl-4 xxs:ml-[-4%]">
 
             <div class="grid">
 
-                <h1 class="text-2xl font-bold text-white font-main ">Añade un nuevo evento</h1>
+                <h1 class="text-2xl font-bold text-white font-main xxs:my-4 xxs:ml-[10%]">Añade un nuevo evento</h1>
 
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Título</label>
@@ -46,10 +46,10 @@
                 </div>
                 <div class="flex mt-6">
                     <button type="submit"
-                        class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 mr-2 text-center">Crear
+                        class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 mr-2 xxs:text-xs text-center">Crear
                         Evento</button>
 
-                    <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
+                    <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 xxs:py-5 xxs:text-sm text-center"
                         href="{{ route('dishes.index') }}">Atrás</a>
 
                 </div>

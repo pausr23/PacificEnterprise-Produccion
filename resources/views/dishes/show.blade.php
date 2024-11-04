@@ -12,9 +12,10 @@
         @endif
 </div>
 
-<a href="{{ route('dishes.index') }}" class="font-main ml-32 xxs:ml-[36%] text-white lg:w-[30%] md:w-[60%] xxs:w-[90%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center">Regresar</a>
+<a class="font-main ml-16 xxs:ml-6 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
 
-<div class="grid container py-8 rounded-xl secondary-color mx-auto w-[50%] xxs:w-[90%] text-center text-white mb-5 md:mt-6 xxs:mt-12">
+
+<div class="grid container py-8 rounded-xl secondary-color mx-auto w-[50%] xxs:w-[90%] text-center text-white mt-5 xxs:my-6">
     <h1 class="text-2xl mb-6 font-bold">{{ $dish->title }}</h1>
     <img class="w-72 mx-auto rounded-lg" src="{{ $dish->image }}" alt="{{ $dish->title }}" border="0">
     <div class="mt-4 text-white">
