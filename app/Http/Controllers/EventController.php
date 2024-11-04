@@ -11,18 +11,17 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 class EventController extends Controller
 {
     public function index()
-    {
-        $today = Carbon::today();
-        $events = Event::where('event_date', '>=', $today)->get();
+{
+    $today = Carbon::today();
+    $events = Event::where('event_date', '>=', $today)->get();
 
-        $events->transform(function ($event) {
-            $event->event_date = Carbon::parse($event->event_date)->format('Y-m-d');
-            return $event;
-        });
+    $events->transform(function ($event) {
+        $event->event_date = Carbon::parse($event->event_date)->format('Y-m-d');
+        return $event;
+    });
 
-        return response()->json($events);
-    }
-
+    return response()->json($events);
+}
     public function create()
     {
         return view('events.create');

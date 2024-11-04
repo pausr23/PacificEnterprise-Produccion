@@ -135,7 +135,7 @@ class DashboardSummaryController extends Controller
             'recentInvoices' => $recentInvoices,
             'totalEarnings' => $totalEarnings,
             'invoiceCount' => $invoiceCount,
-            'selectedDate' => null,
+            'selectedDate' => $selectedDate,
             'earningsLabels' => $earningsLabels,
             'earningsValues' => $earningsValues,
             'ordersLabels' => $ordersLabels,

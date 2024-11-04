@@ -46,7 +46,7 @@
 
     <div>
         <div class="md:grid md:grid-cols-2">
-            <form class="my-6" action="{{ route('principal.show') }}" method="POST">
+            <form class="my-2" action="{{ route('principal.show') }}" method="POST">
                 @csrf
                 <label class="font-main xxs:text-sm text-white mr-4 lg:text-lg md:text-md" for="date">Selecciona una fecha:</label>
                 <input class="rounded-lg xxs:px-2 xxs:py-1 mr-4 px-3 mt-2 py-2 secondary-color text-white" type="date" name="date" value="{{ old('date', $selectedDate) }}" required>
