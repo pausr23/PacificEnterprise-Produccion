@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="grid grid-cols-[20%,60%] xxs:grid-cols-1 gap-16">
-        <img class="w-80 ml-10 mb-10 xxs:w-60 xxs:ml-1 xxs:-mb-6" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
-        <div class="content-end mb-14">
+        <img class="w-80 ml-10 mb-10 xxs:w-60 xxs:ml-1 xxs:-mb-6 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+        <div class="content-end mb-14 xxs:mt-4">
             <a class="ml-10 font-bold flex items-center justify-center xxs:ml-4 py-2 w-24 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100" href="{{ route('admin.profile') }}">Atrás
             </a>
         </div>

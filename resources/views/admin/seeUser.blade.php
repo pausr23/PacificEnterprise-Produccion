@@ -12,10 +12,9 @@
         @endif
     </div>
 
-    <a class="ml-10 font-bold flex items-center justify-center w-[30%] py-2 secondary-color text-white rounded-xl text-center hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100 xxs:ml-[4%]" href="{{ route('admin.profile') }}">Atrás</a>
+    <a class="font-main ml-16 xxs:ml-6 text-white w-[30%] secondary-color hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center" href="{{ route('admin.profile') }}">Atrás</a>
 
-
-    <div class="grid container py-8 rounded-xl secondary-color mx-auto lg:w-[30%] md:w-[46%] xxs:w-80 xxs:mr-1.5rem xxs:my-6 text-justify text-white">
+    <div class="grid container py-8 rounded-xl secondary-color mx-auto lg:w-[30%]  xxs:w-[90%] mt-5 xxs:my-6 text-justify text-white">
     <img class="rounded-full mx-auto bg-white" src="https://img.icons8.com/?size=100&id=HNn3lC0m5uKR&format=png&color=000000" alt="">
 
     

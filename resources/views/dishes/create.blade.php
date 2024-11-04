@@ -2,11 +2,11 @@
 
 @section('content')
 <div>
-    <img class="w-56 m-12 xxs:w-60 xxs:ml-1" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
-    <div class="flex justify-center items-center mb-10">
-        <div class="grid grid-cols-2 xxs:grid-cols-1 lg:gap-96 sm:gap-10">
-            <h1 class="text-2xl xxs:text-xl font-bold text-white font-main lg:ml-0">Añade un nuevo producto</h1>
-            <a class="font-main w-[50%] xxs:w-full secondary-color text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 xxs:px-1 py-2.5 text-center" href="{{ route('dishes.index') }}">Atrás</a>
+    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+    <div class="flex justify-center items-center mb-10 xxs:mb-4">
+        <div class="grid grid-cols-2 lg:gap-96 md:gap-16 xxs:mt-4  xxs:grid-cols-1">
+            <h1 class="text-2xl lg:ml-0 sm:ml-7 xxs:text-xl font-bold text-white font-main xxs:mb-2">Añade un nuevo producto</h1>
+            <a class="font-main text-white lg:w-[30%] md:w-[50%] lg:h-auto md:h-auto secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 xxs:mt-4 text-center" href="{{ route('dishes.index') }}">Atrás</a>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
 
     <form action="{{ route('dishes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="pl-20 grid grid-cols-[50%,50%] md:-ml-0 sm:-ml-6 xxs:grid-cols-1 xxs:gap-y-1 xxs:px-2">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:justify-items-center xxs:gap-y-1 xxs:px-2">
 
             <div class="grid">
 
@@ -89,8 +89,8 @@
 
         </div>
 
-        <div class="flex justify-end xxs:justify-center xxs:ml-16 pr-20 mt-5">
-            <button type="submit" class="font-main text-white w-[8%] md:w-[12%] sm:w-[16%] xxs:w-full secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center lg:mr-60 xxs:mr-0 mb-10">Guardar</button>
+        <div class="flex justify-end xxs:justify-center xxs:ml-20 pr-20 mt-5">
+            <button type="submit" class="font-main text-white w-[8%] md:w-[12%] sm:w-[16%] xxs:w-full secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center lg:mr-60 mb-10">Guardar</button>
         </div>
     </form>
 </div>
