@@ -1,7 +1,7 @@
 @extends('events.layout')
 @section('content')
 <div>
-    <img class="w-56 m-12" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
     @if ($errors->any())
         <div class="bg-red-500 text-white p-4 mb-4">
@@ -16,11 +16,11 @@
     <form action="{{ route('events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="pl-20 grid grid-cols-[50%,50%]">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:justify-items-center xxs:pl-4 xxs:ml-[-4%]">
 
             <div class="grid">
 
-                <h1 class="text-2xl font-bold text-white font-main ">Editar Evento</h1>
+                <h1 class="text-2xl font-bold text-white font-main xxs:my-4 xxs:ml-[28%]">Editar Evento</h1>
 
                 <div class="grid mb-2">
                     <label class="block mb-2 font-medium text-white font-main">Título</label>
@@ -54,12 +54,12 @@
                         name="image">
                     
                 </div>
-                <div class="flex mt-6">
+                <div class="flex mt-6 ">
                     <button type="submit"
-                        class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 mr-2 text-center">Actualizar
+                        class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 mr-2 xxs:text-xs text-center">Actualizar
                         Evento</button>
 
-                    <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
+                    <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 xxs:py-5 xxs:text-sm text-center"
                         href="{{ route('events.index') }}">Atrás</a>
 
                 </div>
