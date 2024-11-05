@@ -18,12 +18,12 @@
                 href="{{ route('factures.order') }}">Órdenes</a>
             <a class="py-3 mb-5 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]"
                 href="{{ route('factures.history') }}">Historial de Ventas</a>
+            <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                href="{{ route('dishes.inventory') }}">Inventario</a>
 
             @if(Auth::check() && Auth::user()->job_titles_id == 1)
                 <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                     href="{{ route('dishes.index') }}">Productos</a>
-                <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('dishes.inventory') }}">Inventario</a>
                 <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                     href="{{ route('suppliers.index') }}">Proveedores</a>
                 <a class="py-3 mb-3 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
