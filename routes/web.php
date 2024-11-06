@@ -85,8 +85,6 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::get('/dishes/create', [AdminDishController::class, 'create'])->name('dishes.create');
 
-    Route::resource('dishes', AdminDishController::class);
-
     Route::post('/dishes', [AdminDishController::class, 'store'])->name('dishes.store');
 
     Route::get('/dishes/{id}/edit', [AdminDishController::class, 'edit'])->name('dishes.edit');
@@ -104,14 +102,12 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::delete('suppliers/{supplier}', [AdminSupplierController::class, 'destroy'])->name('suppliers.destroy');
 
-    Route::resource('suppliers', AdminSupplierController::class);
 
     
 
     /* Information */
 
     Route::resource('information', AdminInformationController::class);
-    Route::get('information/{id}', [AdminInformationController::class, 'show'])->name('information.show'); 
     
 });
 
