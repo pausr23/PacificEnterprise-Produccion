@@ -43,9 +43,9 @@
                 style="max-height: 315px;">
                 @foreach($dishes as $dish)
                     <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
-                        data-dish-id="{{ $dish->id }}" 
+                        data-dish-id="{{ $dish->id }}"
                         data-subcategory-id="{{ $dish->subcategories_id }}"
-                        data-dish-price="{{ $dish->sale_price }}" 
+                        data-dish-price="{{ $dish->sale_price }}"
                         data-dish-title="{{ strtolower($dish->title) }}"
                         style="border-left: 6px solid #8FC08B;">
                         <div class="flex flex-col h-full justify-between">

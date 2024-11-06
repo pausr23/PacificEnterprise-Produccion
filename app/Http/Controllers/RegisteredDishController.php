@@ -13,22 +13,18 @@ class RegisteredDishController extends Controller
     {
         $dishes = $this->getDishesWithRelations();
 
-        if ($dishes->isEmpty()) {
-            return response()->json(['message' => self::NO_DISHES_FOUND_MESSAGE], 404);
-        }
-
-        return response()->json($dishes);
+        return $dishes->isEmpty()
+            ? response()->json(['message' => self::NO_DISHES_FOUND_MESSAGE], 404)
+            : response()->json($dishes);
     }
 
     public function show(string $id)
     {
         $dish = $this->getDishById($id);
 
-        if (!$dish) {
-            return response()->json(['message' => self::DISH_NOT_FOUND_MESSAGE], 404);
-        }
-
-        return response()->json($dish);
+        return $dish
+            ? response()->json($dish)
+            : response()->json(['message' => self::DISH_NOT_FOUND_MESSAGE], 404);
     }
 
     private function getDishesWithRelations()

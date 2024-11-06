@@ -10,7 +10,7 @@
             <h1 class="text-2xl xxs:text-lg font-bold text-white font-main xxs:align-center">
                 Añade un nuevo proveedor
             </h1>
-            <a class="font-main text-white lg:w-[30%] md:w-[50%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 xxs:mt-4 text-center" 
+            <a class="font-main text-white lg:w-[30%] md:w-[50%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 xxs:mt-4 text-center"
                href="{{ route('suppliers.index') }}">Atrás</a>
         </div>
     </div>

@@ -23,21 +23,21 @@
                 <h1 class="text-2xl font-bold text-white font-main xxs:my-4 xxs:ml-[10%]">Añade un nuevo evento</h1>
 
                 <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Título</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white"
+                    <label class="block mb-2 font-medium text-white font-main" for="title">Título</label>
+                    <input id="title" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white"
                         type="text" name="title" placeholder="Título del evento" value="{{ old('title') }}" required>
                 </div>
 
                 <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Fecha del Evento</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white"
-                        type="date" name="event_date" placeholder="Fecha del evento" value="{{ old('event_date') }}"
-                        required>
+                    <label class="block mb-2 font-medium text-white font-main" for="event_date">Fecha del Evento</label>
+                    <input id="event_date" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white"
+                        type="date" name="event_date" placeholder="Fecha del evento" value="{{ old('event_date') }}" required>
                 </div>
 
                 <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Descripción</label>
+                    <label class="block mb-2 font-medium text-white font-main" for="description">Descripción</label>
                     <textarea
+                        id="description"
                         class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white"
                         name="description" cols="30" rows="3"
                         placeholder="Descripción del evento">{{ old('description', '') }}</textarea>

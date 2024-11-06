@@ -54,10 +54,12 @@
             </form>
 
             <div class="my-6 flex items-center">
-                <label class="switch" for="toggleSwitch">
+                <label class="switch">
                     <input type="checkbox" id="toggleSwitch">
                     <span class="slider round w-14 md:ml-3"></span>
+                    Activo
                 </label>
+
                 <span class="font-main text-white md:ml-9 text-lg xxs:text-sm">Mostrar Gráficos</span>
             </div>
         </div>

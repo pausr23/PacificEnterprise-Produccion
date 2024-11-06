@@ -51,13 +51,13 @@
             @foreach($events as $event)
                 <div class="border w-full min-h-[18rem] bg-[#2D2D2D] border-none rounded-[2rem]">
                     <div class="flex h-40 w-full overflow-hidden relative">
-                        <img src="{{ $event->image_path }}" alt="{{ $event->title }}" 
+                        <img src="{{ $event->image_path }}" alt="{{ $event->title }}"
                             class="absolute top-0 left-0 w-full h-full object-cover rounded-t-[2rem]">
                     </div>
                     <div class="mx-[5%] my-[2%]">
                         <h2 class="font-bold text-white">{{ $event->title }}</h2>
                         <p class="font-bold text-[#B4C1C7]">Fecha: {{ \Carbon\Carbon::parse($event->event_date)->format('Y-m-d') }}</p>
-                        <a href="{{ route('events.show', $event->id) }}" 
+                        <a href="{{ route('events.show', $event->id) }}"
                         class="text-white font-bold mt-[1rem] w-full bg-[#7ECACA] rounded-[2rem] py-2 text-center block">Ver más</a>
                     </div>
                 </div>
