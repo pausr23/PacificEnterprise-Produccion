@@ -199,11 +199,13 @@
 
                     <!-- Notas -->
                     <div class="grid grid-cols-1 mb-2">
-                        <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
+                        <label for="note" class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
                         <textarea
+                            id="note"
                             class="secondary-color border border-gray-300 text-sm rounded-lg block p-2 text-white lg:w-80 md:w-[80%] xxs:w-[86%] mx-auto"
                             name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
                     </div>
+
 
                     <!-- Métodos de Pago -->
                     <h2 class="text-gray-400 text-sm ml-5 font-main mt-5">Método de Pago:</h2>
@@ -232,15 +234,15 @@
 
                     <!-- Sección de Monto y Cambio (visible solo para efectivo) -->
                     <div class="grid grid-cols-2 mt-5" id="payment-amount-section" style="display: none;">
-                        <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Monto recibido:</label>
+                        <label for="customer-payment" class="text-gray-400 text-sm ml-5 mt-2 font-main">Monto recibido:</label>
                         <input id="customer-payment" type="number"
                             class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-36"
                             placeholder="Monto" />
                     </div>
 
                     <div class="grid grid-cols-2 mt-5" id="change-section" style="display: none;">
-                        <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Cambio:</label>
-                        <h3 id="change-amount" class="text-white text-xs font-semibold ml-5 mt-2 text-center font-main">₡0</h3>
+                        <label for="change-amount" class="text-gray-400 text-sm ml-5 mt-2 font-main">Cambio:</label>
+                        <output id="change-amount" class="text-white text-xs font-semibold ml-5 mt-2 text-center font-main">₡0</output>
                     </div>
 
                     <!-- Botón de Envío -->
