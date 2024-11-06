@@ -19,6 +19,13 @@ class AdminDishController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    private const DISHES_FOLDER = 'dishes';
+    private const DEFAULT_IMAGE = 'default.jpg';
+    private const INVOICE_PATH = 'invoices/invoice_';
+    private const PDF_EXTENSION = '.pdf';
+
+
     public function index(Request $request)
     {
         $searchTerm = $request->input('dish');
@@ -84,7 +91,7 @@ class AdminDishController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $imageUrl = 'default.jpg';
+        $imageUrl = self::DEFAULT_IMAGE;
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -92,7 +99,7 @@ class AdminDishController extends Controller
             if ($file->isValid()) {
                 try {
                     $uploadResult = Cloudinary::upload($file->getPathname(), [
-                        'folder' => 'dishes'
+                        'folder' => self::DISHES_FOLDER,
                     ]);
                     
                     logger('Imagen cargada: ', [
@@ -356,7 +363,7 @@ class AdminDishController extends Controller
         $pdf->setPaper('legal', 'portrait'); // Formato legal (8.5 x 14 pulgadas)
         $pdf->render();
         $output = $pdf->output();
-        $filePath = 'invoices/invoice_' . $invoiceNumber . '.pdf';
+        $filePath = self::INVOICE_PATH . $invoiceNumber . self::PDF_EXTENSION;
         file_put_contents(public_path($filePath), $output);
 
         return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath'));
