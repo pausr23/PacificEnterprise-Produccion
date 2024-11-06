@@ -9,6 +9,19 @@ use App\Models\Event;
 
 class DashboardSummaryController extends Controller
 {
+
+    private const VIEW_DASHBOARD = 'dashboard.principal';
+    private const FIELD_TOTAL_EARNINGS = 'totalEarnings';
+    private const FIELD_INVOICE_COUNT = 'invoiceCount';
+    private const FIELD_SELECTED_DATE = 'selectedDate';
+    private const FIELD_INVOICES = 'invoices';
+    private const FIELD_RECENT_INVOICES = 'recentInvoices';
+    private const FIELD_EARNINGS_LABELS = 'earningsLabels';
+    private const FIELD_EARNINGS_VALUES = 'earningsValues';
+    private const FIELD_ORDERS_LABELS = 'ordersLabels';
+    private const FIELD_ORDERS_VALUES = 'ordersValues';
+    private const FIELD_EVENTS = 'events';
+
     public function index(Request $request)
     {
         $selectedDate = $this->getSelectedDate($request);
@@ -24,18 +37,18 @@ class DashboardSummaryController extends Controller
 
         $events = $this->getEvents();
 
-        return view('dashboard.principal', compact(
-            'invoices',
-            'recentInvoices',
-            'totalEarnings',
-            'invoiceCount',
-            'selectedDate',
-            'earningsLabels',
-            'earningsValues',
-            'ordersLabels',
-            'ordersValues',
-            'events'
-        ));
+        return view(self::VIEW_DASHBOARD, [
+            self::FIELD_INVOICES => $invoices,
+            self::FIELD_RECENT_INVOICES => $recentInvoices,
+            self::FIELD_TOTAL_EARNINGS => $totalEarnings,
+            self::FIELD_INVOICE_COUNT => $invoiceCount,
+            self::FIELD_SELECTED_DATE => $selectedDate,
+            self::FIELD_EARNINGS_LABELS => $earningsLabels,
+            self::FIELD_EARNINGS_VALUES => $earningsValues,
+            self::FIELD_ORDERS_LABELS => $ordersLabels,
+            self::FIELD_ORDERS_VALUES => $ordersValues,
+            self::FIELD_EVENTS => $events,
+        ]);
     }
 
     protected function getSelectedDate(Request $request): string
