@@ -20,15 +20,26 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            border-radius: 2rem;
         }
 
-        th, td {
+        th,
+        td {
             padding: 4px;
             text-align: left;
         }
 
         th {
             background-color: #f2f2f2;
+        }
+
+        tbody {
+            background-color: #f2f2f2;
+            height: 60%;
+            /* Asegura que el cuerpo ocupe el 60% de la altura de la tabla */
+
+            overflow-y: auto;
+            /* Permite el desplazamiento vertical si el contenido excede la altura */
         }
 
         .total {
@@ -46,10 +57,9 @@
 
 <body>
     <!-- Logo de la empresa -->
-    <img class="w-52 mx-auto mb-10" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific Enterprise">
+    
 
-    <!-- Título de la factura -->
-    <h1 class="mb-10 text-center">FACTURA</h1>
+   
 
     <!-- Comprobación de si el archivo existe -->
     @if (isset($filePath))
@@ -57,6 +67,7 @@
         <iframe src="{{ asset($filePath) }}" style="display:none;"></iframe>
 
         <!-- Tabla con los detalles de los productos -->
+        <div id="back-button-container" class="flex justify-center mb-10"></div>
         <table>
             <thead>
                 <tr>
@@ -65,7 +76,8 @@
                     <th>Precio</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class=" ml-4"> 
+            
                 @foreach ($addedItemsWithDetails as $item)
                     <tr>
                         <td>{{ $item['quantity'] }}</td>
@@ -86,19 +98,30 @@
     @endif
 
     <!-- Contenedor para el botón de regreso -->
-    <div id="back-button-container" class="flex justify-center mt-10"></div>
+
 
     <!-- Script para agregar el botón de regreso después de un tiempo -->
-    <script>
+        <script>
         setTimeout(function () {
             const backButtonContainer = document.getElementById('back-button-container');
+    
+            // Crear el botón "Regresar"
             const backButton = document.createElement('button');
             backButton.textContent = 'Regresar';
-            backButton.className = 'bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600';
+            backButton.className = 'bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600';
             backButton.onclick = function () {
-                window.history.back();
+                window.location.href = '{{ route('factures.ordering') }}';
             };
             backButtonContainer.appendChild(backButton);
+    
+            // Crear el botón "Imprimir"
+            const printButton = document.createElement('button');
+            printButton.textContent = 'Imprimir';
+            printButton.className = 'bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 ml-4';
+            printButton.onclick = function () {
+                window.location.reload();
+            };
+            backButtonContainer.appendChild(printButton);
         }, 1000); // 1000 milisegundos = 1 segundo
     </script>
 </body>
