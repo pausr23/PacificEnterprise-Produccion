@@ -29,11 +29,12 @@
             <div class="form-column">
                 @include('information.partials.input', ['label' => 'Dirección', 'name' => 'address', 'type' => 'text', 'placeholder' => 'Dirección'])
                 
-                <!-- Notas Field -->
-                <div class="input-group mb-2">
-                    <label class="label block mb-2 font-medium text-white font-main">Notas</label>
-                    <textarea class="input-area secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
-                </div>
+            <!-- Notas Field -->
+            <div class="input-group mb-2">
+                <label for="note" class="label block mb-2 font-medium text-white font-main">Notas</label>
+                <textarea id="note" class="input-area secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
+            </div>
+
             </div>
         </div>
 

@@ -38,30 +38,33 @@
 
                     <!-- Campo de nombre -->
                     <div class="grid mb-2">
-                        <label class="block mb-2 font-medium text-white font-main">Nombre</label>
-                        <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="name" placeholder="Nombre completo">
+                        <label for="name" class="block mb-2 font-medium text-white font-main">Nombre</label>
+                        <input id="name" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="name" placeholder="Nombre completo">
                     </div>
+
 
                     <!-- Campo de usuario -->
                     <div class="grid mb-2">
-                        <label class="block mb-2 font-medium text-white font-main">Usuario</label>
-                        <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="username" placeholder="Usuario">
+                        <label for="username" class="block mb-2 font-medium text-white font-main">Usuario</label>
+                        <input id="username" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="username" placeholder="Usuario">
                     </div>
+
                 </div>
 
                 <!-- Columna de derecha -->
                 <div>
                     <!-- Campo de contraseña -->
                     <div class="grid mb-2">
-                        <label class="block mb-2 font-medium text-white font-main">Contraseña</label>
-                        <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="password" name="password" placeholder="Contraseña para el usuario">
+                        <label for="password" class="block mb-2 font-medium text-white font-main">Contraseña</label>
+                        <input id="password" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="password" name="password" placeholder="Contraseña para el usuario">
                     </div>
 
                     <!-- Campo de correo electrónico -->
                     <div class="grid mb-2">
-                        <label class="block mb-2 font-medium text-white font-main">Correo electrónico asociado</label>
-                        <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="email" placeholder="Correo">
+                        <label for="email" class="block mb-2 font-medium text-white font-main">Correo electrónico asociado</label>
+                        <input id="email" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="email" placeholder="Correo">
                     </div>
+                    
                 </div>
             </div>
 

@@ -21,26 +21,26 @@
                 @csrf
                 
                 <!-- Username Input -->
-                <input 
+                <input
                     class="w-72 xxs:w-32 xxs:text-sm xxs:ml-1 text-xl text-[#CDA0CB] mb-10 bg-transparent border-b-2 border-[#CDA0CB] placeholder:text-[#bc96ba] focus:outline-none"
-                    placeholder="Username" 
-                    type="text" 
-                    name="username" 
+                    placeholder="Username"
+                    type="text"
+                    name="username"
                     required
                 >
 
                 <!-- Password Input -->
-                <input 
+                <input
                     class="text-xl xxs:w-32 xxs:text-sm xxs:ml-1 text-[#CDA0CB] mb-12 bg-transparent border-b-2 border-[#CDA0CB] placeholder:text-[#bc96ba] focus:outline-none"
-                    placeholder="Password" 
-                    type="password" 
-                    name="password" 
+                    placeholder="Password"
+                    type="password"
+                    name="password"
                     required
                 >
 
                 <!-- Submit Button -->
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     class="text-center hover:bg-[#bc96ba] active:bg-[#b080a8] bg-[#CDA0CB] w-[60%] justify-self-center text-lg xxs:text-sm font-main font-semibold py-2 px-4 rounded-2xl"
                 >
                     Log in

@@ -55,13 +55,14 @@
 
                     <tbody>
                         @foreach ($dishes as $dish)
-                            <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-[0.5rem] lg:px-0 xxs:px-0">
-                                <td scope="col" class="lg:px-3 xxs:px-1 lg:py-3 xxs:py-2">{{ $dish->title }}</td>
-                                <td>{{ $dish->category }}</td>
-                                <td>{{ $dish->subcategory }}</td>
-                                <td>{{ $dish->sale_price }}</td>
-                                <td>{{ $dish->units }}</td>
-                            </tr>
+                        <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-[0.5rem] lg:px-0 xxs:px-0">
+                            <td class="lg:px-3 xxs:px-1 lg:py-3 xxs:py-2">{{ $dish->title }}</td>
+                            <td>{{ $dish->category }}</td>
+                            <td>{{ $dish->subcategory }}</td>
+                            <td>{{ $dish->sale_price }}</td>
+                            <td>{{ $dish->units }}</td>
+                        </tr>
+
                         @endforeach
                     </tbody>
                 </table>
