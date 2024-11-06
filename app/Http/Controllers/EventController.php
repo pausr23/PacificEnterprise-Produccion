@@ -47,7 +47,7 @@ class EventController extends Controller
                 $uploadResult = Cloudinary::upload($image->getPathname(), [
                     'folder' => 'events'
                 ]);
-                $imageUrl = $uploadResult->getSecurePath(); 
+                $imageUrl = $uploadResult->getSecurePath();
             } catch (\Exception $e) {
                 return redirect()->back()->withErrors(['image' => 'Error al subir la imagen: ' . $e->getMessage()]);
             }
