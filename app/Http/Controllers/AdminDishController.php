@@ -290,9 +290,11 @@ class AdminDishController extends Controller
 
     public function storeOrder(Request $request)
     {
+
         $addedItems = json_decode($request->input('addedItems'), true);
         $paymentMethodId = $request->input('payment_method_id');
         $note = $request->input('note', '');
+        $voucherNumber = $request->input('voucher_number', null);
 
         $total = 0;
 
@@ -325,6 +327,7 @@ class AdminDishController extends Controller
             'payment_method_id' => $paymentMethodId,
             'total' => $total,
             'note' => $note,
+            'voucher_number' => $voucherNumber,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

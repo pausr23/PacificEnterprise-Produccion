@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->id(); 
-            $table->bigInteger('invoice_number')->unique();  
+            $table->id();
+            $table->bigInteger('invoice_number')->unique();
             $table->foreignId('payment_method_id')->constrained('payment_methods');
             $table->decimal('total', 8, 2);
+            $table->string('voucher_number')->nullable();
             $table->string('note')->nullable();
             $table->integer('is_ready')->default(1);
             $table->timestamps();

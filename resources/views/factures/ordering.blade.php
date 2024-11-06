@@ -245,6 +245,14 @@
                         <output id="change-amount" class="text-white text-xs font-semibold ml-5 mt-2 text-center font-main">₡0</output>
                     </div>
 
+                    <div id="voucher-section" class="grid grid-cols-1 mb-2" style="display: none;">
+                        <label id="voucher-label" for="voucher-number" class="text-gray-400 text-sm ml-8 font-main mt-5 mb-5">Número de Comprobante:</label>
+                        <input type="text" id="voucher-number" name="voucher_number"
+                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-2 text-white lg:w-70 md:w-[80%] xxs:w-[86%] mx-auto"
+                            placeholder="Número" />
+                    </div>
+
+
                     <!-- Botón de Envío -->
                     <div class="flex justify-center">
                         <button type="submit" class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300">
@@ -337,6 +345,7 @@
                         const addedItems = Object.keys(billing).map(id => ({ id, quantity: billing[id].quantity }));
                         document.getElementById('addedItemsInput').value = JSON.stringify(addedItems);
 
+                        // Verificar si hay productos añadidos
                         if (addedItems.length === 0) {
                             event.preventDefault();  // Evita el envío del formulario
                             alert('Por favor, agregue al menos un producto antes de facturar.');
@@ -344,7 +353,17 @@
                         }
 
                         const paymentMethod = document.getElementById('paymentMethodInput').value;
-                        if (paymentMethod === "1") { // Verifica si el método es efectivo
+                        const voucherNumber = document.getElementById('voucher-number').value;
+
+                        // Verificar si el método de pago es Tarjeta (2) o Sinpe (3) y si el número de voucher está vacío
+                        if ((paymentMethod === "2" || paymentMethod === "3") && !voucherNumber) {
+                            event.preventDefault();  // Evita el envío del formulario
+                            alert('El número de voucher/comprobante es obligatorio para el método de pago seleccionado.');
+                            return;
+                        }
+
+                        // Verificación de pago en efectivo (si es necesario)
+                        if (paymentMethod === "1") { // Efectivo
                             const total = parseFloat(document.getElementById('total-amount').innerText.replace('₡', '')) || 0;
                             const payment = parseFloat(document.getElementById('customer-payment').value) || 0;
 
@@ -354,6 +373,36 @@
                             }
                         }
                     };
+                });
+            </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const paymentMethodButtons = document.querySelectorAll('.payment-method');
+                    const voucherSection = document.getElementById('voucher-section');
+                    const voucherLabel = document.getElementById('voucher-label');
+                    const paymentMethodInput = document.getElementById('paymentMethodInput');
+                    
+                    paymentMethodButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const paymentMethod = this.getAttribute('data-value');
+                            
+                            // Actualizar el input hidden para el método de pago
+                            paymentMethodInput.value = paymentMethod;
+                            
+                            // Mostrar o esconder el campo de voucher según el método de pago
+                            if (paymentMethod === '2') { // Tarjeta
+                                voucherSection.style.display = 'block';
+                                voucherLabel.textContent = 'Número de Voucher';
+                            } else if (paymentMethod === '3') { // Sinpe
+                                voucherSection.style.display = 'block';
+                                voucherLabel.textContent = 'Número de Comprobante';
+                            } else { // Efectivo
+                                voucherSection.style.display = 'none';
+                                document.getElementById('voucher-number').value = ''; // Resetear el campo si es efectivo
+                            }
+                        });
+                    });
                 });
             </script>
 
