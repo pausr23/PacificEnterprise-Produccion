@@ -7,6 +7,11 @@ use App\Models\RegisteredSupplier;
 
 class AdminSupplierController extends Controller
 {
+
+    private const SUCCESS_CREATE_MESSAGE = 'Proveedor registrado correctamente.';
+    private const SUCCESS_UPDATE_MESSAGE = 'Proveedor actualizado correctamente.';
+    private const SUCCESS_DELETE_MESSAGE = 'Proveedor eliminado correctamente.';
+
     public function index(Request $request)
     {
         $suppliers = $this->searchSuppliers($request->input('supplier'));
@@ -28,7 +33,7 @@ class AdminSupplierController extends Controller
 
         RegisteredSupplier::create($request->only(['name', 'phone_number', 'email', 'note']));
 
-        return redirect()->route('suppliers.index')->with('success', 'Proveedor registrado correctamente.');
+        return redirect()->route('suppliers.index')->with('success', self::SUCCESS_CREATE_MESSAGE);
     }
 
     public function show(string $id)
@@ -50,7 +55,7 @@ class AdminSupplierController extends Controller
         $supplier = RegisteredSupplier::findOrFail($id);
         $supplier->update($request->only(['name', 'phone_number', 'email', 'note']));
 
-        return redirect()->route('suppliers.index')->with('success', 'Proveedor actualizado correctamente.');
+        return redirect()->route('suppliers.index')->with('success', self::SUCCESS_UPDATE_MESSAGE);
     }
 
     public function destroy(string $id)
@@ -58,7 +63,7 @@ class AdminSupplierController extends Controller
         $supplier = RegisteredSupplier::findOrFail($id);
         $supplier->delete();
 
-        return redirect()->route('suppliers.index')->with('success', 'Proveedor eliminado correctamente.');
+        return redirect()->route('suppliers.index')->with('success', self::SUCCESS_DELETE_MESSAGE);
     }
 
     private function searchSuppliers(?string $searchTerm)
