@@ -3,118 +3,66 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-
 use App\Models\JobTitle;
 use App\Models\User;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
         return view('admin.login');
     }
 
     public function login(Request $request)
-{
-    $request->validate([
-        'username' => 'required|string',
-        'password' => 'required|string',
-    ]);
+    {
+        $this->validateLogin($request);
 
-    if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-
-        if (Auth::user()->job_titles_id == 1) {
-            return redirect()->route('dashboard.principal');
-        } elseif (Auth::user()->job_titles_id == 2) {
+        if (Auth::attempt($request->only('username', 'password'))) {
             return redirect()->route('dashboard.principal');
         }
-    }
 
-    return redirect()->route('admin.login')->withErrors(['login_error' => 'Credenciales incorrectas.']);
-}
+        return redirect()->route('admin.login')->withErrors(['login_error' => 'Credenciales incorrectas.']);
+    }
 
     public function profile()
     {
-        //
         return view('admin.profile');
     }
 
     public function users(Request $request)
     {
-        $name = $request->input('dish');
-        $jobTitleId = $request->input('category');
-
-        $query = User::select(
-            'users.id',
-            'users.name',
-            'job_titles.title as title'
-        )
-        ->join('job_titles', 'users.job_titles_id', '=', 'job_titles.id');
-
-        if (!empty($name)) {
-            $query->where('users.name', 'LIKE', '%' . $name . '%');
-        }
-
-        if ($jobTitleId && $jobTitleId != 0) {
-            $query->where('job_titles.id', $jobTitleId);
-        }
-
-        $users = $query->get();
-
+        $users = $this->filterUsers($request);
         $titles = JobTitle::all();
-        
+
         return view('admin.users', compact('users', 'titles'));
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        $selectedJobTitleId = $request->input('job_titles_id');
-
         $titles = JobTitle::all();
-
         return view('admin.create', compact('titles'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6',
-            'job_titles_id' => 'required|exists:job_titles,id',
-        ]);
+        $this->validateUser($request);
 
-        $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'job_titles_id' => $request->job_titles_id,
-        ]);
+        User::create($this->userData($request));
 
         return redirect()->route('admin.users')->with('success', 'Usuario creado correctamente.');
     }
 
-
     public function show(string $id)
     {
         $user = User::with('jobTitle')->findOrFail($id);
-
         return view('admin.seeUser', compact('user'));
     }
 
     public function edit(string $id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $titles = JobTitle::all();
         
         return view('admin.edit', compact('user', 'titles'));
@@ -122,22 +70,11 @@ class UsersController extends Controller
 
     public function update(Request $request, string $id)
     {
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'job_titles_id' => 'required|exists:job_titles,id',
-            'password' => 'nullable|string|min:6',
-        ]);
+        $this->validateUser($request, $id);
 
         $user = User::findOrFail($id);
-
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->job_titles_id = $request->job_titles_id;
-
+        $user->fill($this->userData($request, false));
+        
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
@@ -149,11 +86,54 @@ class UsersController extends Controller
 
     public function destroy(string $id)
     {
-        $user = User::find($id);
-        if ($user) {
-            $user->delete();
-        }
+        User::findOrFail($id)->delete();
 
         return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente.');
+    }
+
+    private function validateLogin(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
+    private function validateUser(Request $request, ?string $id = null)
+    {
+        $uniqueEmailRule = $id ? 'unique:users,email,' . $id : 'unique:users,email';
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'email' => "required|email|max:255|$uniqueEmailRule",
+            'job_titles_id' => 'required|exists:job_titles,id',
+            'password' => 'nullable|string|min:6',
+        ]);
+    }
+
+    private function filterUsers(Request $request)
+    {
+        $query = User::select('users.id', 'users.name', 'job_titles.title as title')
+            ->join('job_titles', 'users.job_titles_id', '=', 'job_titles.id');
+
+        if ($name = $request->input('dish')) {
+            $query->where('users.name', 'LIKE', '%' . $name . '%');
+        }
+
+        if ($jobTitleId = $request->input('category')) {
+            $query->where('job_titles.id', $jobTitleId);
+        }
+
+        return $query->get();
+    }
+
+    private function userData(Request $request, bool $hashPassword = true)
+    {
+        $data = $request->only(['name', 'username', 'email', 'job_titles_id']);
+        if ($hashPassword && $request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+        return $data;
     }
 }

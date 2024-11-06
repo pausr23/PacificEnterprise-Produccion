@@ -50,40 +50,32 @@
     border-radius: 50%;
 }
 
-
-
-/* Altura por defecto para dispositivos md hacia abajo */
 #earningsChartContainer, #ordersChartContainer {
-    height: 300px; /* Altura para dispositivos md y menores */
+    height: 300px;
 }
 
-/* Altura para dispositivos lg y superiores */
 @media (min-width: 1024px) {
     #earningsChartContainer, #ordersChartContainer {
-        height: 250px; /* Ajusta esta altura según lo necesites */
+        height: 250px;
     }
 }
 
-/* Contenedor general para los gráficos */
 .chart-container {
     width: 100%;
     position: relative;
 }
 
-/* Ajuste de altura para pantallas pequeñas */
 @media (max-width: 600px) {
     .chart-container {
-        height: 300px; /* Altura para dispositivos móviles */
+        height: 300px;
     }
 }
 
-/* Ajuste de altura para dispositivos lg y superiores dentro del contenedor general */
 @media (min-width: 1024px) {
     .chart-container {
-        height: 250px; /* Mantén esta altura similar a los divs de etiquetas */
+        height: 250px;
     }
 }
-
 
 .swiper-button-white {
     color: rgb(215, 215, 215);
@@ -128,17 +120,14 @@ select:focus {
     background: #323035; 
 }
 
-/* Cuando el checkbox NO está marcado, el menú está oculto */
 #mobile-checkbox:not(:checked) ~ #sidebar-menu {
     transform: translateX(-100%);
 }
 
-/* Cuando el checkbox está marcado, el menú se muestra */
 #mobile-checkbox:checked ~ #sidebar-menu {
     transform: translateX(0);
 }
 
-/* Este estilo asegura que el menú esté siempre visible en pantallas grandes */
 @media (min-width: 1024px) {
     #mobile-checkbox:checked ~ #sidebar-menu {
         transform: translateX(0);

@@ -10,9 +10,21 @@
             <img class="mb-4 lg:w-60 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
                 alt="Pacific-Enterprise">
 
-            <div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
+        <div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
+            <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                href="{{ route('dashboard.principal') }}">Panel Principal</a>
+            <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                href="{{ route('factures.ordering') }}">Punto de Venta</a>
+            <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                href="{{ route('factures.order') }}">Órdenes</a>
+            <a class="py-3 mb-5 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035]"
+                href="{{ route('factures.history') }}">Historial de Ventas</a>
+            <a class="py-3 mb-5 pl-2 secondary-color hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg transition-colors duration-300"
+                href="{{ route('dishes.inventory') }}">Inventario</a>
+
+            @if(Auth::check() && Auth::user()->job_titles_id == 1)
                 <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('dashboard.principal') }}">Panel Principal</a>
+                    href="{{ route('dishes.index') }}">Productos</a>
                 <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                     href="{{ route('factures.ordering') }}">Punto de Venta</a>
                 <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
