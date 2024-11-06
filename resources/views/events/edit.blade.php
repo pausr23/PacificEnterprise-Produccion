@@ -1,10 +1,9 @@
 @extends('events.layout')
 @section('content')
-<div>
-    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+v
 
     @if ($errors->any())
-        <div class="bg-red-500 text-white p-4 mb-4">
+        <div class=" bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 lg:w-[70%] w-[20%]">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -12,6 +11,8 @@
             </ul>
         </div>
     @endif
+
+
 
     <form action="{{ route('events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
         @csrf

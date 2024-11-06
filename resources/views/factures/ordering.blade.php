@@ -192,6 +192,10 @@
                     @csrf
                     <input type="hidden" name="addedItems" id="addedItemsInput" value='[]'>
                     <input type="hidden" name="payment_method_id" id="paymentMethodInput" value="">
+                    <input type="hidden" name="total_price" id="totalPrice" value="1000"> <!-- Aquí establece el valor total -->
+
+                    <!-- Contenedor para mensajes de error -->
+                    <div id="error-message" class="bg-red-500 text-white p-2 rounded mb-3 hidden"></div>
 
                     <!-- Notas -->
                     <div class="grid grid-cols-1 mb-2">
@@ -205,21 +209,21 @@
                     <h2 class="text-gray-400 text-sm ml-5 font-main mt-5">Método de Pago:</h2>
                     <div class="flex justify-around p-4">
                         <div class="group">
-                            <button type="button" class="payment-method border border-white rounded-lg p-2" data-value="1">
+                            <button type="button" class="payment-method border border-white rounded-lg p-2 focus:border-green-500" data-value="1">
                                 <img class="w-8" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png" alt="Efectivo" />
                             </button>
                             <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
                         </div>
 
                         <div class="group">
-                            <button type="button" class="payment-method border border-white rounded-lg p-2" data-value="2">
+                            <button type="button" class="payment-method border border-white rounded-lg p-2 focus:border-green-500" data-value="2">
                                 <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png" alt="Tarjeta" />
                             </button>
                             <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
                         </div>
 
                         <div class="group">
-                            <button type="button" class="payment-method border border-white rounded-lg p-2" data-value="3">
+                            <button type="button" class="payment-method border border-white rounded-lg p-2 focus:border-green-500" data-value="3">
                                 <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png" alt="Sinpe" />
                             </button>
                             <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
@@ -260,7 +264,7 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     const billing = {};
 
-                    // Actualizar el cambio basado en el monto recibido y el total
+                    // Actualiza el cambio basado en el monto recibido y el total
                     function updateChange() {
                         const total = parseFloat(document.getElementById('total-amount').innerText.replace('₡', '')) || 0;
                         const payment = parseFloat(document.getElementById('customer-payment').value) || 0;
@@ -327,13 +331,31 @@
                     });
 
                     // Configura el formulario antes de enviar
-                    document.getElementById('order-form').onsubmit = () => {
-                        document.getElementById('addedItemsInput').value = JSON.stringify(
-                            Object.keys(billing).map(id => ({ id, quantity: billing[id].quantity }))
-                        );
+                    document.getElementById('order-form').onsubmit = function (event) {
+                        const addedItems = Object.keys(billing).map(id => ({ id, quantity: billing[id].quantity }));
+                        document.getElementById('addedItemsInput').value = JSON.stringify(addedItems);
+
+                        if (addedItems.length === 0) {
+                            event.preventDefault();  // Evita el envío del formulario
+                            alert('Por favor, agregue al menos un producto antes de facturar.');
+                            return;
+                        }
+
+                        const paymentMethod = document.getElementById('paymentMethodInput').value;
+                        if (paymentMethod === "1") { // Verifica si el método es efectivo
+                            const total = parseFloat(document.getElementById('total-amount').innerText.replace('₡', '')) || 0;
+                            const payment = parseFloat(document.getElementById('customer-payment').value) || 0;
+
+                            if (payment < total) {
+                                event.preventDefault();  // Evita el envío del formulario
+                                alert(`El monto recibido es insuficiente. El total es de ₡${total}.`);
+                            }
+                        }
                     };
                 });
             </script>
+
+
         </div>
     </div>
     @endsection

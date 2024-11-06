@@ -81,8 +81,15 @@ class AdminSupplierController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'email' => 'nullable|string|max:255',
+            'phone_number' => 'required|string|min:8|max:8',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:registered_suppliers,email',
+                'regex:/^[A-Za-z0-9.]+@[A-Za-z0-9.]+\.[A-Za-z]{2,}$/',
+            ],
             'note' => 'nullable|string|max:255',
         ]);
     }

@@ -1,9 +1,9 @@
 @extends('admin.layout')
 
 @section('content')
-    <div>
-        <!-- Imagen del logo -->
-        <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+<div class="lg:mt-0 mt-12">
+        <!-- Logo de la Empresa -->
+        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
         <!-- Título y botón de volver -->
         <div class="flex justify-center items-center mb-10 lg:-mr-0 sm:-mr-16">
@@ -67,7 +67,7 @@
 
             <!-- Botón de enviar -->
             <div class="flex justify-end xxs:justify-center xxs:ml-16 pr-20 mt-5">
-                <button type="submit" class="font-main text-white w-full lg:w-[9%] md:w-[12%] sm:w-[16%] max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Actualizar</button>
+                <button type="submit" class="font-main text-white w-full lg:w-[9%] md:w-[12%] sm:w-[16%] max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Guardar</button>
             </div>
         </form>
     </div>

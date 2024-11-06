@@ -10,7 +10,8 @@
 
         <!-- Right Login Section -->
         <div class="grid place-items-center secondary-color w-full h-full">
-            
+
+            <div>
             <!-- Login Header -->
             <h1 class="text-white text-center font-main font-bold text-4xl xxs:text-2xl tracking-[.22em] mb-16">
                 Log in
@@ -53,6 +54,7 @@
                     {{ $errors->first('login_error') }}
                 </div>
             @endif
+            </div>
 
         </div>
 

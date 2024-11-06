@@ -5,5 +5,17 @@
         type="{{ $type ?? 'text' }}" 
         name="{{ $name }}" 
         value="{{ old($name) }}" 
-        placeholder="{{ $placeholder }}">
+        placeholder="{{ $placeholder }}"
+        @if(isset($minlength)) minlength="{{ $minlength }}" @endif
+        @if(isset($maxlength)) maxlength="{{ $maxlength }}" @endif
+        @if(isset($type) && $type == 'email') 
+            pattern="[A-Za-z0-9.]+@[A-Za-z0-9.]+\.[A-Za-z]{2,}$" 
+            title="Por favor ingrese un correo válido (solo se permiten letras, números y puntos)" 
+        @endif
+        required>
+
+    {{-- Mostrar errores si existen --}}
+    @error($name)
+        <p class="bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 lg:w-[70%] w-[20%]">{{ $message }}</p>
+    @enderror
 </div>

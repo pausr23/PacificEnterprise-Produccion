@@ -1,8 +1,9 @@
 @extends('suppliers.layout')
 
 @section('content')
-<div>
-    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+<div class="container lg:mt-0 mt-12">
+        <!-- Logo de la Empresa -->
+        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10">
         <div class="grid grid-cols-2 xxs:grid-cols-1 xxs:gap-1 gap-96 xxs:mt-4">
             <h1 class="text-2xl xxs:text-lg font-bold text-white font-main xxs:align-center">
@@ -12,6 +13,17 @@
                href="{{ route('suppliers.index') }}">Atrás</a>
         </div>
     </div>
+
+    {{-- Mostrar los mensajes de error --}}
+    @if ($errors->any())
+        <div class="bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 lg:w-[70%] w-[20%]" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form action="{{ route('suppliers.update', $supplier->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -24,15 +36,17 @@
                 @include('components.input-suppliersEdit', [
                     'label' => 'Nombre',
                     'name' => 'name',
-                    'value' => $supplier->name,
+                    'value' => old('name', $supplier->name),  {{-- Usamos old() para mantener los valores si el formulario tiene errores --}}
                     'placeholder' => 'Nombre del proveedor'
                 ])
 
                 @include('components.input-suppliersEdit', [
                     'label' => 'Número de teléfono',
                     'name' => 'phone_number',
-                    'value' => $supplier->phone_number,
-                    'placeholder' => 'Número de teléfono del proveedor'
+                    'value' => old('phone_number', $supplier->phone_number),
+                    'placeholder' => 'Número de teléfono del proveedor',
+                    'minlength' => 8,  
+                    'maxlength' => 8
                 ])
             </div>
 
@@ -41,14 +55,14 @@
                 @include('components.input-suppliersEdit', [
                     'label' => 'Correo electrónico',
                     'name' => 'email',
-                    'value' => $supplier->email,
+                    'value' => old('email', $supplier->email),
                     'placeholder' => 'Correo electrónico del proveedor'
                 ])
 
                 @include('components.textarea-suppliersEdit', [
                     'label' => 'Notas Adicionales',
                     'name' => 'note',
-                    'value' => $supplier->note,
+                    'value' => old('note', $supplier->note),
                     'placeholder' => 'Notas adicionales del proveedor'
                 ])
             </div>

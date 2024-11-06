@@ -45,6 +45,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/principal', [DashboardSummaryController::class, 'showStatistics'])->name('principal.show');
 
     Route::get('/factures/{id}', [AdminDishController::class, 'showInvoices'])->name('factures.show');
+
+    Route::post('/factures/invoice', [AdminDishController::class, 'storeOrder'])->name('factures.invoice');
+
+    Route::get('/events', [EventController::class, 'show'])->name('events.index');
+
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
+    Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
+
+    Route::get('events/show/{id}', [EventController::class, 'showEventDetail'])->name('events.show');
+
+    Route::get('/events/edit/{event}', [EventController::class, 'edit'])->name('events.edit');
+
+    Route::put('/events/update{event}', [EventController::class, 'update'])->name('events.update');
+
+    Route::delete('/events/destroy/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 });
 
 Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
@@ -90,30 +106,13 @@ Route::middleware(['auth', 'checkJobTitle:1'])->group(function () {
 
     Route::resource('suppliers', AdminSupplierController::class);
 
-    Route::post('/factures/invoice', [AdminDishController::class, 'storeOrder'])->name('factures.invoice');
-
-    Route::get('/events', [EventController::class, 'show'])->name('events.index');
-
-    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-
-    Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
-
-    Route::get('events/show/{id}', [EventController::class, 'showEventDetail'])->name('events.show');
+    
 
     /* Information */
 
     Route::resource('information', AdminInformationController::class);
     Route::get('information/{id}', [AdminInformationController::class, 'show'])->name('information.show'); 
     
-
-    Route::get('/events/edit/{event}', [EventController::class, 'edit'])->name('events.edit');
-
-    Route::put('/events/update{event}', [EventController::class, 'update'])->name('events.update');
-
-    Route::delete('/events/destroy/{event}', [EventController::class, 'destroy'])->name('events.destroy');
-
-
-
 });
 
 // Ruta de inicio de sesión

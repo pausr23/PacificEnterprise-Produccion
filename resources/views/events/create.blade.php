@@ -1,8 +1,18 @@
 @extends('dishes.layout')
 @section('content')
-<div>
-    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+<div class="lg:mt-0 mt-12">
+        <!-- Logo de la Empresa -->
+        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
+    @if ($errors->any())
+        <div class="bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 lg:w-[70%] w-[20%]">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -30,7 +40,7 @@
                     <textarea
                         class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white"
                         name="description" cols="30" rows="3"
-                        placeholder="Descripción del evento">{{ old('description') }}</textarea>
+                        placeholder="Descripción del evento">{{ old('description', '') }}</textarea>
                 </div>
 
             </div>
@@ -50,7 +60,7 @@
                         Evento</button>
 
                     <a class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 xxs:py-5 xxs:text-sm text-center"
-                        href="{{ route('dishes.index') }}">Atrás</a>
+                        href="{{ route('events.index') }}">Atrás</a>
 
                 </div>
 

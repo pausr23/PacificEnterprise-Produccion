@@ -1,14 +1,9 @@
 @extends('suppliers.layout')
 
 @section('content')
-<div>
-    <!-- Sección de Encabezado -->
-    <img 
-        class="w-56 m-12 xxs:w-60 xxs:hidden" 
-        src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" 
-        alt="Pacific-Enterprise" 
-        border="0"
-    >
+<div class="container lg:mt-0 mt-12">
+        <!-- Logo de la Empresa -->
+        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     <div class="flex justify-center items-center mb-10 lg:-mr-0 sm:-mr-16">
         <div class="grid grid-cols-2 xxs:grid-cols-1 lg:gap-96 sm:gap-10 xxs:gap-4 xxs:mt-4">
             <h1 class="text-2xl font-bold text-white font-main lg:ml-0 sm:ml-7 xxs:text-lg xxs:align-center">
@@ -22,6 +17,18 @@
             </a>
         </div>
     </div>
+
+    @if ($errors->any())
+        <div class="mb-4 ml-20">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li class="bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 lg:w-[70%] w-[20%]">
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <!-- Sección de Formulario -->
     <form action="{{ route('information.update', $information->id) }}" method="POST" enctype="multipart/form-data">
@@ -53,7 +60,9 @@
                     'name' => 'number', 
                     'type' => 'text', 
                     'value' => $information->number, 
-                    'placeholder' => 'Número de teléfono'
+                    'placeholder' => 'Número de teléfono',
+                    'minlength' => 8,
+                    'maxlength' => 8
                 ])
             </div>
 

@@ -19,9 +19,10 @@
                     href="{{ route('dishes.index') }}">Productos</a>
                 <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                     href="{{ route('suppliers.index') }}">Proveedores</a>
-                <a class="py-3 mb-3 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('events.index') }}">Eventos</a>
+                
             @endif
+            <a class="py-3 mb-3 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
+                href="{{ route('events.index') }}">Eventos</a>
 
             <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0 ">
                 <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10"

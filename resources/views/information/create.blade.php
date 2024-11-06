@@ -1,9 +1,9 @@
 @extends('suppliers.layout')
 
 @section('content')
-<div class="container">
-    <!-- Logo -->
-    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+<div class="container lg:mt-0 mt-12">
+        <!-- Logo de la Empresa -->
+        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
 
     <!-- Header Section -->
     <div class="flex justify-center items-center mb-10 lg:mr-0 sm:-mr-16">
@@ -12,6 +12,18 @@
             <a class="btn-back font-main text-white w-[50%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center xxs:mt-4 xxs:justify-self-center" href="{{ route('information.index') }}">Atrás</a>
         </div>
     </div>
+
+    @if ($errors->any())
+        <div class="mb-4 ml-20">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li class="bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 lg:w-[70%] w-[20%]">
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <!-- Form Section -->
     <form action="{{ route('information.store') }}" method="POST" enctype="multipart/form-data">
@@ -22,7 +34,14 @@
             <div class="form-column">
                 @include('information.partials.input', ['label' => 'Nombre', 'name' => 'name', 'type' => 'text', 'placeholder' => 'Nombre'])
                 @include('information.partials.input', ['label' => 'Correo electrónico', 'name' => 'email', 'type' => 'text', 'placeholder' => 'Correo electrónico'])
-                @include('information.partials.input', ['label' => 'Número', 'name' => 'number', 'type' => 'text', 'placeholder' => 'Número de teléfono'])
+                @include('information.partials.input', [
+                    'label' => 'Número',
+                    'name' => 'number',
+                    'type' => 'text',
+                    'placeholder' => 'Número de teléfono',
+                    'minlength' => 8,
+                    'maxlength' => 8
+                ])
             </div>
 
             <!-- Right Column Inputs -->

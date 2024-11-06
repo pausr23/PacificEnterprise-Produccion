@@ -31,20 +31,23 @@ class EventController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'event_date' => 'required|date',
-            'description' => 'nullable|string',
+            'event_date' => 'required|date|after_or_equal:today',
+            'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'event_date.after_or_equal' => 'La fecha del evento no puede ser anterior a la fecha actual.',
+            'description.required' => 'La descripción es obligatoria. Por favor, ingrésela antes de continuar.',
         ]);
 
-        $imageUrl = null; // Para almacenar la URL de la imagen
+        $imageUrl = null;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             try {
                 $uploadResult = Cloudinary::upload($image->getPathname(), [
-                    'folder' => 'events' // Cambia la carpeta según lo necesites
+                    'folder' => 'events'
                 ]);
-                $imageUrl = $uploadResult->getSecurePath(); // Obtiene la URL de la imagen
+                $imageUrl = $uploadResult->getSecurePath(); 
             } catch (\Exception $e) {
                 return redirect()->back()->withErrors(['image' => 'Error al subir la imagen: ' . $e->getMessage()]);
             }
@@ -65,13 +68,18 @@ class EventController extends Controller
         return view('events.edit', compact('event'));
     }
 
-    public function update(Request $request, Event $event)
+    public function update(Request $request, $id)
     {
+        $event = Event::findOrFail($id);
+
         $request->validate([
             'title' => 'required|string|max:255',
-            'event_date' => 'required|date',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
+            'event_date' => 'required|date|after_or_equal:today',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'event_date.after_or_equal' => 'La fecha del evento no puede ser anterior a la fecha actual.',
+            'description.required' => 'La descripción es obligatoria. Por favor, ingrésela antes de continuar.',
         ]);
 
         $imageUrl = $event->image_path;
@@ -79,9 +87,6 @@ class EventController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             try {
-
-                Cloudinary::destroy($event->image_path);
-
                 $uploadResult = Cloudinary::upload($image->getPathname(), [
                     'folder' => 'events'
                 ]);

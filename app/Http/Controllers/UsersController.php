@@ -106,7 +106,17 @@ class UsersController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'email' => "required|email|max:255|$uniqueEmailRule",
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                $uniqueEmailRule,
+                function ($attribute, $value, $fail) {
+                    if (!str_ends_with($value, '.com')) {
+                        $fail('El correo debe terminar con .com');
+                    }
+                }
+            ],
             'job_titles_id' => 'required|exists:job_titles,id',
             'password' => 'nullable|string|min:6',
         ]);

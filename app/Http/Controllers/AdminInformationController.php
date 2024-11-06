@@ -35,10 +35,15 @@ class AdminInformationController extends Controller
     public function store(Request $request)
     {
 
-         $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'number' => 'required|string|max:20',
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z0-9.]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,6}$/',
+            ],
+            'number' => 'required|string|min:8|max:8',
             'address' => 'required|string|max:255',
             'note' => 'nullable|string',
         ]);
@@ -56,6 +61,7 @@ class AdminInformationController extends Controller
         $information = RegisteredInformation::findOrFail($id);
         return view('information.show', compact('information'));
     }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -73,8 +79,13 @@ class AdminInformationController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'number' => 'required|string|max:20',
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z0-9.]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,6}$/', 
+            ],
+            'number' => 'required|string|min:8|max:8',
             'address' => 'required|string|max:255',
             'note' => 'nullable|string',
         ]);

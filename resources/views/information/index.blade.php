@@ -43,7 +43,9 @@
                         <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 md:px-3 xxs:px-0.5 xxs:text-xs">
                             <td>{{ $info->name }}</td>
                             <td>{{ $info->email }}</td>
-                            <td>{{ $info->number }}</td>
+                            <td>
+                                {{ substr($info->number, 0, 4) }}-{{ substr($info->number, 4) }}
+                            </td>
                             <td>{{ $info->address }}</td>
                             <td>{{ $info->note }}</td>
                             <td class="py-6">

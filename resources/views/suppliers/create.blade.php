@@ -1,8 +1,9 @@
 @extends('suppliers.layout')
 
 @section('content')
-<div>
-    <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+<div class="container lg:mt-0 mt-12">
+        <!-- Logo de la Empresa -->
+        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
     
     <div class="flex justify-center items-center mb-10">
         <div class="grid grid-cols-2 xxs:grid-cols-1 gap-96 xxs:gap-4 xxs:mt-4">
@@ -14,33 +15,47 @@
         </div>
     </div>
 
+    @if ($errors->any())
+    <div class="bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 v w-[20%]" role="alert">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <form action="{{ route('suppliers.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         
         <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:justify-items-center xxs:pl-4 xxs:ml-[-4%]">
             
-            {{-- Primera Columna --}}
-            <div class="grid">
-                @include('components.input-suppliersCreate', [
-                    'label' => 'Nombre',
-                    'name' => 'name',
-                    'placeholder' => 'Nombre del proveedor'
-                ])
+        {{-- Primera Columna --}}
+        <div class="grid">
+            @include('components.input-suppliersCreate', [
+                'label' => 'Nombre',
+                'name' => 'name',
+                'placeholder' => 'Nombre del proveedor'
+            ])
 
-                @include('components.input-suppliersCreate', [
-                    'label' => 'Número de teléfono',
-                    'name' => 'phone_number',
-                    'placeholder' => 'Número de teléfono del proveedor'
-                ])
-            </div>
+            @include('components.input-suppliersCreate', [
+                'label' => 'Número de teléfono',
+                'name' => 'phone_number',
+                'placeholder' => 'Número de teléfono del proveedor',
+                'minlength' => 8,
+                'maxlength' => 8
+            ])
+        </div>
+
 
             {{-- Segunda Columna --}}
             <div>
-                @include('components.input-suppliersCreate', [
-                    'label' => 'Correo electrónico',
-                    'name' => 'email',
-                    'placeholder' => 'Correo electrónico del proveedor'
-                ])
+            @include('components.input-suppliersCreate', [
+                'label' => 'Correo electrónico',
+                'name' => 'email',
+                'placeholder' => 'Correo electrónico del proveedor',
+                'type' => 'email'
+            ])
 
                 @include('components.textarea-suppliersCreate', [
                     'label' => 'Notas Adicionales',

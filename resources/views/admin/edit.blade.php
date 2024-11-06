@@ -1,6 +1,10 @@
 @extends('dishes.layout')
 
 @section('content')
+
+<div class="lg:mt-0 mt-12">
+        <!-- Logo de la Empresa -->
+        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
   <div class="flex justify-center items-center mb-10 lg:-mr-0 sm:-mr-16">
     <div class="grid grid-cols-2 xxs:grid-cols-1 lg:gap-96 sm:gap-10 xxs:gap-4 xxs:mt-4">
       <h1 class="text-2xl font-bold text-white font-main lg:ml-0 sm:ml-7 xxs:text-lg xxs:text-center">Actualiza el usuario</h1>
@@ -66,4 +70,5 @@
         <button type="submit" class="font-main text-white w-full lg:w-[9%] md:[12%] sm:w-[16%] max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Actualizar</button>
         </div>
   </form>
+</div>
 @endsection
