@@ -21,7 +21,7 @@ class AdminInformationController extends Controller
      */
     public function create()
     {
-        $informationCount = RegisteredInformation::count(); 
+        $informationCount = RegisteredInformation::count();
         if ($informationCount > 0) {
             return redirect()->route('information.index')->with('warning', 'Ya hay información registrada. Solo puedes editarla.');
         }

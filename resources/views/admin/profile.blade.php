@@ -11,8 +11,9 @@
         <!-- Profile Info Section -->
         <div class="grid lg:grid-cols-[20%,80%] p-8">
             
-            <!-- User Profile Picture -->
-            <img class="rounded-full bg-white lg:m-0 md:m-6 xxs:m-2" src="https://img.icons8.com/?size=100&id=HNn3lC0m5uKR&format=png&color=000000" alt="Profile Picture">
+        <!-- User Profile Picture -->
+        <img class="rounded-full bg-white lg:m-0 md:m-6 xxs:m-2" src="https://img.icons8.com/?size=100&id=HNn3lC0m5uKR&format=png&color=000000" alt="Profile">
+
 
             <!-- User Info Section -->
             <div class="ml-10 grid mt-4 lg:grid-cols-2 xxs:grid-cols-1 items-start">
@@ -40,7 +41,7 @@
                     <div class="grid">
                         <a class="mb-3 font-main justify-self-end text-white xxs:mt-3 p-4 md:w-full h-auto lg:w-[60%] bg-pink-500 hover:bg-pink-700 font-medium rounded-lg text-center md:px-3 xxs:px-1" href="{{ route('admin.users') }}">
                             Administrador de Usuarios
-                        </a> 
+                        </a>
                         <a class="font-main justify-self-end text-white p-4 xxs:mt-3 md:w-full h-auto lg:w-[60%] bg-pink-500 hover:bg-pink-700 font-medium rounded-lg text-center md:px-3 xxs:px-1" href="{{ route('information.index') }}">
                             Administrador de Información
                         </a>

@@ -64,7 +64,8 @@
     <!-- Comprobación de si el archivo existe -->
     @if (isset($filePath))
         <!-- iframe oculto para cargar el archivo de la factura -->
-        <iframe src="{{ asset($filePath) }}" style="display:none;"></iframe>
+        <iframe src="{{ asset($filePath) }}" style="display:none;" title="Factura del archivo cargado"></iframe>
+
 
         <!-- Tabla con los detalles de los productos -->
         <div id="back-button-container" class="flex justify-center mb-10"></div>

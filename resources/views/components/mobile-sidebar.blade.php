@@ -1,13 +1,14 @@
-<div class="ml-2 lg:hidden py-4 z-40 h-8 cursor-pointer flex items-center justify-start" onclick="toggleMenu()">
-    <img class="w-44 xxs:w-32" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-</div>
+<button class="ml-2 lg:hidden py-4 z-40 h-8 cursor-pointer flex items-center justify-start" onclick="toggleMenu()" aria-label="Abrir menú">
+    <img class="w-44 xxs:w-32" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Logo Pacific-Enterprise">
+</button>
 
 <div id="mobile-sidebar-menu"
     class="absolute top-0 left-0 w-full h-screen transform -translate-x-full transition-transform duration-300 lg:hidden z-10 flex">
     <div class="w-1/2 h-full bg-[#16161A]">
-        <div class="mt-10 pl-2 flex items-center justify-start py-4 z-40 h-8 cursor-pointer" onclick="toggleMenu()">
+        <button class="mt-10 pl-2 flex items-center justify-start py-4 z-40 h-8 cursor-pointer" onclick="toggleMenu()" aria-label="Toggle menu">
             <img class="w-44 xxs:w-32" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise Logo">
-        </div>
+        </button>
+
         <div class="pl-2 pt-6 text-white font-light text-sm font-main">
             <a class="py-3 mb-6 pl-2 secondary-color transition-colors duration-300 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
                 href="{{ route('dashboard.principal') }}">Panel Principal</a>
