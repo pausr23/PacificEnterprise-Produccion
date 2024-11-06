@@ -3,6 +3,7 @@
 @section('content')
 <div>
     <img class="w-56 m-12 xxs:hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+
     <div class="flex justify-center items-center mb-10 lg:-mr-0 sm:-mr-16">
         <div class="grid grid-cols-2 xxs:grid-cols-1 lg:gap-96 sm:gap-10 xxs:gap-4 xxs:mt-4">
             <h1 class="text-2xl font-bold text-white font-main lg:ml-0 sm:ml-7 xxs:text-lg xxs:align-center xxs:mb-2">Añade un nuevo producto</h1>
@@ -10,83 +11,12 @@
         </div>
     </div>
 
-    @if ($errors->any())
-        <div class="bg-gray-200 border-l-4 border-red-500 text-red-700 p-4 mb-4 m-5" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('dishes.partials.error-messages')
 
     <form action="{{ route('dishes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="pl-20 grid grid-cols-[50%,50%] md:-ml-0 sm:-ml-6 xxs:grid-cols-1 xxs:justify-items-center xxs:gap-y-1 xxs:px-2">
-
-            <div class="grid">
-
-                <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Nombre</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="title" placeholder="Nombre del producto">
-                </div>
-
-                <div class="mt-2 mb-2">
-                    <div>
-                        <label for="dishes_categories_id" class="block mb-2 font-medium text-white font-main">Categoría:</label>
-                        <select name="dishes_categories_id" id="dishes_categories_id" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white" onchange="filterSubcategories()">
-                            <option value="">Selecciona una categoría</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="mt-2 mb-2">
-                    <div>
-                        <label for="subcategories_id" class="block mb-2 font-medium text-white font-main">Subcategoría:</label>
-                        <select name="subcategories_id" id="subcategories_id" class="secondary-color border border-gray-300  text-sm rounded-lg block w-80 p-2.5 focus:ring-blue-500 focus:border-blue-500 text-white">
-                            <option value="">Selecciona una categoría primero</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Unidades</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="number" name="units" placeholder="Unidades disponibles" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
-                </div>
-            
-            </div>
-
-            <!-- Seccion 2 -->
-            <div>
-
-                <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Precio de compra</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="purchase_price" placeholder="Precio de compra del producto" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
-                </div>
-
-                <div class="grid mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Precio de venta</label>
-                    <input class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" type="text" name="sale_price" placeholder="Precio de venta del producto" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(?=\d)/, '')">
-        
-                </div>
-
-                <div class="grid grid-cols-1 mb-2">
-                    <label class="block mb-2 font-medium text-white font-main">Descripción</label>
-                    <textarea class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white" name="description" cols="30" rows="3" placeholder="Descripción del producto"></textarea>
-                </div>
-
-                <div class="mt-2 mb-2">
-                    <div>
-                        <label for="image" class="block mb-2 font-medium text-white font-main">Imagen:</label>
-                        <input type="file" accept=".jpg, .png" id="image" class="text-white secondary-color border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5" name="image">
-                    </div>
-                </div>
-
-            </div>
-
+            @include('dishes.partials.dish-form')
         </div>
 
         <div class="flex justify-end xxs:justify-center xxs:ml-16 pr-20 mt-5">
@@ -94,7 +24,6 @@
         </div>
     </form>
 </div>
-
 
 <script>
     const subcategoriesData = @json($subcategories);
@@ -104,13 +33,9 @@
         const subcategorySelect = document.getElementById('subcategories_id');
         subcategorySelect.innerHTML = '<option value="">Selecciona una subcategoría</option>';
 
-        console.log("Categoría seleccionada ID:", categoryId);
-
         const filteredSubcategories = subcategoriesData.filter(subcategory => {
             return subcategory.dishes_categories_id == categoryId;
         });
-
-        console.log("Subcategorías filtradas:", filteredSubcategories);
 
         if (filteredSubcategories.length === 0) {
             subcategorySelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
@@ -124,14 +49,4 @@
         }
     }
 </script>
-
-    @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 @endsection

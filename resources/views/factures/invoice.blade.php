@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imprimir Factura</title>
+    <!-- Estilos CSS -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,8 +22,7 @@
             border-collapse: collapse;
         }
 
-        th,
-        td {
+        th, td {
             padding: 4px;
             text-align: left;
         }
@@ -36,7 +36,7 @@
         }
     </style>
 
-
+    <!-- Script para imprimir la factura al cargar la página -->
     <script>
         window.onload = function () {
             window.print();
@@ -45,10 +45,18 @@
 </head>
 
 <body>
-    <img class="w-52 mx-auto mb-10" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="">
+    <!-- Logo de la empresa -->
+    <img class="w-52 mx-auto mb-10" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific Enterprise">
+
+    <!-- Título de la factura -->
     <h1 class="mb-10 text-center">FACTURA</h1>
+
+    <!-- Comprobación de si el archivo existe -->
     @if (isset($filePath))
+        <!-- iframe oculto para cargar el archivo de la factura -->
         <iframe src="{{ asset($filePath) }}" style="display:none;"></iframe>
+
+        <!-- Tabla con los detalles de los productos -->
         <table>
             <thead>
                 <tr>
@@ -73,11 +81,14 @@
         </table>
 
     @else
+        <!-- Mensaje si no se encuentra el archivo -->
         <p>No se encontró el archivo de la factura.</p>
     @endif
 
+    <!-- Contenedor para el botón de regreso -->
     <div id="back-button-container" class="flex justify-center mt-10"></div>
 
+    <!-- Script para agregar el botón de regreso después de un tiempo -->
     <script>
         setTimeout(function () {
             const backButtonContainer = document.getElementById('back-button-container');
@@ -88,10 +99,8 @@
                 window.history.back();
             };
             backButtonContainer.appendChild(backButton);
-        }, 1000); // 5000 milisegundos = 5 segundos
+        }, 1000); // 1000 milisegundos = 1 segundo
     </script>
-
-
 </body>
 
 </html>

@@ -4,52 +4,19 @@
 
 <div class="grid lg:grid-cols-[20%,80%] pl-6">
 
+    <!-- Menú lateral -->
     <div class="mr-5">
-
-    <div class="md:mr-5 hidden lg:block">
-        <img class="mb-4 lg:w-60 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
-            alt="Pacific-Enterprise">
-        <div id="sidebar-menu" class="hidden lg:grid pl-2 pt-6 text-white font-light text-sm font-main">
-            <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                href="{{ route('dashboard.principal') }}">Panel Principal</a>
-            <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                href="{{ route('factures.ordering') }}">Punto de Venta</a>
-            <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                href="{{ route('factures.order') }}">Órdenes</a>
-            <a class="py-3 mb-5 pl-2 block rounded-lg hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] secondary-color transition-colors duration-300"
-                href="{{ route('factures.history') }}">Historial de Ventas</a>
-
-            @if(Auth::check() && Auth::user()->job_titles_id == 1)
-                <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('dishes.index') }}">Productos</a>
-                <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('dishes.inventory') }}">Inventario</a>
-                <a class="py-3 mb-5 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('suppliers.index') }}">Proveedores</a>
-                <a class="py-3 mb-3 pl-2 hover:bg-[#323035] focus:bg-[#323035] active:bg-[#323035] block rounded-lg"
-                    href="{{ route('events.index') }}">Eventos</a>
-            @endif
-
-            <a href="{{ route('admin.profile') }}" class="flex items-center cursor-pointer lg:m-2 sm:ml-0 ">
-                <img class="lg:w-16 lg:h-16 sm:w-10 sm:h-10"
-                    src="https://img.icons8.com/?size=100&id=492ILERveW8G&format=png&color=000000" alt="">
-                <div class="lg:ml-2">
-                    <p class="text-base font-semibold ml-1">{{ auth()->user()->name }}</p>
-                    <p class="text-sm">@ {{ auth()->user()->username }}</p>
-                </div>
-            </a>
-        </div>
-        </div>
-
+        @include('components.sidebar-link')
     </div>
 
+    <!-- Contenido Principal -->
     <div class="md:w-full xxs:w-[94%]">
-        <div class="grid lg:grid-cols-1 md:grid-cols-[70%,20%]  mb-6">
+        <!-- Filtro de Pago -->
+        <div class="grid lg:grid-cols-1 md:grid-cols-[70%,20%] mb-6">
             <form method="GET" action="{{ route('factures.history') }}">
                 <div class="grid">
                     <label class="mt-8 text-white font-main pb-2 font-bold" for="payment_method">Método de Pago:</label>
-                    <select class="secondary-color rounded h-8 text-center w-full md:w-40 text-white"
-                        id="payment_method" name="payment_method" onchange="this.form.submit()">
+                    <select class="secondary-color rounded h-8 text-center w-full md:w-40 text-white" id="payment_method" name="payment_method" onchange="this.form.submit()">
                         <option value="0">Todo</option>
                         @foreach ($paymentMethods as $method)
                             <option value="{{ $method->id }}">{{ $method->name }}</option>
@@ -59,26 +26,23 @@
             </form>
         </div>
 
+        <!-- Tabla de Órdenes -->
         <div class="w-full md:w-[90%] grid gap-4 md:gap-16 lg:ml-0 md:ml-[4%]">
             <div class="py-6 rounded-lg overflow-x-auto xxs:ml-1">
                 <table class="min-w-full rounded-lg">
                     <thead class="rounded-lg text-white font-main font-bold secondary-color">
                         <tr>
-                            <th scope="col" class="rounded-l-lg px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">ID
-                            </th>
-                            <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Método de pago
-                            </th>
+                            <th scope="col" class="rounded-l-lg px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">ID</th>
+                            <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Método de pago</th>
                             <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Notas</th>
                             <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Total</th>
-                            <th scope="col" class="rounded-r-lg px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">
-                                Acción</th>
+                            <th scope="col" class="rounded-r-lg px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Acción</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach ($orders as $order)
-                            <tr
-                                class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-xs lg:px-0 xxs:px-0">
+                            <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-xs lg:px-0 xxs:px-0">
                                 <td class="px-2">{{ $order->invoice_number }}</td>
                                 <td class="px-2">{{ $order->payment_method_name }}</td>
                                 <td class="px-1">{{ $order->note }}</td>
@@ -89,12 +53,11 @@
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
             </div>
         </div>
-
     </div>
+
 </div>
 
 @endsection
